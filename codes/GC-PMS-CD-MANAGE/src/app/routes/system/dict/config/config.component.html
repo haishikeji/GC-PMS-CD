@@ -1,0 +1,36 @@
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="drawerWidth" [nzVisible]="visible" nzTitle="{{title}}" (nzOnClose)="close()">
+  <nz-page-header>
+    <nz-page-header-title>{{'dictionary.name'|translate}}:</nz-page-header-title>
+    <nz-page-header-subtitle>{{item.dictName}}</nz-page-header-subtitle>
+    <nz-page-header-tags>
+      <nz-tag [nzColor]="'blue'">{{item.dictCode}}</nz-tag>
+    </nz-page-header-tags>
+    <nz-page-header-extra>
+      <button nz-button nzType="primary" (click)="add()">{{'new.data.item'|translate}}</button>
+    </nz-page-header-extra>
+  </nz-page-header>
+  <nz-table nzSize="small" #basicTable [nzData]="listOfData" [nzFrontPagination]="false" [nzLoading]="isSpinning"
+  [nzTotal]="page.total" [nzPageIndex]="page.current" (nzPageIndexChange)="pageIndexChange($event)">
+    <thead>
+      <tr>
+        <th nzAlign="center">{{'contract.name'|translate}}</th>
+        <th nzAlign="center">{{'data.value'|translate}}</th>
+        <th nzAlign="center" style="width: 21%">{{'table.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td nzAlign="center">{{ data.itemText }}</td>
+        <td nzAlign="center">{{ data.itemValue }}</td>
+        <td nzAlign="center">
+          <a href="javascript:void(0);" (click)="edit(data)">{{'table.update'|translate}}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javascript:void(0);" (click)="delete(data.id)">{{'table.delete'|translate}}</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-drawer>
+<app-system-dict-config-edit #systemDictConfigEditComponent (afterSave)="getDictItems()">
+</app-system-dict-config-edit>

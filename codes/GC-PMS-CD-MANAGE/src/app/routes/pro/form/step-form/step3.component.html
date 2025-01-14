@@ -1,0 +1,30 @@
+<div class="icon pt-md">
+  <i nz-icon type="check-circle" class="text-success icon-lg"></i>
+</div>
+<!-- 操作成功 -->
+<h1 class="h2 pt-md">{{ 'Successful.operation' | translate }}</h1>
+<!-- 预计两小时内到账 -->
+<p class="pt-md text-grey">{{ 'expected.arrive.two.hours' | translate }}</p>
+<div sv-container col="1" labelWidth="150" class="extra">
+  <!-- 付款账户 -->
+  <sv label="{{ 'payFor' | translate }}{{ 'account' | translate }}">{{ item.pay_account }}</sv>
+  <!--账户类型  -->
+  <sv label="{{ 'account.type' | translate }}">{{ item.receiver_type_str }}</sv>
+  <!-- 收款账户 -->
+  <sv label="{{ 'collection' | translate }}{{ 'account' | translate }}">{{ item.receiver_account }}</sv>
+  <!-- 收款人姓名 -->
+  <sv label="{{ 'payee.name' | translate }}">{{ item.receiver_name }}</sv>
+  <!-- 转账金额 -->
+  <sv label="{{ 'transfer.amount' | translate }}"
+    ><strong class="text-lg pr-sm">{{ item.amount }}</strong
+    >元</sv
+  >
+</div>
+<div nz-row class="my-md py-md">
+  <div nz-col>
+    <!-- 再转一笔 -->
+    <button nz-button (click)="item.again()" [nzType]="'primary'">{{ 'transfer.again' | translate }}</button>
+    <!-- 查看账单 -->
+    <button nz-button class="ml-sm">{{ 'check' | translate }}{{ 'bill' | translate }}</button>
+  </div>
+</div>

@@ -1,0 +1,85 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- 新增 -->
+    <button acl [acl-ability]="'role:add'" (click)="systemRoleEditComponent.open('新增',null)" nz-button
+      nzType="primary">{{'button.add'|translate}}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <form nz-form>
+    <div nz-row [nzGutter]="24">
+      <!-- 角色名称 -->
+      <div nz-col nzMd="24" nzLg="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">{{'role.name'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <input nz-input [(ngModel)]="role.roleName" name="roleName" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="24" nzLg="8">
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <button nz-button nzType="primary" (click)="query()">{{'button.query'|translate}}</button>
+        </nz-form-control>
+      </div>
+    </div>
+  </form>
+  <nz-table nzSize="small" #userTable [nzData]="listOfMapData" [nzFrontPagination]="false" [nzTotal]="page.total"
+    [nzPageIndex]="page.current" (nzPageIndexChange)="pageIndexChange($event)" [nzShowPagination]=true
+    [nzLoading]="isSpinning">
+    <thead>
+      <tr>
+        <!--角色编码-->
+        <th>{{'role.coding'|translate}}</th>
+        <!--角色名称-->
+        <th>{{'role.name'|translate}}</th>
+        <!--备注-->
+        <th>{{'role.memo'|translate}}</th>
+        <!--创建时间-->
+        <th>{{'role.creation.time'|translate}}</th>
+        <!--最后更新时间-->
+        <th>{{'role.last.update.time'|translate}}</th>
+        <!--操作-->
+        <th>{{'table.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of userTable.data">
+        <td>{{ item.roleCode }}</td>
+        <td>{{ item.roleName }}</td>
+        <td>{{ item.description }}</td>
+        <td>{{ item.createTime }}</td>
+        <td>{{ item.updateTime}}</td>
+        <td>
+          <!-- 修改 -->
+          <a acl [acl-ability]="'role:update'" href="javascript:;" (click)="systemRoleEditComponent.open('修改',item)">{{'table.update'|translate}}</a>
+          <nz-divider acl [acl-ability]="'role:update'" nzType="vertical"></nz-divider>
+          <nz-dropdown [acl]="{ ability: [10, 'role:authorization-view','role:delete'], mode: 'oneOf' }">
+            <!-- 更多 -->
+            <a nz-dropdown> {{'table.More'|translate}} <i nz-icon type="down"></i> </a>
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>
+                <!-- 授权 -->
+                <a href="javascript:;"
+                  (click)="viewUser(item)">{{'View.users'|translate}}</a>
+              </li>
+              <li nz-menu-item acl [acl-ability]="'role:authorization-view'">
+                <!-- 授权 -->
+                <a href="javascript:;"
+                  (click)="systemRoleAuthComponent.open(item)">{{'table.To.grant.authorization'|translate}}</a>
+              </li>
+              <li nz-menu-item acl [acl-ability]="'role:delete'">
+                <!-- 删除 -->
+                <a nz-popconfirm nzTitle="{{'table.Whether.to.delete'|translate}}?" nzOkText="{{'yes'|translate}}"
+                  nzCancelText="{{'no'|translate}}" (nzOnConfirm)="confirmDel(item.id)"
+                  (nzOnCancel)="cancelDel()">{{'table.delete'|translate}}</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<app-system-role-edit #systemRoleEditComponent (afterSave)="getRoles()"></app-system-role-edit>
+<app-system-role-auth #systemRoleAuthComponent></app-system-role-auth>

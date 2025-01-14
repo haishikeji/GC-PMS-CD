@@ -1,0 +1,34 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <!-- 费用编码 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">
+      {{ 'pm.quotation.fee' | translate }}{{ 'contract.code' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        placeholder="{{ 'aoto.create' | translate }}"
+        nz-input
+        formControlName="code"
+        id="code"
+        [(ngModel)]="baseArchivesCost.code"
+        maxlength="3"
+      />
+      <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+        {{ 'placeholder' | translate }}
+        {{ 'pm.quotation.fee' | translate }}{{ 'contract.code' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!-- 费用名称 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">
+      {{ 'pm.quotation.Tag.name' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" [(ngModel)]="baseArchivesCost.name" maxlength="20" />
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        {{ 'placeholder' | translate }}{{ 'pm.quotation.Tag.name' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+</form>

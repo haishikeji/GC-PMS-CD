@@ -1,0 +1,172 @@
+<!-- 基本信息 -->
+<form nz-form>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--项目编码  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'project' | translate }}{{ 'table.thead.code' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- <nz-select style="widows: 100%;" nzShowSearch nzAllowClear formControlName="proId" id="proId"
+            [(ngModel)]="projectManageArchivesa.proId" nzPlaceHolder="请选择">
+            <nz-option *ngFor="let i of proList" [nzValue]="i.id" [nzLabel]="i.code"></nz-option>
+          </nz-select> -->
+          {{ projectManageArchivesa.proCode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--项目名称  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'cost.item.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.proName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--  客户编码-->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'customer.code'| translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.cusCode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--客户名称  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'customer.name'| translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.cusName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--项目总金额  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{
+          'total.amount.of.the.project' | translate
+        }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.totalPrice }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 里程碑类型 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'financial.management.milestoneName' | translate }}
+          {{ 'financial.management.type' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.milestoneType }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 销售经理 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'sales' | translate }}{{ 'manager' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.saleManager }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!--业务员 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'salesman' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- <nz-select [nzMaxTagCount]="3" nzMode="multiple" nzPlaceHolder="请选择" formControlName="saleManIds"
+            id="saleManIds" [(ngModel)]="saleManIds">
+            <nz-option *ngFor="let item of personnelList" [nzLabel]="item.id" [nzValue]="item.name"></nz-option>
+          </nz-select> -->
+          {{ projectManageArchivesa.saleMan }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 实施项目经理 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'implementation' | translate }}{{ 'pm.PM' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.impManager }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!-- 实施顾问 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24"
+          >{{ 'implementation' | translate }}{{ 'consultant' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.impConsultant }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--开发项目经理  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24"
+          >{{ 'development' | translate }}{{ 'pm.PM' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.deManager }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!--开发工程师  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24"
+          >{{ 'customer.name' | translate }}{{ 'engineer' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.deEngineer }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 服务经理 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24"
+          >{{ 'service' | translate }}{{ 'manager' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.seManager }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!-- 服务工程师 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24"
+          >{{ 'service' | translate }}{{ 'engineer' | translate }}</nz-form-label
+        >
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.seEngineer }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

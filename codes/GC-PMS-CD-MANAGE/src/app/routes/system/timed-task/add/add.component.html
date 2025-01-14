@@ -1,0 +1,69 @@
+<form nz-form>
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{'TimedTask.Label.ClassName'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input [(ngModel)]="timedTask.jobClassName" name="jobClassName" nz-input placeholder="{{'TimedTask.PlaceHolder.jobClassName'|translate}}"/>
+      </nz-form-control>
+    </nz-form-item>
+    
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">{{'TimedTask.Label.Parameter'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" >
+        <input [(ngModel)]="timedTask.parameter" name="parameter" nz-input placeholder="{{'TimedTask.PlaceHolder.parameter'|translate}}"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">{{'description'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input [(ngModel)]="timedTask.description" name="description" nz-input />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sex" >{{'state'|translate}}</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-radio-group [(ngModel)]="status" name="status">
+            <label nz-radio nzValue="0">{{'TimedTask.Status.normal'|translate}}</label>
+            <label nz-radio nzValue="1">{{'TimedTask.Status.stoped'|translate}}</label>
+            <label nz-radio nzValue="-1">{{'TimedTask.Status.suspend'|translate}}</label>
+          </nz-radio-group>
+        </nz-form-control>
+      </nz-form-item>
+      <hr style="height: 1px;">
+      <nz-form-item>
+          <nz-form-label  [nzSm]="6" [nzXs]="24">{{'TimedTask.Label.CronExpression'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" hidden>
+            <input [(ngModel)]="timedTask.cronExpression" name="cronExpression" nz-input placeholder="{{'TimedTask.PlaceHolder.cronExpression'|translate}}"/>
+          </nz-form-control>
+        </nz-form-item>
+      <nz-form-item>
+          <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="hours" >{{'TimedTask.Label.CronExpression.Hour'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24" >
+            <nz-select
+            style="width: 100%"
+            [(ngModel)]="currentHours" name="hours"
+            nzMode="multiple"
+            nzPlaceHolder="{{'select.user.role'|translate}}"
+          >
+            <nz-option *ngFor="let item of allHours" nzLabel="{{item.text}}" nzValue="{{item.value}}"></nz-option>
+          </nz-select>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzFor="minutes" >{{'TimedTask.Label.CronExpression.Minute'|translate}}</nz-form-label>
+        <nz-form-control [nzSm]="14" [nzXs]="24">
+          <nz-select
+          style="width: 100%"
+          [(ngModel)]="currentMinutes" name="minutes"
+          nzMode="multiple"
+          nzPlaceHolder="{{'select.user.role'|translate}}"
+        >
+          <nz-option *ngFor="let item of allMinutes" nzLabel="{{item.text}}" nzValue="{{item.value}}"></nz-option>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <div class="footer">
+      <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>{{'button.close'|translate}}</span></button>
+      <button type="button" (click)="save()" class="ant-btn ant-btn-primary"><span>{{'button.save'|translate}}</span></button>
+    </div>
+  </form>
+  

@@ -1,0 +1,44 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <!-- 编码 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'table.thead.code' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="code" id="code" [(ngModel)]="baseArchivesMilestone.code" maxlength="6" />
+      <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+        {{ 'placeholder' | translate }}{{ 'table.thead.code' | translate }
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!-- 名称 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'contract.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" [(ngModel)]="baseArchivesMilestone.name" maxlength="20" />
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        {{ 'placeholder' | translate }}{{ 'contract.name' | translate }
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!-- 类别 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">
+      {{ 'financial.management.category' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        style="widows: 100%;"
+        nzShowSearch
+        nzAllowClear
+        formControlName="typeId"
+        name="typeId"
+        [(ngModel)]="baseArchivesMilestone.typeId"
+        nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+      >
+        <nz-option *ngFor="let i of typeList" [nzValue]="i.value" [nzLabel]="i.text"></nz-option>
+      </nz-select>
+      <nz-form-explain *ngIf="validateForm.get('type')?.dirty && validateForm.get('type')?.errors">
+        {{ 'select.please.choose' | translate }}{{ 'financial.management.category' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+</form>

@@ -1,0 +1,15 @@
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="24">
+    <!-- 角色下的用户 -->
+    <h3>“{{ roleName }}”{{ 'user.of.the.role' | translate }}：</h3>
+  </div>
+</div>
+
+<div nz-row [nzGutter]="24">
+  <ng-container *ngFor="let user of userList; let i = index">
+    <div nz-col [nzSpan]="12">
+      <nz-tag style="margin-bottom: 5px;margin-left: 10%;" [nzColor]="'cyan'">{{ user.realname }}</nz-tag
+      >{{ user.departName }}<br />
+    </div>
+  </ng-container>
+</div>

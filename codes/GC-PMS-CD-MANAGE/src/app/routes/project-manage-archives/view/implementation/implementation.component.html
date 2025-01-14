@@ -1,0 +1,150 @@
+<!-- 商务 -->
+<form nz-form>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户编码 -->
+        <nz-form-label [nzSpan]="8">{{ 'customer.code' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.cusCode }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--客户名称  -->
+        <nz-form-label [nzSpan]="8">{{ 'customer.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.cusName }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 实施项目经理 -->
+        <nz-form-label [nzSpan]="8">{{ 'implementation' | translate }}{{ 'pm.PM' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.impManager }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 实施顾问 -->
+        <nz-form-label [nzSpan]="8">{{ 'implementation' | translate }}{{ 'consultant' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.impConsultant }}</nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+
+<!-- 回款信息 -->
+<nz-card nzTitle="{{ 'receivable' | translate }}{{ 'info' | translate }}" nzSize="small">
+  <nz-table nzBordered nzSize="small" [nzNoResult]="' '" [nzShowPagination]="false">
+    <tbody>
+      <tr>
+        <!-- 实施金额 -->
+        <td>
+          <strong>{{ 'implementation' | translate }}{{ 'their.fees.money' | translate }}</strong>
+        </td>
+        <!-- 第一笔 -->
+        <td>{{ 'the.first' | translate }}</td>
+        <td>{{ remittanceInformation.price1 }}</td>
+        <!--  2-->
+        <td>{{ 'the.second' | translate }}</td>
+        <td>{{ remittanceInformation.price2 }}</td>
+        <!--  3-->
+        <td>{{ 'the.third' | translate }}</td>
+        <td>{{ remittanceInformation.price3 }}</td>
+        <!-- 4 -->
+        <td>{{ 'the.fourth' | translate }}</td>
+        <td>{{ remittanceInformation.price4 }}</td>
+        <!-- 5 -->
+        <td>{{ 'the.fifth' | translate }}</td>
+        <td>{{ remittanceInformation.price5 }}</td>
+      </tr>
+      <tr>
+        <!-- 实际回款 -->
+        <td>
+          <strong>{{ 'actual' | translate }}{{ 'receivable' | translate }}</strong>
+        </td>
+        <td>{{ remittanceInformation.milestone1 }}</td>
+        <td>{{ remittanceInformation.desc1 }}</td>
+        <td>{{ remittanceInformation.milestone2 }}</td>
+        <td>{{ remittanceInformation.desc2 }}</td>
+        <td>{{ remittanceInformation.milestone3 }}</td>
+        <td>{{ remittanceInformation.desc3 }}</td>
+        <td>{{ remittanceInformation.milestone4 }}</td>
+        <td>{{ remittanceInformation.desc4 }}</td>
+        <td>{{ remittanceInformation.milestone5 }}</td>
+        <td>{{ remittanceInformation.desc5 }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+
+<!-- 实施计划 -->
+<nz-card nzTitle="{{ 'implementation' | translate }}{{ 'the.plan' | translate }}" nzSize="small">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        style="padding-top: 5px;"
+        nzSize="small"
+        #expandTable
+        [nzData]="listOfMapData"
+        nzTableLayout="fixed"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+      >
+        <thead>
+          <tr>
+            <th style="width: 8%;"></th>
+            <!-- 编码 -->
+            <th style="width: 5%;">{{ 'table.thead.code' | translate }}</th>
+            <!-- 里程碑 -->
+            <th style="width: 12%;">{{ 'financial.management.milestoneName' | translate }}</th>
+            <!-- 开始时间 -->
+            <th style="width: 10%;">{{ 'contract.start.date' | translate }}</th>
+            <!-- 结束时间 -->
+            <th style="width: 10%;">{{ 'contract.end.date' | translate }}</th>
+            <!--计划人天  -->
+            <th style="width: 10%;">{{ 'the.plan' | translate }}{{ 'person.date' | translate }}</th>
+            <!-- 执行人 -->
+            <th style="width: 20%;">{{ 'executor' | translate }}</th>
+            <!-- 实际人天 -->
+            <th style="width: 10%;">{{ 'actual' | translate }}{{ 'person.date' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of expandTable.data">
+            <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+              <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+                <td
+                  [nzIndentSize]="item.level! * 20"
+                  [nzShowExpand]="!!item.children"
+                  [(nzExpand)]="item.expand"
+                  (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
+                >
+                  *
+                </td>
+                <td>{{ item.muilesCode }}</td>
+                <td>
+                  {{ item.muilesName }}
+                </td>
+                <td>
+                  {{ item.startDate }}
+                </td>
+                <td>
+                  {{ item.endDate }}
+                </td>
+                <td>
+                  {{ item.planTime }}
+                </td>
+                <td>
+                  {{ item.executor }}
+                </td>
+                <td>
+                  {{ item.realTime }}
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

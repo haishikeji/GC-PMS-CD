@@ -1,0 +1,65 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <!-- 客商编码 -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">
+      {{ 'quotation.merchants' | translate }}{{ 'numbering' | translate }}</nz-form-label
+    >
+    <!-- 自动生成 -->
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        placeholder="{{ 'aoto.create' | translate }}"
+        nz-input
+        formControlName="code"
+        id="code"
+        [(ngModel)]="baseCustomerIndustry.code"
+      />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">
+      {{ 'quotation.merchants.name' | translate }}</nz-form-label
+    >
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" [(ngModel)]="baseCustomerIndustry.name" maxlength="20" />
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        {{ 'placeholder' | translate }}{{ 'quotation.merchants.name' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 是否启用 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{ 'is.status' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="status"
+        name="status"
+        nzCheckedChildren="{{ 'yes' | translate }}"
+        nzUnCheckedChildren="{{ 'no' | translate }}"
+      ></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 序号 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzRequired nzFor="sort">
+      {{ 'milestone.serial.number' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        formControlName="sort"
+        id="sort"
+        [(ngModel)]="baseCustomerIndustry.sort"
+        name="sort"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'milestone.serial.number' | translate }}"
+      />
+      <!-- 序号未填报错 -->
+      <nz-form-explain *ngIf="validateForm.get('sort')?.dirty && validateForm.get('sort')?.errors">
+        {{ 'placeholder' | translate }}{{ 'milestone.serial.number' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+</form>

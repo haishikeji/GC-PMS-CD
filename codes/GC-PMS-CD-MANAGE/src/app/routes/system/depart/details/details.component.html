@@ -1,0 +1,122 @@
+<nz-spin [nzSpinning]="isLoading">
+  <form nz-form>
+    <!-- 人员编码 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'personnel.code' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        {{ personnel.code }}
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 人员名称 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'personnel.name' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        {{ personnel.name }}
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 英文名称 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'english.name' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        {{ personnel.enName }}
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 性别 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'sex' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <ng-container *ngIf="personnel.gender === '0'">
+          <!-- 男 -->
+          {{ 'male' | translate }}
+        </ng-container>
+        <ng-container *ngIf="personnel.gender === '1'">
+          <!-- 女 -->
+          {{ 'female' | translate }}
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 所属公司 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'company' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <ng-container *ngFor="let data of company">
+          <ng-container *ngIf="data.id === personnel.pkOrg">
+            {{ data.departName }}
+          </ng-container>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 手机 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'phone' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        {{ personnel.mobile }}
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 电话 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'telephone' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        {{ personnel.tel }}
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 部门 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'depart' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <ng-container *ngFor="let depart of departmentList">
+          <ng-container *ngIf="depart.id === personnel.pkDepart">
+            {{ depart.departName }}
+          </ng-container>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 人员状态 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'personnel.state' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <ng-container *ngFor="let person of personStatus">
+          <ng-container *ngIf="person.value === personnel.status">
+            {{ person.text }}
+          </ng-container>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 邮箱 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'email' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        {{ personnel.email }}
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 直接领导 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'personnel.manager' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <ng-container *ngFor="let management of managementList">
+          <ng-container *ngIf="management.id === personnel.pkPersonnel">
+            {{ management.name }}
+          </ng-container>
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- 是否停用 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'whether.using.or.not' | translate }} </nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <ng-container *ngIf="personnel.enable === '0'">
+          {{ 'no' | translate }}
+        </ng-container>
+        <ng-container *ngIf="personnel.enable === '1'">
+          <!-- 是 -->
+          {{ 'yes' | translate }}
+        </ng-container>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-spin>
+<div class="footer">
+  <button nz-button (click)="close()">
+    <span>{{ 'button.close' | translate }}</span>
+  </button>
+</div>

@@ -1,0 +1,40 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <nz-tabset nzTabPosition="left">
+    <!-- 基本信息 -->
+    <nz-tab nzTitle="{{'essential.information'|translate}}">
+      <app-project-manage-archives-view-essential-information #essentialInformation >
+
+      </app-project-manage-archives-view-essential-information>
+    </nz-tab>
+    <!-- 商务 -->
+    <nz-tab nzTitle="{{'business.affairs'|translate}}">
+      <app-project-manage-archives-view-business-affairs #businessAffairs >
+
+      </app-project-manage-archives-view-business-affairs>
+    </nz-tab>
+    <!-- 实施 -->
+    <nz-tab nzTitle="{{'implementation'|translate}}">
+      <app-project-manage-archives-view-implementation #implementation>
+
+      </app-project-manage-archives-view-implementation>
+    </nz-tab>
+    <!-- 开发 -->
+    <nz-tab nzTitle="{{'development'|translate}}">
+      <app-project-manage-archives-view-development #development>
+
+      </app-project-manage-archives-view-development>
+    </nz-tab>
+    <!-- 服务 -->
+    <nz-tab nzTitle="{{'service'|translate}}">
+      <app-project-manage-archives-view-serviceta #serviceta>
+
+      </app-project-manage-archives-view-serviceta>
+    </nz-tab>
+  </nz-tabset>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 关闭按钮 -->
+  <button nz-button (click)="close()"
+    ><span>{{'pm.quotation.cancel'|translate}}</span></button>
+</div>

@@ -1,0 +1,58 @@
+<!-- nzAlign="center" whereCustomer-->
+
+<form nz-form>
+  <!-- 查询条件 -->
+  <div nz-row nzGutter="24">
+    <div nz-col nzMd="24" nzLg="3">
+      <nz-form-label>{{ 'customer.abbreviation' | translate }}</nz-form-label>
+    </div>
+    <div nz-col nzMd="24" nzLg="6">
+      <input nz-input [(ngModel)]="customer.abbreviation" name="abbreviation" />
+    </div>
+    <div nz-col nzMd="24" nzLg="3">
+      <nz-form-label>{{ 'customer.name' | translate }}</nz-form-label>
+    </div>
+    <div nz-col nzMd="24" nzLg="6">
+      <input nz-input [(ngModel)]="customer.name" name="name" />
+    </div>
+    <div nz-col nzMd="24" nzLg="6">
+      <button (click)="query()" nz-button nzType="primary">{{ 'button.query' | translate }}</button>
+      <!-- <button nz-button nzType="primary">{{ 'button.reset' | translate }}</button> -->
+    </div>
+  </div>
+</form>
+
+<!--   nzAlign   nzBordered -->
+<nz-table
+  #rowSelectTable
+  nzSize="small"
+  class="tableTdPadding"
+  [nzData]="selectData"
+  [nzTotal]="page.total"
+  [nzPageIndex]="page.current"
+  [nzFrontPagination]="false"
+  (nzPageIndexChange)="pageIndexChange($event)"
+  [nzLoading]="isSpinning"
+  (nzCurrentPageDataChange)="currentPageDataChange($event)"
+>
+  <thead>
+    <tr>
+      <th></th>
+      <th>{{ 'customer.code' | translate }}</th>
+      <th>{{ 'customer.name' | translate }}</th>
+      <th>{{ 'customer.shortName' | translate }}</th>
+      <th>{{ 'customer.abbreviation' | translate }}</th>
+      <th>{{ 'customer.contacts.name' | translate }}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of rowSelectTable.data">
+      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <td>{{ data.code }}</td>
+      <td>{{ data.name }}</td>
+      <td>{{ data.shortName }}</td>
+      <td>{{ data.abbreviation }}</td>
+      <td>{{ data.contactPsn }}</td>
+    </tr>
+  </tbody>
+</nz-table>

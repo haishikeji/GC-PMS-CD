@@ -1,0 +1,216 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">
+            {{ 'documents.code' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 自动生成 -->
+            <input
+              placeholder="{{ 'aoto.create' | translate }}"
+              nz-input
+              formControlName="billcode"
+              id="billcode"
+              [(ngModel)]="proWorkLogic.billcode"
+              [disabled]="true"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              formControlName="proId"
+              id="proId"
+              [(ngModel)]="proWorkLogic.proId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              (ngModelChange)="proChange($event)"
+            >
+              <nz-option *ngFor="let i of proList" [nzValue]="i.id" [nzLabel]="i.proName"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('proId')?.dirty && validateForm.get('proId')?.errors">
+              <!-- 请选择项目名称 -->
+              {{ 'select.please.choose' | translate }}{{ 'cost.item.name' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>
+            {{ 'report.person' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-tree-select
+              style="width: 100%"
+              [nzNodes]="personnelList"
+              nzShowSearch
+              [nzMultiple]="false"
+              formControlName="reporterId"
+              id="reporterId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              [(ngModel)]="proWorkLogic.reporterId"
+              [nzMaxTagCount]="3"
+              [nzAllowClear]="true"
+            >
+            </nz-tree-select>
+            <nz-form-explain *ngIf="validateForm.get('proId')?.dirty && validateForm.get('proId')?.errors">
+              <!--     请选择汇报人 -->
+              {{ 'select.please.choose' | translate }}{{ 'report.person' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!--  开始时间-->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'contract.start.date' | translate }}</nz-form-label>
+          <!-- <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-range-picker [nzShowTime]="true" formControlName="date" id="date" [(ngModel)]="date"></nz-range-picker>
+          </nz-form-control> -->
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-date-picker
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              formControlName="startDate"
+              id="startDate"
+              [(ngModel)]="proWorkLogic.startDate"
+              [nzDisabledDate]="disabledDate"
+            ></nz-date-picker>
+            <nz-form-explain *ngIf="validateForm.get('startDate')?.dirty && validateForm.get('startDate')?.errors">
+              <!-- 请选择开始时间 -->
+              {{ 'select.please.choose' | translate }}{{ 'contract.start.date' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 结束时间 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'contract.end.date' | translate }}</nz-form-label>
+          <!-- <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-range-picker [nzShowTime]="true" formControlName="date" id="date" [(ngModel)]="date"></nz-range-picker>
+          </nz-form-control> -->
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-date-picker
+              nzShowTime
+              nzFormat="yyyy-MM-dd HH:mm:ss"
+              formControlName="endDate"
+              id="endDate"
+              [(ngModel)]="proWorkLogic.endDate"
+              [nzDisabledDate]="disabledDate2"
+            ></nz-date-picker>
+            <nz-form-explain *ngIf="validateForm.get('endDate')?.dirty && validateForm.get('endDate')?.errors">
+              <!-- 请选择结束时间 -->
+              {{ 'select.please.choose' | translate }}{{ 'contract.end.date' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <!-- 新增按钮 -->
+        <button (click)="addRow()" nz-button nzType="primary">{{ 'button.add' | translate }}</button>
+      </div>
+    </div>
+
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+          style="padding-top: 5px;"
+          nzSize="small"
+          class="tableTdPadding"
+          #basicTable
+          [nzData]="itemList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <!--  序号-->
+              <th nzAlign="center" style="width: 5%;">{{ 'pm.contract.serial.number' | translate }}</th>
+              <!-- 里程碑 -->
+              <th style="width: 30%;">{{ 'financial.management.milestoneName' | translate }}</th>
+              <!-- 工作内容 -->
+              <th style="width: 50%;">{{ 'work.content' | translate }}</th>
+              <!--工作用时  -->
+              <th style="width: 5%;">{{ 'work.available' | translate }}</th>
+              <!-- 操作 -->
+              <th style="width: 10%;">{{ 'table.operation' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td nzAlign="center">{{ i + 1 }}</td>
+              <td>
+                <nz-tree-select
+                  style="width: 100%"
+                  [nzNodes]="mieList"
+                  nzShowSearch
+                  [nzMultiple]="false"
+                  nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                  [(ngModel)]="data.proArchivesId"
+                  [nzMaxTagCount]="3"
+                  [nzAllowClear]="true"
+                  (ngModelChange)="proArchivesIdChange(data)"
+                >
+                </nz-tree-select>
+              </td>
+              <td>
+                <textarea rows="1" nz-input [(ngModel)]="data.content"></textarea>
+              </td>
+              <td style="width: 10%;">
+                <nz-input-number [(ngModel)]="data.duration" [nzMin]="0" [nzStep]="1" [nzMax]="100"></nz-input-number>
+              </td>
+              <td>
+                <!-- 是否删除 -->
+                <a
+                  nz-popconfirm
+                  nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+                  (nzOnConfirm)="deleteRow(data.sort)"
+                >
+                  {{ 'table.delete' | translate }}
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 填写人 -->
+  <strong>{{ 'fill.person' | translate }}:</strong>{{ proWorkLogic.currentUser }}
+
+  <!--  填写时间 -->
+  <strong>{{ 'fill.time' | translate }}:</strong>{{ proWorkLogic.createTime }}
+  <!-- 关闭按钮 -->
+  <a
+    nz-popconfirm
+    nzTitle="{{ 'pm.contract.contract.add.button.cancel' | translate }}"
+    (nzOnConfirm)="close()"
+    style="padding-right: 8px"
+  >
+    <button nz-button>{{ 'pm.quotation.cancel' | translate }}</button>
+  </a>
+  <!-- 保存按钮 -->
+  <button nz-button nzType="primary" class="ant-btn ant-btn-primary" (click)="submitForm()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.finish' | translate }}</span>
+  </button>
+</div>

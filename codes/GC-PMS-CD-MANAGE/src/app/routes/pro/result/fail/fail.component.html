@@ -1,0 +1,37 @@
+<page-header></page-header>
+<nz-card [nzBordered]="false">
+  <!-- 提交失败 请核对并修改以下信息后，再重新提交-->
+  <result
+    type="error"
+    [title]="'{{ 'submit.fail' | translate }}'"
+    description="{{ 'check.modify.following.information.before.resubmitting' | translate }}"
+    [extra]="resultExtra"
+  >
+    <ng-template #resultExtra>
+      <!-- 您提交的内容有如下错误： -->
+      <div class="mb-md text-lg">{{ 'your.submission.has.following.error' | translate }}：</div>
+      <div class="mb-md">
+        <i nz-icon type="close-circle" class="text-error pr-sm"></i>
+        <!-- 您的账户已被冻结 -->
+        {{ 'your.account.frozen' | translate }}
+        <a class="ml-md">
+          <!--立即解冻  -->
+          {{ 'thaw.immediately' | translate }}
+          <i nz-icon type="right" class="pl-sm"></i>
+        </a>
+      </div>
+      <div>
+        <i nz-icon type="close-circle" class="text-error pr-sm"></i>
+        <!--  您的账户还不具备申请资格-->
+        {{ 'your.account.eligible.for.application.not.yet' | translate }}
+        <a class="ml-md">
+          <!-- 立即升级 -->
+          {{ 'upgrade.immediately' | translate }}
+          <i nz-icon type="right" class="pl-sm"></i>
+        </a>
+      </div>
+    </ng-template>
+    <!--返回修改  -->
+    <button nz-button [nzType]="'primary'">{{ 'return.modify' | translate }}</button>
+  </result>
+</nz-card>

@@ -1,0 +1,118 @@
+<!-- 基本信息 -->
+<form nz-form>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 单据编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'documents.code' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.billcode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'project.code' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.proCode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目名称 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'cost.item.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.proName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'customer.code' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.cusCode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户名称 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'customer.name' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.cusName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!--项目里程碑  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'project' | translate }}{{ 'financial.management.milestoneName' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.mileName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 里程碑确认 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'financial.management.milestoneName' | translate }}{{ 'ok' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- 是 -->
+          <nz-tag [nzColor]="'green'" *ngIf="proWorkMilestone.mileConfirm === 1">
+            {{ 'yes' | translate }}
+          </nz-tag>
+          <!-- 否 -->
+          <nz-tag [nzColor]="'green'" *ngIf="proWorkMilestone.mileConfirm === 0">
+            {{ 'no' | translate }}
+          </nz-tag>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 确认时间 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'ok' | translate }}{{ 'date' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.confirmTime }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<!-- 项目成果 -->
+<nz-card nzTitle="{{ 'project.results' | translate }}">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-upload nzAction="sys/common/uploadFile" [nzFileList]="fileList" nzMultiple="true">
+        <!-- <button nz-button><i nz-icon nzType="upload"></i>上传</button> -->
+      </nz-upload>
+    </div>
+  </div>
+</nz-card>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 填写人 -->
+  <strong>{{ 'fill.person' | translate }}:</strong>{{ proWorkMilestone.currentUser }}
+
+  <!-- 填写时间 -->
+  <strong>{{ 'fill.time' | translate }}:</strong>{{ proWorkMilestone.createTime }}
+  <!-- 关闭按钮 -->
+  <button nz-button (click)="close()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.quotation.cancel' | translate }}</span>
+  </button>
+</div>

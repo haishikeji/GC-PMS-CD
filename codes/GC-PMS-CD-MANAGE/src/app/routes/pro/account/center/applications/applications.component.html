@@ -1,0 +1,61 @@
+<nz-list
+  [nzLoading]="listLoading"
+  [nzDataSource]="list"
+  [nzRenderItem]="item"
+  [nzGrid]="{ gutter: 24, xxl: 8, xl: 12, lg: 12, md: 12, sm: 12, xs: 24 }"
+>
+  <ng-template #item let-item>
+    <nz-list-item>
+      <nz-card nzHoverable [nzActions]="[op1, op2, op3, op4]">
+        <ng-template #op1>
+          <!-- 下载 -->
+          <nz-tooltip [nzTitle]="'{{ 'pm.project.archives.file.down.load' | translate }}'">
+            <i nz-tooltip nz-icon type="download"></i>
+          </nz-tooltip>
+        </ng-template>
+        <ng-template #op2>
+          <!-- 编辑 -->
+          <nz-tooltip [nzTitle]="'{{ 'edit' | translate }}'">
+            <i nz-tooltip nz-icon type="edit"></i>
+          </nz-tooltip>
+        </ng-template>
+        <ng-template #op3>
+          <!-- 分享 -->
+          <nz-tooltip [nzTitle]="'{{ 'share' | translate }}'">
+            <i nz-tooltip nz-icon type="share-alt"></i>
+          </nz-tooltip>
+        </ng-template>
+        <ng-template #op4>
+          <nz-dropdown [nzPlacement]="'bottomLeft'">
+            <i nz-dropdown nz-icon type="ellipsis"></i>
+            <ul nz-menu>
+              <li nz-menu-item>1st menu item</li>
+              <li nz-menu-item>2st menu item</li>
+              <li nz-menu-item>3st menu item</li>
+            </ul>
+          </nz-dropdown>
+        </ng-template>
+        <nz-card-meta [nzTitle]="item.title" [nzAvatar]="nzAvatar">
+          <ng-template #nzAvatar>
+            <nz-avatar nzSize="small" [nzSrc]="item.avatar"></nz-avatar>
+          </ng-template>
+        </nz-card-meta>
+        <div class="card-info d-flex">
+          <div>
+            <!-- 活跃用户 -->
+            <p>{{ 'active.users' | translate }}</p>
+            <p>
+              {{ item.activeUser }}
+              <em class="wan">万</em>
+            </p>
+          </div>
+          <div>
+            <!-- 新增用户 -->
+            <p>{{ 'new.users' | translate }}</p>
+            <p>{{ item.newUser | number: '3.' }}</p>
+          </div>
+        </div>
+      </nz-card>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

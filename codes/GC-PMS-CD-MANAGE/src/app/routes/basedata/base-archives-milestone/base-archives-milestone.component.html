@@ -1,0 +1,107 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- 新增一级 -->
+    <button (click)="add()" nz-button nzType="primary" acl [acl-ability]="'base-archives-milestone:add'">
+      {{ 'button.add' | translate }}{{ 'leve.one' | translate }}
+    </button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <!-- 查询条件 -->
+  <form nz-form>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 类别 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>
+            {{ 'financial.management.category' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              name="typeId"
+              [(ngModel)]="baseArchivesMilestone.typeId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            >
+              <nz-option *ngFor="let i of typeList" [nzValue]="i.value" [nzLabel]="i.text"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="2" [nzXs]="24" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 查询 -->
+            <button nzType="primary" (click)="query()" nz-button>
+              <span>{{ 'button.query' | translate }}</span>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <!-- 数据表格 -->
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        nzSize="small"
+        #expandTable
+        [nzData]="listOfMapData"
+        nzTableLayout="fixed"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+      >
+        <thead>
+          <tr>
+            <!-- 编码 -->
+            <th>{{ 'table.thead.code' | translate }}</th>
+            <!-- 名称 -->
+            <th>{{ 'contract.name' | translate }}</th>
+            <!-- 类别 -->
+            <th>{{ 'financial.management.category' | translate }}</th>
+            <!-- 操作 -->
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of expandTable.data">
+            <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+              <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+                <td
+                  [nzIndentSize]="item.level! * 20"
+                  [nzShowExpand]="!!item.children"
+                  [(nzExpand)]="item.expand"
+                  (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
+                >
+                  {{ item.code }}
+                </td>
+                <td>{{ item.name }}</td>
+                <td>{{ item.type }}</td>
+                <td>
+                  <!-- 新增子级 -->
+                  <a (click)="addChild(item)" acl [acl-ability]="'base-archives-milestone:add'">
+                    {{ 'add.child' | translate }}
+                  </a>
+
+                  <nz-divider nzType="vertical" acl [acl-ability]="'base-archives-milestone:add'"></nz-divider>
+                  <!-- 修改 -->
+                  <a (click)="update(item)" acl [acl-ability]="'base-archives-milestone:update'">
+                    {{ 'table.update' | translate }}
+                  </a>
+                  <nz-divider nzType="vertical" acl [acl-ability]="'base-archives-milestone:update'"></nz-divider>
+                  <!-- 删除 -->
+                  <a (click)="delete(item.id)" acl [acl-ability]="'base-archives-milestone:delete'">
+                    {{ 'table.delete' | translate }}</a
+                  >
+                </td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

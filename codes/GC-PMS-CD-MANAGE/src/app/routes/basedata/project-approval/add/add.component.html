@@ -1,0 +1,43 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <!-- 项目编码 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'project.code' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <!-- 自动生成 -->
+      <input
+        placeholder="{{ 'aoto.create' | translate }}"
+        nz-input
+        formControlName="code"
+        id="code"
+        [(ngModel)]="baseArchivesProjectApproval.code"
+      />
+      <!-- <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+        请输入项目编码
+      </nz-form-explain> -->
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!-- 项目名称 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'cost.item.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" [(ngModel)]="baseArchivesProjectApproval.name" maxlength="20" />
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        <!-- 请输入项目名称 -->
+        {{ 'placeholder' | translate }}{{ 'cost.item.name' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!--是否启用  -->
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{ 'is.status' | translate }} </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch
+        [ngModelOptions]="{ standalone: true }"
+        [(ngModel)]="status"
+        name="status"
+        nzCheckedChildren="{{ 'yes' | translate }}"
+        nzUnCheckedChildren="{{ 'no' | translate }}"
+      ></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

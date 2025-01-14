@@ -1,0 +1,83 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl> </ng-template>
+</page-header>
+
+<nz-card>
+  <!-- 查询条件 -->
+  <div nz-row [nzGutter]="{ xs: 12, sm: 15, md: 29, lg: 36, xl: 40 }">
+    <!-- 标题 -->
+    <div nz-col nzXs="24" nzSm="3" nzLg="2" [nzPush]="1">
+      <nz-form-label>{{ 'title' | translate }}</nz-form-label>
+    </div>
+    <div nz-col nzXs="24" nzSm="4" nzLg="6">
+      <input nz-input [(ngModel)]="sysAnnouncement.titile" />
+    </div>
+
+    <!-- 发布人 -->
+    <div nz-col nzXs="24" nzSm="3" nzLg="2">
+      <nz-form-label>{{ 'issuer' | translate }}</nz-form-label>
+    </div>
+    <div nz-col nzXs="24" nzSm="4" nzLg="6">
+      <input nz-input [(ngModel)]="sysAnnouncement.sender" />
+    </div>
+    <!-- 查询 -->
+    <div nz-col nzXs="24" nzSm="3" nzLg="4">
+      <button nz-button (click)="query()" nzType="primary">{{ 'milestone.search' | translate }}</button>
+    </div>
+  </div>
+
+  <nz-table
+    nzSize="small"
+    #nzTable
+    [nzData]="listOfMapData"
+    [nzFrontPagination]="false"
+    [nzTotal]="page.total"
+    [nzPageIndex]="page.current"
+    (nzPageIndexChange)="pageIndexChange($event)"
+    [nzLoading]="isLoading"
+  >
+    <thead>
+      <tr>
+        <!-- 标题 -->
+        <th>{{ 'title' | translate }}</th>
+        <!-- 消息内容 -->
+        <th>{{ 'message.type' | translate }}</th>
+        <!-- 发布人 -->
+        <th>{{ 'issuer' | translate }}</th>
+        <!-- 发布时间 -->
+        <th>{{ 'release.time' | translate }}</th>
+        <!-- 阅读状态 -->
+        <th>{{ 'Reading.state' | translate }}</th>
+        <!-- 操作 -->
+        <th>{{ 'table.operation' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody *ngFor="let data of nzTable.data">
+      <tr>
+        <!-- 标题 -->
+        <td>{{ data.titile }}</td>
+        <!-- 内容 -->
+        <td>{{ data.msgContent }}</td>
+        <!-- 发布人 -->
+        <td>{{ data.sender }}</td>
+        <!-- 发布时间 -->
+        <td>{{ data.createTime }}</td>
+        <!-- 优先级 -->
+        <td>
+          <!-- <nz-tag [nzColor]="'data.color'">{{ data.priority }}</nz-tag> -->
+          <nz-tag *ngIf="data.readFlag === '0'" [nzColor]="'red'">{{ 'Unread' | translate }}</nz-tag>
+          <nz-tag *ngIf="data.readFlag === '1'" [nzColor]="'lime'">{{ 'Already.read' | translate }}</nz-tag>
+        </td>
+        <!-- 操作 -->
+        <td>
+          <a (click)="check(data, modal)">
+            {{ 'check' | translate }}
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<ng-template #modal>
+  <button nz-button nzType="primary" (click)="close()">{{ 'determine' | translate }}</button>
+</ng-template>

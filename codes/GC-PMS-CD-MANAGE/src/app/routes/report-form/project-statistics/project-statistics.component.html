@@ -1,0 +1,171 @@
+<!-- 项目成本核算表 -->
+<nz-card>
+  <form nz-form>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'project.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="proArchivesCode" [(ngModel)]="projectStatisticsWhere.proArchivesCode" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">
+            {{'cost.item.name' | translate}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="proArchivesName" [(ngModel)]="projectStatisticsWhere.proArchivesName" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="2" [nzXs]="24" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 查询 -->
+            <button nzType="primary" (click)="query()" nz-button>
+              <span>{{ 'button.query' | translate }}</span>
+            </button>
+            <button nzType="primary" (click)="export()" nz-button>
+              <!-- 导出 -->
+              <span>{{ 'financial.management.export' | translate }}</span>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <!-- 表格 -->
+  <!-- style="height:500px;overflow-y:scroll;" -->
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        nzSize="small"
+        [nzScroll]="{ x: '2220px', y: '550px' }"
+        [nzData]="listOfData"
+        #basicTable
+        nzBordered
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+        [nzLoading]="isSpinning"
+      >
+        <thead>
+          <!-- <tr>
+            <th rowSpan="2" nzWidth="170px">项目编码</th>
+            <th rowSpan="2" nzWidth="150px">项目名称</th>
+            <th colSpan="5">收入</th>
+            <th colSpan="5">付款</th>
+            <th rowSpan="2" nzWidth="100px">应税合计</th>
+            <th rowSpan="2" nzWidth="100px">税后合计</th>
+            <th colSpan="6">内部成本</th>
+            <th rowSpan="2" nzWidth="100px">毛利</th>
+          </tr> -->
+          <tr>
+            <!-- 项目编码 -->
+            <th rowSpan="2" nzWidth="170px">{{ 'project.code' | translate }}</th>
+
+            <!--项目名称  -->
+            <th rowSpan="2" nzWidth="150px">{{'cost.item.name' | translate}}</th>
+
+            <!-- 产品 -->
+            <th nzWidth="100px">{{ 'product' | translate }}</th>
+
+            <!-- 实施 -->
+            <th nzWidth="100px">{{ 'implementation' | translate }}</th>
+
+            <!-- 开发 -->
+            <th nzWidth="100px">{{ 'development' | translate }}</th>
+
+            <!-- 服务 -->
+            <th nzWidth="100px">{{ 'service' | translate }}</th>
+
+            <!-- 其他 -->
+            <th nzWidth="100px">{{ 'pm.quotation.other' | translate }}</th>
+
+            <!--产品  -->
+            <th nzWidth="100px">{{ 'product' | translate }}</th>
+
+            <!-- 实施 -->
+            <th nzWidth="100px">{{ 'implementation' | translate }}</th>
+
+            <!-- 开发 -->
+            <th nzWidth="100px">{{ 'development' | translate }}</th>
+
+            <!--服务  -->
+            <th nzWidth="100px">{{ 'service' | translate }}</th>
+
+            <!-- 其他 -->
+            <th nzWidth="100px">{{ 'pm.quotation.other' | translate }}</th>
+
+            <!--  应税合计-->
+            <th rowSpan="2" nzWidth="100px">{{ 'taxable.amount' | translate }}</th>
+
+            <!-- 税后合计 -->
+            <th rowSpan="2" nzWidth="100px">{{ 'after.tax.total' | translate }}</th>
+
+            <!-- 预留 -->
+            <th nzWidth="100px">{{ 'reserved' | translate }}</th>
+
+            <!-- 工资 -->
+            <th nzWidth="100px">{{ 'wage' | translate }}</th>
+
+            <!-- 奖金 -->
+            <th nzWidth="100px">{{ 'bonus' | translate }}</th>
+
+            <!-- 费用 -->
+            <th nzWidth="100px">{{ 'pm.quotation.fee' | translate }}</th>
+
+            <!-- 销售提成 -->
+            <th nzWidth="100px">{{ 'sales' | translate }}{{ 'commission' | translate }}</th>
+
+            <!-- 公摊费用 -->
+            <th nzWidth="100px">{{ 'equally.shared.costs' | translate }}</th>
+
+            <!-- 毛利 -->
+            <th rowSpan="2" nzWidth="100px">{{ 'Gross.profit' | translate }}</th>
+          </tr>
+          <tr>
+            <!-- 收入 -->
+            <th colSpan="5">{{ 'income' | translate }}</th>
+
+            <!-- 付款 -->
+            <th colSpan="5">{{ 'payFor' | translate }}</th>
+
+            <!-- 内部成本 -->
+            <th colSpan="6">{{ 'internal.cost' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.proCode }}</td>
+            <td>{{ data.proName }}</td>
+            <!-- <td>{{ data.cusName }}</td> -->
+            <td>{{ data.proIncome }}</td>
+            <td>{{ data.imIncome }}</td>
+            <td>{{ data.deIncome }}</td>
+            <td>{{ data.seIncome }}</td>
+            <td>{{ data.otherIncome }}</td>
+            <td>{{ data.proPayment }}</td>
+            <td>{{ data.imPayment }}</td>
+            <td>{{ data.dePayment }}</td>
+            <td>{{ data.sePayment }}</td>
+            <td>{{ data.otherPayment }}</td>
+            <td>{{ data.totalTax }}</td>
+            <td>{{ data.totalAfterTax }}</td>
+            <td>{{ data.reserve }}</td>
+            <td>{{ data.salary }}</td>
+            <td>{{ data.award }}</td>
+            <td>{{ data.cost }}</td>
+            <td>{{ data.comSales }}</td>
+            <td>{{ data.exShared }}</td>
+            <td>{{ data.groProfit }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

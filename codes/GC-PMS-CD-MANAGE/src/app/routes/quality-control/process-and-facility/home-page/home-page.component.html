@@ -1,0 +1,70 @@
+<nz-card>
+  <div nz-row [nzGutter]="{xs:10,sm:25,md:39,lg: 36, xl: 40}">
+    <div nz-col nzXs="24" nzSm="4" nzLg="4">
+      <!-- 质量控制单号 -->
+      <nz-form-label>{{'financial.management.quality.control.sheet.number' | translate}}</nz-form-label>
+    </div>
+    <div nz-col nzXs="24" nzSm="5" nzLg="5">
+      <input nz-input />
+    </div>
+    <div class="backGauge" nz-col nzXs="24" nzSm="4" nzLg="4">
+      <!-- 合同号 -->
+      <nz-form-label>{{'pm.archives.contract.number' | translate}}</nz-form-label>
+    </div>
+    <div nz-col nzXs="24" nzSm="5" nzLg="5">
+      <input nz-input />
+    </div>
+    <div nz-col nzXs="24" nzSm="3" nzLg="5">
+      <!-- 查询 -->
+      <button nz-button nzType="primary">{{'contract.index.serach'|translate}}</button>
+    </div>
+  </div>
+  <nz-table nzSize="small" #rowSelectionTable [nzData]="listOfAllData" [nzLoading]="isLoading" nzShowSizeChanger="false"
+    (nzCurrentPageDataChange)="currentPageDataChange($event)" [nzFrontPagination]="false">
+    <thead>
+      <tr>
+        <th nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+          (nzCheckedChange)="checkAll($event)" [nzIndeterminate]="isIndeterminate"></th>
+        <!-- 合同号 -->
+        <th nzAlign="center">{{'pm.archives.contract.number' | translate}}</th>
+        <!-- 质量保证单号 -->
+        <th nzAlign="center">{{'financial.management.quality.assurance.form.number' | translate}}</th>
+        <!-- 质量保证单日期 -->
+        <th nzAlign="center">{{'financial.management.quality.assurance.sheet.date' | translate}}</th>
+        <!-- 类型 -->
+        <th nzAlign="center">{{'financial.management.type' | translate}}</th>
+        <!-- 提交日期 -->
+        <th nzAlign="center">{{'financial.management.submission.date' | translate}}</th>
+        <!-- 操作 -->
+        <th nzAlign="center">{{'contract.index.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of rowSelectionTable.data">
+        <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]" (nzCheckedChange)="refreshStatus()"></td>
+        <td nzAlign="center">{{ data.contractNumber }}</td>
+        <td nzAlign="center">{{data.qualityControlSheetNumber}}</td>
+        <td nzAlign="center">{{ data.qualityControlSheetDate }}</td>
+        <td nzAlign="center">{{data.type}}</td>
+        <td nzAlign="center">{{data.submissionDate}}</td>
+        <td nzAlign="center">
+          <a>{{'contract.index.details'|translate}}</a>
+          <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+          <nz-dropdown>
+            <a nz-dropdown>{{'pm.quotation.more' | translate}}<i nz-icon type="down"></i> </a>
+            <ul nz-menu nzSelectable>
+              <li nz-menu-item>
+                <a href="javascript:void(0);">{{'table.update' | translate}}</a>
+              </li>
+              <li nz-menu-item>
+                <a nz-popconfirm nzTitle="{{'hospital.menu.item.title' | translate}}"
+                  nzOkText="{{'hospital.menu.yes' | translate}}"
+                  nzCancelText="{{'hospital.menu.no' | translate}}">{{'pm.quotation.delete' | translate}}</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>

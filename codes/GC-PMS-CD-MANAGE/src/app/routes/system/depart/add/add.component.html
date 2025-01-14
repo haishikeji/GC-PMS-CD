@@ -1,0 +1,100 @@
+<form nz-form>
+  <table>
+    <th style="width: 600px;"></th>
+  </table>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{ 'depart.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="depart.departName"
+        name="departName"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'depart.name' | translate }}"
+        maxlength="10"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item *ngIf="isOne == 2">
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'depart.prant' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        [nzDisabled]="flase"
+        nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+        [(ngModel)]="depart.parentId"
+        name="parentId"
+      >
+        <ng-container *ngFor="let de of listDepart">
+          <!-- <ng-container *ngIf="depart.parentId==de.id"> -->
+          <nz-option nzLabel="{{ de.departName }}" nzValue="{{ de.id }}"></nz-option>
+          <!-- </ng-container> -->
+          <!-- <ng-container *ngIf="depart.parentId!=de.id">
+            <nz-option nzLabel="{{'nothing'|translate}}" nzValue=""></nz-option>
+          </ng-container> -->
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'depart.sort' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-input-number [(ngModel)]="depart.departOrder" name="departOrder" [nzMin]="0" [nzStep]="1"> </nz-input-number>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'depart.telephone' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="depart.mobile"
+        name="mobile"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'depart.telephone' | translate }}"
+        maxlength="20"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'depart.fax' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="depart.fix" name="fix" nz-input maxlength="20" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{ 'depart.person.in.charge' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzAllowClear
+          nzPlaceHolder="Select a person"
+          [(ngModel)]="depart.pkPersonnel"
+          name="pkPersonnel"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue=""></nz-option>
+          <ng-container *ngFor="let per of listPersonnel">
+            <nz-option nzLabel="{{ per.name }}" nzValue="{{ per.id }}"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'address' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="depart.address" name="address" nz-input maxlength="100" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'memo' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <textarea [(ngModel)]="depart.memo" name="memo" nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;">
+      <span>{{ 'button.close' | translate }}</span>
+    </button>
+    <button type="button" (click)="save()" class="ant-btn ant-btn-primary">
+      <span>{{ 'button.save' | translate }}</span>
+    </button>
+  </div>
+</form>

@@ -1,0 +1,33 @@
+<nz-drawer
+    [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzMaskClosable]="true"
+    [nzWidth]="600"
+    [nzVisible]="visible"
+    nzTitle="{{title}}{{'character'|translate}}"
+    (nzOnClose)="close()"
+  >
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roleCode" nzRequired>{{'role.coding'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input [disabled]="true" placeholder="{{'automatic.generated'|translate}}" nz-input [(ngModel)]="role.roleCode" id="roleCode" name="roleCode"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="roleName" nzRequired>{{'role.name'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [(ngModel)]="role.roleName" id="roleName" name="roleName" maxlength=20/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="description">{{'role.memo'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <textarea [(ngModel)]="role.description" nz-input rows="2" id="description" name="description" placeholder=""></textarea>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>{{'button.close'|translate}}</span></button>
+    <button type="button" (click)="save()" class="ant-btn ant-btn-primary"><span>{{'button.save'|translate}}</span></button>
+  </div>
+</nz-drawer>

@@ -1,0 +1,41 @@
+<!-- 新增物料分类 -->
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <!-- 物料分类编码 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">
+      {{ 'material.classification' | translate }}{{ 'table.thead.code' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="baseMaterialFileClassification.code" formControlName="code" id="code" nz-input />
+      <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+        {{ 'placeholder' | translate }}{{ 'material.classification' | translate }}{{ 'table.thead.code' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 物料分类名称 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">
+      {{ 'material.classification.name' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="baseMaterialFileClassification.name" formControlName="name" nz-input />
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        {{ 'placeholder' | translate }}{{ 'material.classification.name' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+
+  <!-- 物料分类排序 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24" nzRequired nzFor="sort">
+      {{ 'material.classification' | translate }}{{ 'depart.sort' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="baseMaterialFileClassification.sort" formControlName="sort" nz-input maxlength="100" />
+      <nz-form-explain *ngIf="validateForm.get('sort')?.dirty && validateForm.get('sort')?.errors">
+        {{ 'placeholder' | translate }}{{ 'depart.sort' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+</form>

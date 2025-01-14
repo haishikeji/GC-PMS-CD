@@ -1,0 +1,18 @@
+<div class="container">
+  <header-i18n showLangText="false" class="langs"></header-i18n>
+  <div class="wrap">
+    <div class="top">
+      <div class="head">
+        <img class="logo" src="./assets/logo1.png" />
+        <span class="title">品讯·项目管理软件</span>
+      </div>
+    </div>
+    <router-outlet></router-outlet>
+    <global-footer [links]="links">
+      <span style="font-size:12px">
+        {{ 'app.login.technical.support.company' | translate }}
+        {{ 'app.login.technical.support' | translate }}
+      </span>
+    </global-footer>
+  </div>
+</div>

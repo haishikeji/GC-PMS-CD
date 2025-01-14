@@ -1,0 +1,104 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary">{{'new'|translate}}</button>
+  </ng-template>
+</page-header>
+<div nz-row nzGutter="8">
+   <!--左边的card-->
+  <div nz-col [nzSpan]="6">
+    <nz-card>
+       <!--按钮增删-->
+      <nz-row style="margin-bottom: 10px;">
+        <nz-col>
+          <button nz-button nzType="primary">{{'button.add'|translate}}</button>
+          <button nz-button nzType="danger">{{'table.delete'|translate}}</button>
+        </nz-col>
+      </nz-row>
+      <!--树形体-->
+      <nz-row>
+        <nz-col>
+          <nz-dropdown [nzClickHide]="false" >
+              <a nz-dropdown> {{'product.management'|translate}} <i nz-icon type="down"></i> </a>
+              <ul nz-menu>
+                <li nz-menu-item>{{'product.categories'|translate}}</li>
+                <li nz-menu-item>{{'file.classification'|translate}}</li>
+              </ul>
+          </nz-dropdown>
+        </nz-col>
+      </nz-row>
+    </nz-card>
+  </div>
+  <div nz-col [nzSpan]="18">
+    <!--右边的card-->
+    <nz-card style="width: 100%;">
+      <div nz-row nzGutter="16">
+          <div nz-col class="gutter-row" nzSpan="2">
+              <nz-form-label>{{'classification.code'|translate}}</nz-form-label>
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+              <input nz-input >
+          </div>
+          <div nz-col class="gutter-row" nzSpan="2">
+              <nz-form-label>{{'category.name'|translate}}</nz-form-label>
+            </div>
+          <div nz-col class="gutter-row" nzSpan="8">
+              <input nz-input >
+          </div>
+          <div nz-col class="gutter-row" nzSpan="6">
+            <button nz-button nzType="primary">{{'button.query'|translate}}</button>
+          </div>
+      </div>
+      <!--table表-->
+      <nz-table nzSize="small" #userTable [nzData]="listOfMapData" [nzPageSize]=100 [nzShowPagination]=false>
+        <thead>
+          <tr>
+            <!-- <th>行号</th>
+            <th><label nz-checkbox ></label></th>
+            <th>操作</th>
+            <th>编码</th>
+            <th>名称</th>
+            <th>大类</th>
+            <th>小类</th>
+            <th>单位</th>
+            <th>品牌</th>
+            <th>规格</th>
+            <th>换算率</th>
+            <th>创建人</th>
+            <th>创建时间</th> -->
+            <th>{{'line.number'|translate}}</th>
+            <th><label nz-checkbox ></label></th>
+            <th>{{'table.operation'|translate}}</th>
+            <th>{{'large.class.coding'|translate}}</th>
+            <th>{{'large.class.name'|translate}}</th>
+            <th>{{'small class coding'|translate}}</th>
+            <th>{{'small.class.name'|translate}}</th>
+            <th>{{'create.by'|translate}}</th>
+            <th>{{'creat.time'|translate}}</th>
+            <th>{{'update.by'|translate}}</th>
+            <th>{{'update.time'|translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td><label nz-checkbox ></label></td>
+            <td><a href="javascript:;">{{'table.update'|translate}}</a>
+              <nz-divider nzType="vertical"></nz-divider></td>
+            <td>10</td>
+            <td>{{'IT.hardware'|translate}}</td>
+            <td>01</td>
+            <td>{{'server'|translate}}</td>
+            <td>{{'system.administrator'|translate}}</td>
+            <td>2018-11-02 10:23:56</td>
+            <td>{{'system.administrator'|translate}}</td>
+            <td>2018-11-02 10:23:56</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
+<!-- <nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="url" [columns]="columns"></st>
+</nz-card> -->

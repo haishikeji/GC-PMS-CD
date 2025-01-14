@@ -1,0 +1,541 @@
+<!-- 基本信息 -->
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <!-- 合同编码 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+            {{ 'project.file.upload.contract' | translate }}{{ 'contract.code' | translate }}</nz-form-label
+          >
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <input nz-input placeholder="{{ 'aoto.create' | translate }}" disabled="true" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 项目名称 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <nz-tree-select
+              style="width: 100%"
+              [nzNodes]="proList"
+              nzShowSearch
+              [nzMultiple]="false"
+              formControlName="proId"
+              id="proId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              [(ngModel)]="contractFile.proId"
+              [nzMaxTagCount]="3"
+              [nzAllowClear]="true"
+              (ngModelChange)="proChange($event)"
+            >
+            </nz-tree-select>
+            <nz-form-explain *ngIf="validateForm.get('proId')?.dirty && validateForm.get('proId')?.errors">
+              {{ 'cost.choose' | translate }}{{ 'project' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 合同日期 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+            {{ 'project.file.upload.contract' | translate }}{{ 'Date' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              nzFormat="yyyy-MM-dd"
+              formControlName="contractDate"
+              id="contractDate"
+              [(ngModel)]="contractFile.contractDate"
+            ></nz-date-picker>
+            <nz-form-explain
+              *ngIf="validateForm.get('contractDate')?.dirty && validateForm.get('contractDate')?.errors"
+            >
+              {{ 'select.please.choose' | translate }}
+              {{ 'project.file.upload.contract' | translate }}{{ 'Date' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 里程碑类型 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24" nzRequired>
+            {{ 'financial.management.milestoneName' | translate }}
+            {{ 'financial.management.type' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              formControlName="milestoneId"
+              id="milestoneId"
+              [(ngModel)]="contractFile.milestoneId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              (ngModelChange)="milestoneChange($event)"
+            >
+              <nz-option *ngFor="let i of milestoneList" [nzValue]="i.value" [nzLabel]="i.text"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('milestoneId')?.dirty && validateForm.get('milestoneId')?.errors">
+              {{ 'select.please.choose' | translate }}
+              {{ 'financial.management.milestoneName' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <!-- 免费售后起始 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+            {{ 'free.sale.start' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            <nz-date-picker
+              nzFormat="yyyy-MM-dd"
+              formControlName="freeAfterSalesStart"
+              id="freeAfterSalesStart"
+              [(ngModel)]="contractFile.freeAfterSalesStart"
+              [nzDisabledDate]="disabledDate"
+            ></nz-date-picker>
+            <nz-form-explain
+              *ngIf="validateForm.get('freeAfterSalesStart')?.dirty && validateForm.get('freeAfterSalesStart')?.errors"
+            >
+              {{ 'select.please.choose' | translate }}
+              {{ 'free.sale.start' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 免费售后截至 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+            {{ 'free.sale.until' | translate }}
+          </nz-form-label>
+          <nz-form-explain>
+            <nz-date-picker
+              nzFormat="yyyy-MM-dd"
+              formControlName="freeAfterSalesEnd"
+              id="freeAfterSalesEnd"
+              [(ngModel)]="contractFile.freeAfterSalesEnd"
+              [nzDisabledDate]="disabledDate2"
+            ></nz-date-picker>
+            <nz-form-explain
+              *ngIf="validateForm.get('freeAfterSalesEnd')?.dirty && validateForm.get('freeAfterSalesEnd')?.errors"
+            >
+              {{ 'select.please.choose' | translate }}
+              {{ 'free.sale.until' | translate }}
+            </nz-form-explain>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+
+      <!-- 合同概述 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'project.file.upload.contract' | translate }}{{ 'summarize' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <textarea
+              rows="2"
+              formControlName="overview"
+              id="overview"
+              nz-input
+              [(ngModel)]="contractFile.overview"
+              placeholder="{{ 'placeholder' | translate }}{{ 'project.file.upload.contract' | translate }}{{
+                'summarize' | translate
+              }}"
+            ></textarea>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 客户 -->
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>{{ 'customer' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+              <input
+                type="text"
+                [(ngModel)]="contractFile.fdCustomerName"
+                formControlName="fdCustomerName"
+                id="fdCustomerName"
+                nz-input
+                placeholder="{{ 'select.please.choose' | translate }}"
+                disabled="true"
+              />
+            </nz-input-group>
+            <ng-template #suffixIconButton>
+              <!-- 放大镜  勾选列表 -->
+              <button nz-button nzType="primary" nzSearch (click)="modalTable()">
+                <i nz-icon type="search"></i>
+              </button>
+            </ng-template>
+            <nz-form-explain
+              *ngIf="validateForm.get('fdCustomerName')?.dirty && validateForm.get('fdCustomerName')?.errors"
+            >
+              {{ 'select.please.choose' | translate }}{{ 'customer' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="18">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'customer' | translate }}{{ 'address' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <input
+              disabled="true"
+              nz-input
+              [(ngModel)]="contractFile.fdCustomeraddress"
+              formControlName="fdCustomeraddress"
+              id="fdCustomeraddress"
+              placeholder="客户地址"
+              [disabled]="true"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 客户人员 -->
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired
+            >{{ 'customer' | translate }}{{ 'personnel' | translate }}</nz-form-label
+          >
+          <nz-form-control>
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              formControlName="fdCustomerPersonnelId"
+              id="fdCustomerPersonnelId"
+              [(ngModel)]="contractFile.fdCustomerPersonnelId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              (ngModelChange)="fdCustomerPersonnelChange($event)"
+            >
+              <nz-option *ngFor="let i of fdCustomerPersonnelList" [nzValue]="i.id" [nzLabel]="i.contactPsn">
+              </nz-option>
+            </nz-select>
+            <nz-form-explain
+              *ngIf="
+                validateForm.get('fdCustomerPersonnelId')?.dirty && validateForm.get('fdCustomerPersonnelId')?.errors
+              "
+            >
+              {{ 'select.please.choose' | translate }}{{ 'customer' | translate }}{{ 'personnel' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 手机 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'phone' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input
+              disabled="true"
+              nz-input
+              [(ngModel)]="contractFile.fdCustomerPersonnelTel"
+              formControlName="fdCustomerPersonnelTel"
+              id="fdCustomerPersonnelTel"
+              placeholder="{{ 'customer.contacts.client.address' | translate }}"
+              [disabled]="true"
+            />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 销售人员 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>{{ 'sales.staff' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-tree-select
+              [nzNodes]="salesStaffList"
+              nzShowSearch
+              formControlName="salesmanId"
+              id="salesmanId"
+              nzAllowClear="false"
+              [(ngModel)]="contractFile.salesmanId"
+              (ngModelChange)="onChangeSalesmanId($event)"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            ></nz-tree-select>
+            <nz-form-explain *ngIf="validateForm.get('salesmanId')?.dirty && validateForm.get('salesmanId')?.errors">
+              {{ 'select.please.choose' | translate }}{{ 'sales.staff' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 业务类型 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'business.types' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              formControlName="businessTypeDictId"
+              id="businessTypeDictId"
+              [(ngModel)]="contractFile.businessTypeDictId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              (ngModelChange)="businessTypeDictIdChange($event)"
+            >
+              <nz-option *ngFor="let i of businessTypeDictList" [nzValue]="i.value" [nzLabel]="i.text"></nz-option>
+            </nz-select>
+            <nz-form-explain
+              *ngIf="validateForm.get('businessTypeDictId')?.dirty && validateForm.get('businessTypeDictId')?.errors"
+            >
+              {{ 'select.please.choose' | translate }}{{ 'business.types' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <!-- 标准报价 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'standard.quotation' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.standardQuotation"
+              formControlName="standardQuotation"
+              id="standardQuotation"
+              [nzDisabled]="true"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 成交金额 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'deal.price' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.transactionAmount"
+              [nzDisabled]="true"
+              (nzBlur)="transactionAmountBlur()"
+              formControlName="transactionAmount"
+              id="transactionAmount"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 折扣率 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'The discount' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.discountRate"
+              formControlName="discountRate"
+              id="discountRate"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar2"
+              [nzParser]="parserDollar2"
+              [nzDisabled]="true"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 赠品金额 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'gift.amount' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.giftAmount"
+              formControlName="giftAmount"
+              id="giftAmount"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 成本 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'cost' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.cost"
+              formControlName="cost"
+              id="cost"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+              (nzBlur)="costBlur()"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 合同费用 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'project.file.upload.contract' | translate }}{{ 'pm.quotation.fee' | translate }}
+          </nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.contractCost"
+              formControlName="contractCost"
+              id="contractCost"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+              (nzBlur)="contractCostBlur()"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <!-- 合同利润 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'contract.profits' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.contractProfit"
+              formControlName="contractProfit"
+              id="contractProfit"
+              [nzMin]="0"
+              [nzDisabled]="true"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 回款金额 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'receivable.amount' | translate }}</nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [nzDisabled]="true"
+              [(ngModel)]="contractFile.received"
+              formControlName="received"
+              id="received"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 应收款账 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'accounts.receivable.account' | translate }}
+          </nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [nzDisabled]="true"
+              [(ngModel)]="contractFile.accountsReceivable"
+              formControlName="accountsReceivable"
+              id="accountsReceivable"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar"
+              [nzParser]="parserDollar"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 业绩计算率 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'performance．calculation．rate' | translate }}
+          </nz-form-label>
+          <nz-form-explain>
+            <nz-input-number
+              [(ngModel)]="contractFile.performanceCalculationRate"
+              formControlName="performanceCalculationRate"
+              id="performanceCalculationRate"
+              [nzMin]="0"
+              [nzFormatter]="formatterDollar2"
+              [nzParser]="parserDollar2"
+            >
+            </nz-input-number>
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <!-- 制单人 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{
+            'pm.quotation.Single.person' | translate
+          }}</nz-form-label>
+          <nz-form-explain>
+            {{ contractFile.createBy }}
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 制单时间 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'make.time' | translate }}</nz-form-label>
+          <nz-form-explain>
+            {{ contractFile.createTime }}
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <!-- 修改人 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'update.by' | translate }}</nz-form-label>
+          <nz-form-explain>
+            {{ contractFile.updateBy }}
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+      <!-- 修改时间 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'update.time' | translate }}</nz-form-label>
+          <nz-form-explain>
+            {{ contractFile.updateTime }}
+          </nz-form-explain>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+</form>

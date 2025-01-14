@@ -1,0 +1,75 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary">{{ 'add' | translate }}</button>
+    <!-- <button nz-button nzType="primary" >导出</button>
+        <button nz-button nzType="primary">导入</button> -->
+  </ng-template>
+</page-header>
+<nz-card>
+  <!--查询条件-->
+  <form>
+    <div nz-row nzGutter="24">
+      <div nz-col nzMd="24" nzLg="2">
+        <nz-form-label>{{ 'dictionary.name' | translate }}</nz-form-label>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <input nz-input [(ngModel)]="dict.dictName" name="dictName" />
+      </div>
+      <div nz-col nzMd="24" nzLg="2">
+        <nz-form-label>{{ 'dictionary.code' | translate }}</nz-form-label>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <input nz-input [(ngModel)]="dict.dictCode" name="dictCode" />
+      </div>
+      <div nz-col nzMd="24" nzLg="8">
+        <button (click)="getListDict(1)" nz-button nzType="primary">{{ 'button.query' | translate }}</button>
+      </div>
+    </div>
+  </form>
+  <nz-table
+    nzSize="small"
+    #basicTable
+    [nzData]="listOfData"
+    [nzFrontPagination]="false"
+    [nzTotal]="page.total"
+    [nzPageIndex]="page.current"
+    (nzPageIndexChange)="pageIndexChange($event)"
+    [nzLoading]="isSpinning"
+  >
+    <thead>
+      <tr>
+        <!-- 字典名称 -->
+        <th >{{ 'dictionary.name' | translate }}</th>
+        <!-- 字典编码 -->
+        <th >{{ 'dictionary.code' | translate }}</th>
+        <!-- 描述 -->
+        <th >{{ 'description' | translate }}</th>
+        <!-- 操作 -->
+        <th  style="width: 18%">{{ 'table.operation' | translate }}</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td >{{ data.dictName }}</td>
+        <td >{{ data.dictCode }}</td>
+        <td >{{ data.description }}</td>
+        <td>
+          <a href="javascript:void(0);" (click)="update(data.id)">{{ 'edit' | translate }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javascript:void(0);" (click)="config(data)">{{ 'dictionary.configuration' | translate }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a
+            nz-popconfirm
+            nzTitle="{{ 'confirm.to.delete' | translate }}?"
+            nzOkText="{{ 'yes' | translate }}"
+            nzCancelText="{{ 'no' | translate }}"
+            (nzOnConfirm)="delete(data.id)">
+            {{ 'table.delete' | translate }}
+          </a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<app-system-dict-config #systemDictConfigComponent></app-system-dict-config>

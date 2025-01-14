@@ -1,0 +1,27 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">职务编码</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" >
+      <input nz-input formControlName="code" id="code" [(ngModel)]="baseArchivesPost.code" maxlength=3/>
+      <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+        请输入职务编码
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">职务名称</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" nzErrorTip="请输入职务名称!">
+      <input nz-input formControlName="name" id="name" [(ngModel)]="baseArchivesPost.name" maxlength=20/>
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        请输入职务名称
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">是否启用
+    </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch [ngModelOptions]="{standalone: true}" [(ngModel)]="status" name="status" nzCheckedChildren="是" nzUnCheckedChildren="否"></nz-switch>
+    </nz-form-control>
+  </nz-form-item> -->
+</form>

@@ -1,0 +1,35 @@
+<form nz-form>
+  <!-- 规则名称 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="7" [nzXs]="14">{{'data.roles.name' | translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="14">
+      <input nz-input required [(ngModel)]="permissionDataRule.ruleName" name="ruleName" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 规则字段 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="7" [nzXs]="14">{{'data.roles.field' | translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="14">
+      <input nz-input required [(ngModel)]="permissionDataRule.ruleColumn" name="ruleColumn" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 条件规则 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="7" [nzXs]="14">{{'data.roles.where' | translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="14">
+      <nz-select style="width: 100%;" nzShowSearch nzAllowClear name="ruleConditions" nzPlaceHolder="{{'select.please.choose'|translate}}" [(ngModel)]="permissionDataRule.ruleConditions">
+        <ng-container *ngFor="let rule of ruleConditionsList">
+            <nz-option  [nzLabel]="rule.text" [nzValue]="rule.value"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 规则值 -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="7" [nzXs]="14">{{'data.roles.value' | translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="14">
+      <input nz-input required [(ngModel)]="permissionDataRule.ruleValue" name="ruleValue" />
+    </nz-form-control>
+  </nz-form-item>
+
+</form>

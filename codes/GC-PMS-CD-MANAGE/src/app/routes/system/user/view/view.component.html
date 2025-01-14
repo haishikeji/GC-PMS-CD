@@ -1,0 +1,104 @@
+<nz-drawer
+    [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+    [nzMaskClosable]="true"
+    [nzWidth]="drawerWidth"
+    [nzVisible]="visible"
+    nzTitle="{{'modify.user'|translate}}"
+    (nzOnClose)="close()" >
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="username" nzRequired>{{'user.account'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [disabled]="true" [(ngModel)]="user.username" id="username" name="username"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="realname" nzRequired>{{'user.name'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [disabled]="true" [(ngModel)]="user.realname" id="realname" name="realname"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">{{'role.assignments'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-select
+        style="width: 100%"
+        [(ngModel)]="selectedroles" name="selectedroles"
+        [nzSize]="size"
+        nzMode="tags"
+        [nzDisabled]="true"
+      >
+        <nz-option *ngFor="let item of roles" nzLabel="{{item.roleName}}" nzValue="{{item.id}}"></nz-option>
+      </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+    <!-- <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">部门分配</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input nz-input placeholder="点击右侧按钮选择部门"/>
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="default" nzSearch (click)="showModal()"><i nz-icon type="search"></i>选择</button>
+        </ng-template>
+        <nz-modal [(nzVisible)]="isVisible" nzTitle="部门搜索" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+            <p>上级部门</p>
+          </nz-modal>
+      </nz-form-control>
+    </nz-form-item> -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24">{{'avatar'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-upload
+          class="avatar-uploader"
+          nzAction="sys/common/uploadAvatar"
+          nzName="avatar"
+          nzListType="picture-card"
+          [nzShowUploadList]="false"
+          [nzBeforeUpload]="beforeUpload"
+          (nzChange)="handleChange($event)"
+          [nzDisabled]="true"
+        >
+          <ng-container *ngIf="!avatarUrl">
+            <i class="upload-icon" nz-icon [nzType]="loading ? 'loading' : 'plus'"></i>
+            <div class="ant-upload-text">{{'click.to.upload'|translate}}</div>
+          </ng-container>
+          <img *ngIf="avatarUrl" [src]="avatarUrl" class="avatar" style="height:104px;max-width:300px"/>
+        </nz-upload>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+        <nz-form-label [nzSm]="6" [nzXs]="24">{{'birthday'|translate}}</nz-form-label>
+        <nz-form-control [nzSm]="18" [nzXs]="24">
+            <!-- [nzSize]="'large'" -->
+            <nz-date-picker [nzDisabled]="true" nzFormat="yyyy-MM-dd" [(ngModel)]="user.birthday" name="birthday"></nz-date-picker>
+        </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sex" >{{'sex'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group [nzDisabled]="true"  [(ngModel)]="user.sex" id="sex" name="sex">
+          <label nz-radio nzValue="1">{{'male'|translate}}</label>
+          <label nz-radio nzValue="2">{{'female'|translate}}</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">{{'e-mail'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input [disabled]="true" nz-input [(ngModel)]="user.email" id="email" name="email"/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="phone">{{'phone'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input [disabled]="true" nz-input 
+        [(ngModel)]="user.phone" id="phone" name="phone"/>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>{{'button.close'|translate}}</span></button>
+    <!-- <button type="button" (click)="save()" class="ant-btn ant-btn-primary"><span>保存</span></button> -->
+  </div>
+</nz-drawer>

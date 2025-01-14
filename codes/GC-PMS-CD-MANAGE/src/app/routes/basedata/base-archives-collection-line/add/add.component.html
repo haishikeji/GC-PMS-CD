@@ -1,0 +1,22 @@
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <!-- 条线编码 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="code">{{ 'line.code' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="code" id="code" [(ngModel)]="baseArchivesCollectionLine.code" maxlength="3" />
+      <nz-form-explain *ngIf="validateForm.get('code')?.dirty && validateForm.get('code')?.errors">
+        {{ 'placeholder' | translate }}{{ 'line.code' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 条线名称 -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="name">{{ 'line.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="name" id="name" [(ngModel)]="baseArchivesCollectionLine.name" maxlength="20" />
+      <nz-form-explain *ngIf="validateForm.get('name')?.dirty && validateForm.get('name')?.errors">
+        {{ 'placeholder' | translate }}{{ 'line.name' | translate }}
+      </nz-form-explain>
+    </nz-form-control>
+  </nz-form-item>
+</form>

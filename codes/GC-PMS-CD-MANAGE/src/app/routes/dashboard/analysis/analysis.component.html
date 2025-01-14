@@ -1,0 +1,405 @@
+<div nz-row nzGutter="24">
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_normal">
+      CD01{{ 'project' | translate }}<br />
+      85%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_normal">
+      CD02{{ 'project' | translate }}<br />
+      50%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_normal">
+      CD03{{ 'project' | translate }}<br />
+      90%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_normal">
+      CD04{{ 'project' | translate }}<br />
+      40%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_danger">
+      CD05{{ 'project' | translate }}<br />
+      30%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_normal">
+      CD06{{ 'project' | translate }}<br />
+      25%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_danger">
+      CD07{{ 'project' | translate }}<br />
+      15%
+    </div>
+  </nz-col>
+  <nz-col nzXs="12" nzSm="6" nzMd="3" nzLg="3">
+    <div class="block_normal">
+      CD08{{ 'project' | translate }}<br />
+      0%
+    </div>
+  </nz-col>
+</div>
+
+<!-- <div nz-row [nzGutter]="24" class="pt-lg">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24">
+    <nz-card [nzLoading]="loading" [nzBordered]="false" nzTitle="{{'last.90.days.project.statistics' | translate}}"
+      class="mb-0">
+      <g2-pie *ngIf="isVisible" [data]="projectFeeData" [hasLegend]="true" [subTitle]="'项目状态（个数）' | translate" [height]="600"
+        [lineWidth]="4" [total]="projectFeeTotal" [valueFormat]="projectFeeFormat" [inner]="0.4">
+      </g2-pie>
+    </nz-card>
+  </div>
+</div> -->
+<div nz-row [nzGutter]="24" class="pt-lg">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="24">
+    <nz-card [nzLoading]="loading" [nzBordered]="false" [nzTitle]="'项目费用占比' | translate" class="mb-0">
+      <h4 class="margin:5px 0 5px 0;"></h4>
+      <nz-table [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <!-- 序号 -->
+            <th rowspan="2">{{ 'milestone.serial.number' | translate }}</th>
+
+            <!-- 任务 -->
+            <th rowspan="2">{{ 'working.task' | translate }}</th>
+
+            <!-- 负责人 -->
+            <th rowspan="2">{{ 'depart.person.in.charge' | translate }}</th>
+
+            <!-- 开始   时间 -->
+            <th rowspan="2">{{ 'start' | translate }}<br />{{ 'date' | translate }}</th>
+
+            <!-- 完成 时间 -->
+            <th rowspan="2">{{ 'cost.finish' | translate }}<br />{{ 'date' | translate }}</th>
+
+            <!-- 工期 -->
+            <th rowspan="2">{{ 'limit.time' | translate }}</th>
+
+            <!-- 进度 -->
+            <th rowspan="2">{{ 'schedule' | translate }}</th>
+
+            <!-- 年 月 -->
+            <th colspan="2">19{{ 'the.year' | translate }}2{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}3{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}4{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}5{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}6{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}7{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}8{{ 'month' | translate }}</th>
+            <th colspan="2">19{{ 'the.year' | translate }}9{{ 'month' | translate }}</th>
+          </tr>
+          <tr>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+            <th>10</th>
+            <th>25</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>CD01</td>
+            <td>张三</td>
+            <td>20190201</td>
+            <td>20190620</td>
+            <td>100d</td>
+            <td>85%</td>
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td></td>
+            <td></td>
+
+            <td></td>
+            <td></td>
+
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>CD02</td>
+            <td>李四</td>
+            <td>20190301</td>
+            <td>20190926</td>
+            <td>150d</td>
+            <td>50%</td>
+            <td></td>
+            <td></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>CD03</td>
+            <td>Jack</td>
+            <td>20190315</td>
+            <td>20190606</td>
+            <td>60d</td>
+            <td>90%</td>
+            <td></td>
+            <td></td>
+
+            <td class=""></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_doing"></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>CD04</td>
+            <td>Alise</td>
+            <td>20190401</td>
+            <td>20190816</td>
+            <td>100d</td>
+            <td>40%</td>
+            <td></td>
+            <td></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>CD05</td>
+            <td>Tom</td>
+            <td>20190410</td>
+            <td>20190924</td>
+            <td>120d</td>
+            <td>30%</td>
+            <td></td>
+            <td></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class="work_done"></td>
+
+            <td class="work_done"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>CD06</td>
+            <td>王五</td>
+            <td>20190422</td>
+            <td>20190906</td>
+            <td>100d</td>
+            <td>25%</td>
+            <td></td>
+            <td></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class="work_done"></td>
+            <td class="work_done"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class=""></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>CD07</td>
+            <td>超人</td>
+            <td>20190510</td>
+            <td>20190829</td>
+            <td>80d</td>
+            <td>15%</td>
+            <td></td>
+            <td></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class="work_done"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class=""></td>
+            <td class=""></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>CD08</td>
+            <td>Mike</td>
+            <td>20190527</td>
+            <td>20190913</td>
+            <td>80d</td>
+            <td>0%</td>
+            <td></td>
+            <td></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class=""></td>
+            <td class=""></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class="work_doing"></td>
+
+            <td class="work_doing"></td>
+            <td class=""></td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </nz-card>
+  </div>
+</div>
+<div nz-row [nzGutter]="24">
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12">
+    <nz-card [nzLoading]="loading" [nzBordered]="false" [nzTitle]="'2018年度成本分析' | translate" class="mb-0">
+      <h4 class="margin:8px 0 32px 0;"></h4>
+      <g2-pie
+        *ngIf="salesPieData"
+        [data]="feeData"
+        [hasLegend]="true"
+        [subTitle]="'' | translate"
+        [height]="248"
+        [lineWidth]="4"
+        [total]=""
+        [valueFormat]="feeFormat"
+        [inner]="0"
+      >
+      </g2-pie>
+    </nz-card>
+  </div>
+  <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="12">
+    <nz-card [nzLoading]="loading" [nzBordered]="false" [nzTitle]="'项目风险预警' | translate" class="sales-card mb-0">
+      <h4 class="margin:8px 0 32px 0;"></h4>
+      <g2-bar *ngIf="salesPieData" [data]="alertData" [height]="248"> </g2-bar>
+    </nz-card>
+  </div>
+</div>

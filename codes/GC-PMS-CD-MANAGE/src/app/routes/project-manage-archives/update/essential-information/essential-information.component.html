@@ -1,0 +1,309 @@
+<!-- 基本信息 -->
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+          {{ 'project' | translate }}{{ 'table.thead.code' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- <nz-select style="widows: 100%;" nzShowSearch nzAllowClear formControlName="proId" id="proId"
+            [(ngModel)]="projectManageArchivesa.proId" nzPlaceHolder="{{ 'select.please.choose' | translate }}">
+            <nz-option *ngFor="let i of proList" [nzValue]="i.id" [nzLabel]="i.code"></nz-option>
+          </nz-select> -->
+          {{projectManageArchivesa.proCode}}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目名称 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'cost.item.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.proName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'customer.code' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- <nz-select style="widows: 100%;" nzShowSearch nzAllowClear formControlName="cusId" id="cusId"
+            [(ngModel)]="projectManageArchivesa.cusId" nzPlaceHolder="请选择" (ngModelChange)="cusChange($event)">
+            <nz-option *ngFor="let i of cusList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('cusId')?.dirty && validateForm.get('cusId')?.errors">
+            请选择客户
+          </nz-form-explain> -->
+          {{projectManageArchivesa.cusCode}}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户名称 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'customer.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ projectManageArchivesa.cusName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目总金额 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24" nzRequired>
+          {{ 'total.amount.of.the.project' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-input-number [nzDisabled]="true" [(ngModel)]="projectManageArchivesa.totalPrice" formControlName="totalPrice" id="totalPrice"
+            [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterDollar" [nzParser]="parserDollar"
+            (keyup)="getProjectManageArchivesa()" [nzMax]=10000000000></nz-input-number>
+          <nz-form-explain *ngIf="validateForm.get('totalPrice')?.dirty && validateForm.get('totalPrice')?.errors">
+            <!-- 请输入项目总金额 -->
+            {{ 'placeholder' | translate }}{{ 'total.amount.of.the.project' | translate }}
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 里程碑类型 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24" nzRequired>
+          {{ 'financial.management.milestoneName' | translate }}
+          {{ 'milestone.milestone.type' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-select
+            style="widows: 100%;"
+            nzShowSearch
+            nzAllowClear
+            formControlName="milestoneId"
+            id="milestoneId"
+            [(ngModel)]="projectManageArchivesa.milestoneId"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            (ngModelChange)="milestoneChange($event)"
+            [nzDisabled]="true"
+          >
+            <nz-option *ngFor="let i of milestoneList" [nzValue]="i.value" [nzLabel]="i.text"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('milestoneId')?.dirty && validateForm.get('milestoneId')?.errors">
+            <!-- 请选择里程碑-->
+            {{ 'select.please.choose' | translate }} {{ 'financial.management.milestoneName' | translate }}
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 销售经理 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'sales' | translate }} {{ 'manager' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="saleManagerList"
+            nzShowSearch
+            [nzMultiple]="false"
+            formControlName="saleManagerId"
+            id="saleManagerId"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="projectManageArchivesa.saleManagerId"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="managerChange($event, '1')"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!-- 业务员 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">{{ 'salesman' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- <nz-select [nzMaxTagCount]="3" nzMode="multiple" nzPlaceHolder="{{ 'select.please.choose' | translate }}" formControlName="saleManIds"
+            id="saleManIds" [(ngModel)]="saleManIds">
+            <nz-option *ngFor="let item of personnelList" [nzLabel]="item.id" [nzValue]="item.name"></nz-option>
+          </nz-select> -->
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="personnelList"
+            nzShowSearch
+            [nzMultiple]="true"
+            formControlName="saleManIds"
+            id="saleManIds"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="saleManIds"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="personnelChange($event, '1')"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 实施项目经理 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'implementation' | translate }}{{ 'pm.PM' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="impManagerList"
+            nzShowSearch
+            [nzMultiple]="false"
+            formControlName="impManagerId"
+            id="impManagerId"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="projectManageArchivesa.impManagerId"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="managerChange($event, '2')"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!--实施顾问  -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'implementation' | translate }}{{ 'consultant' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- <nz-select [nzMaxTagCount]="3" nzMode="multiple" nzPlaceHolder="{{ 'select.please.choose' | translate }}" formControlName="impConsultantIds"
+            id="impConsultantIds" [(ngModel)]="impConsultantIds">
+            <nz-option *ngFor="let item of personnelList" [nzLabel]="item.id" [nzValue]="item.name"></nz-option>
+          </nz-select> -->
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="personnelList"
+            nzShowSearch
+            [nzMultiple]="true"
+            formControlName="impConsultantIds"
+            id="impConsultantIds"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="impConsultantIds"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="personnelChange($event, '2')"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 开发项目经理-->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'development' | translate }}{{ 'pm.PM' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="deManagerList"
+            nzShowSearch
+            [nzMultiple]="false"
+            formControlName="deManagerId"
+            id="deManagerId"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="projectManageArchivesa.deManagerId"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="managerChange($event, '3')"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!-- 开发工程师 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'customer.name' | translate }}{{ 'engineer' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="personnelList"
+            nzShowSearch
+            [nzMultiple]="true"
+            formControlName="deEngineerIds"
+            id="deEngineerIds"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="deEngineerIds"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="personnelChange($event, '3')"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 服务经理 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'service' | translate }}{{ 'manager' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="seManagerList"
+            nzShowSearch
+            [nzMultiple]="false"
+            formControlName="seManagerId"
+            id="seManagerId"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="projectManageArchivesa.seManagerId"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="managerChange($event, '4')"
+            [nzDefaultExpandedKeys]="expandKeys"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="18">
+      <nz-form-item>
+        <!-- 服务工程师 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24">
+          {{ 'service' | translate }}{{ 'engineer' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-tree-select
+            style="width: 100%"
+            [nzNodes]="personnelList"
+            nzShowSearch
+            [nzMultiple]="true"
+            formControlName="seEngineerIds"
+            id="seEngineerIds"
+            nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            [(ngModel)]="seEngineerIds"
+            [nzMaxTagCount]="3"
+            [nzAllowClear]="true"
+            (ngModelChange)="personnelChange($event, '4')"
+            [nzDefaultExpandedKeys]="expandKeys"
+          >
+          </nz-tree-select>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>

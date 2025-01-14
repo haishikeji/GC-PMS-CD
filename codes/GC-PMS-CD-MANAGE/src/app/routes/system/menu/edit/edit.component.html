@@ -1,0 +1,112 @@
+<nz-drawer [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true" [nzWidth]="600" [nzVisible]="visible" nzTitle="{{title}}{{'menu'|translate}}" (nzOnClose)="close()">
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired nzFor="menuType">{{'menu.type'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-radio-group [(ngModel)]="menuType" name="menuType" (ngModelChange)="changeMenuType()">
+          <label nz-radio nzValue="0" [nzDisabled]="disabled">{{'first.level.menu'|translate}}</label>
+          <label nz-radio nzValue="1" [nzDisabled]="disabled">{{'submenu'|translate}}</label>
+          <label nz-radio nzValue="2" [nzDisabled]="disabled">{{'button/permission.menu'|translate}}</label>
+        </nz-radio-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label *ngIf="menuType!='2'" [nzSm]="6" [nzXs]="24" nzRequired>{{'menu.name'|translate}}</nz-form-label>
+      <nz-form-label *ngIf="menuType=='2'" [nzSm]="6" [nzXs]="24" nzRequired>{{'button/permission.name'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24" nzValidateStatus="nameSuccess" nzHasFeedback>
+        <input nz-input [(ngModel)]="menu.name" name="name" (ngModelChange)="changeName($event)" maxlength=20/>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType!='0'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{'superior.menu'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-tree-select nzPlaceHolder="{{'please.select.the.superior.menu'|translate}}" [nzDefaultExpandedKeys]="expandKeys" [nzNodes]="nodes" nzShowSearch
+          [nzDisabled]="selectDisabled" [nzDropdownStyle]="{ 'max-height': '300px' }" [(ngModel)]="value"
+          name="parentId" (ngModelChange)="onChange($event)">
+        </nz-tree-select>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType=='2'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{'permission.identifier'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [(ngModel)]="menu.perms" name="perms" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType !='2'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="url">{{'menu.path'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [(ngModel)]="menu.url" id="url" name="url" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType !='2'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="component">{{'front.end.component'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [(ngModel)]="menu.component" id="component" name="component" />
+        <!-- <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+          The input is not valid E-mail!
+        </nz-form-explain> -->
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType =='0'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="email">{{'default.jump.address'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [(ngModel)]="menu.redirect" id="redirect" name="redirect" />
+        <!-- <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+          The input is not valid E-mail!
+        </nz-form-explain> -->
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType =='0'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="icon">{{'icon'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <!-- <input nz-input [(ngModel)]="menu.icon" id="icon" name="icon"/> -->
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input type="text" [(ngModel)]="menu.icon" nz-input placeholder="{{'please.select.the.menu.icon'|translate}}" id="icon" name="icon" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch (click)="systemMenuIconComponent.showModal()"><i nz-icon
+              type="search"></i></button>
+        </ng-template>
+        <!-- <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+          The input is not valid E-mail!
+        </nz-form-explain> -->
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item >
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="sortNo">{{'sort'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input [(ngModel)]="menu.sortNo" id="sortNo" name="sortNo" />
+        <!-- <nz-form-explain *ngIf="validateForm.get('email')?.dirty && validateForm.get('email')?.errors">
+          The input is not valid E-mail!
+        </nz-form-explain> -->
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType != '2'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="isRoute">{{'whether.routing.menu'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-switch [(ngModel)]="menu.route" nzCheckedChildren="{{'yes'|translate}}" nzUnCheckedChildren="{{'no'|translate}}" id="route" name="route">
+        </nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType != '2'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="hidden">{{'hidden.route'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-switch [(ngModel)]="menu.hidden" nzCheckedChildren="{{'yes'|translate}}" nzUnCheckedChildren="{{'no'|translate}}" id="hidden" name="hidden">
+        </nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item *ngIf="menuType != '2'">
+      <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="alwaysShow">{{'aggregate.route'|translate}}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-switch [(ngModel)]="menu.alwaysShow" nzCheckedChildren="{{'yes'|translate}}" nzUnCheckedChildren="{{'no'|translate}}" id="alwaysShow"
+          name="alwaysShow"></nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>{{'button.close'|translate}}</span></button>
+    <button type="button" (click)="save()" class="ant-btn ant-btn-primary"><span>{{'button.save'|translate}}</span></button>
+  </div>
+</nz-drawer>
+<app-system-menu-icon #systemMenuIconComponent (afterSelect)="setIcon()"></app-system-menu-icon>

@@ -1,0 +1,95 @@
+<!-- 收款单 -->
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- 新建 -->
+    <button (click)="add()" nz-button nzType="primary" acl [acl-ability]="'receipt:add'">
+      {{ 'cost.new' | translate }}
+    </button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <!-- 查询条件 -->
+  <form nz-form>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'documents.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="code" [(ngModel)]="managerPaymentAndReceiptSlip.billcode" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="2" [nzXs]="24" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 查询 -->
+            <button nzType="primary" (click)="query()" nz-button>
+              <span>{{ 'button.query' | translate }}</span>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <!-- 表格 -->
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        nzSize="small"
+        #basicTable
+        [nzData]="listOfData"
+        [nzFrontPagination]="false"
+        [nzTotal]="page.total"
+        [nzPageIndex]="page.current"
+        (nzPageIndexChange)="pageIndexChange($event)"
+        [nzLoading]="isSpinning"
+      >
+        <thead>
+          <tr>
+            <!-- 单据编码 -->
+            <th>{{ 'documents.code' | translate }}</th>
+            <!-- 客户编码-->
+            <th>{{ 'customer.code' | translate }}</th>
+            <!-- 客户名称 -->
+            <th>{{ 'customer.name' | translate }}</th>
+            <!-- 项目编码 -->
+            <th>{{ 'project.code' | translate }}</th>
+            <!-- 项目名称 -->
+            <th>{{ 'cost.item.name' | translate }}</th>
+            <!-- 操作 -->
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.billcode }}</td>
+            <td>{{ data.cusCode }}</td>
+            <td>{{ data.cusName }}</td>
+            <td>{{ data.proCode }}</td>
+            <td>{{ data.proName }}</td>
+            <td>
+              <!-- 详情 -->
+              <a (click)="view(data)" acl [acl-ability]="'receipt:update'">
+                {{ 'table.view' | translate }}
+              </a>
+              <nz-divider nzType="vertical" acl [acl-ability]="'receipt:update'"></nz-divider>
+
+              <!-- 修改 -->
+              <a (click)="update(data)" acl [acl-ability]="'receipt:update'">
+                {{ 'table.update' | translate }}
+              </a>
+              <nz-divider nzType="vertical" acl [acl-ability]="'receipt:update'"></nz-divider>
+              
+              <!-- 删除 -->
+              <a (click)="delete(data.id)" acl [acl-ability]="'receipt:delete'">
+                {{ 'table.delete' | translate }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

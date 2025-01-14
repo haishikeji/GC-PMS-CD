@@ -1,0 +1,77 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+      <button (click)="add()" nz-button nzType="primary" >{{'add'|translate}}</button>
+      <!-- <button nz-button nzType="primary" >导出</button>
+      <button nz-button nzType="primary">导入</button> -->
+  </ng-template>
+</page-header>
+<nz-card>
+
+  <!--查询条件-->
+  <form>
+  <div nz-row nzGutter="24">
+    <div nz-col nzMd="24" nzLg="2">
+      <nz-form-label>{{'TimedTask.Label.ClassName'|translate}}</nz-form-label>
+    </div>
+    <div nz-col nzMd="24" nzLg="4">
+      <input nz-input [(ngModel)]="timedTask.jobClassName" name="jobClassName">
+    </div>
+    <div nz-col nzMd="24" nzLg="2">
+      <nz-form-label>{{'description'|translate}}</nz-form-label>
+    </div>
+    <div nz-col nzMd="24" nzLg="4">
+      <input nz-input [(ngModel)]="timedTask.description" name="description">
+    </div>
+    <div nz-col nzMd="24" nzLg="6">
+        <button (click)="list(1)" nz-button nzType="primary">{{'button.query'|translate}}</button>
+    </div>
+  </div>
+</form>
+  <nz-table nzSize="small" #basicTable [nzData]="listOfData"
+    [nzFrontPagination]="false"
+    [nzTotal]="page.total"
+    [nzPageIndex]="page.current"
+    (nzPageIndexChange)="pageIndexChange($event)"
+    [nzLoading]="isSpinning"
+  >
+    <thead>
+      <tr>
+        <th>{{'TimedTask.Label.ClassName'|translate}}</th>
+        <th>{{'TimedTask.Label.Parameter'|translate}}</th>
+        <th>{{'description'|translate}}</th>
+        <th>{{'TimedTask.Label.CronExpression'|translate}}</th>
+        <th>{{'state'|translate}}</th>
+        <th>{{'table.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.jobClassName }}</td>
+        <td>{{ data.parameter }}</td>
+        <td>{{ data.description }}</td>
+        <td>{{ data.cronExpression }}</td>
+        
+        <td>
+          <!-- 暂停 -->
+          <nz-tag *ngIf="data.status==-1" [nzColor]="'orange'">{{'TimedTask.Status.suspend'|translate}}</nz-tag>
+          <!-- 正常 -->
+          <nz-tag *ngIf="data.status==0" [nzColor]="'green'">{{'TimedTask.Status.normal'|translate}}</nz-tag>
+          <!-- 停止 -->
+          <nz-tag *ngIf="data.status==1" [nzColor]="'red'">{{'TimedTask.Status.stoped'|translate}}</nz-tag>
+        </td>
+        <td>
+          <a href="javascript:void(0);" (click)="edit(data.id)">{{'edit'|translate}}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a nz-popconfirm
+            nzTitle="{{'confirm.to.delete'|translate}}?"
+            nzOkText="{{'yes'|translate}}"
+            nzCancelText="{{'no'|translate}}"
+            (nzOnConfirm)="delete(data.id)"
+            (nzOnCancel)="cancelDel()"
+            >{{'table.delete'|translate}}</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+</nz-card>

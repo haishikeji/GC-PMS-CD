@@ -1,0 +1,42 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- 新建 -->
+    <button (click)="add()" nz-button nzType="primary">{{ 'new' | translate }}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <nz-table
+    nzSize="small"
+    #basicTable
+    [nzData]="listOfData"
+    [nzFrontPagination]="false"
+    [nzLoading]="isSpinning"
+    [nzTotal]="page.total"
+    [nzPageIndex]="page.current"
+    (nzPageIndexChange)="pageIndexChange($event)"
+  >
+    <thead>
+      <tr>
+        <!-- 名称 -->
+        <th>{{ 'contract.name' | translate }}</th>
+        <!-- 数据值 -->
+        <th>{{ 'data.value' | translate }}</th>
+        <!-- 操作 -->
+        <th style="width: 21%">{{ 'table.operation' | translate }}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.itemText }}</td>
+        <td>{{ data.itemValue }}</td>
+        <td>
+          <a href="javascript:void(0);" (click)="edit(data)">{{ 'table.update' | translate }}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javascript:void(0);" (click)="delete(data.id)">{{ 'table.delete' | translate }}</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<app-basedata-milestone-category-edit #categoryEdit (afterSave)="getDictItems()">
+</app-basedata-milestone-category-edit>

@@ -1,0 +1,81 @@
+<nz-spin [nzSpinning]="isLoading">
+  <form nz-form>
+    <!-- 产品编码 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">
+        {{ 'product' | translate }}{{ 'table.thead.code' | translate }}
+      </nz-form-label>
+      <nz-form-control [nzSm]="8" [nzXs]="12">
+        {{ baseMaterialFileProduct.code }}
+      </nz-form-control>
+      <!-- 名称 -->
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'Name' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="8" [nzXs]="12">
+        {{ baseMaterialFileProduct.name }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 排序   -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24" nzRequired>{{ 'depart.sort' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="8" [nzXs]="12">
+        {{ baseMaterialFileProduct.sort }}
+      </nz-form-control>
+
+      <!--  状态   0未启用    1启用  -->
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">
+        {{ 'depart.Whether.to.enable' | translate }}
+      </nz-form-label>
+      <nz-form-control [nzSm]="8" [nzXs]="12" *ngIf="baseMaterialFileProduct.status == 0">
+        {{ 'enabled.not' | translate }}
+      </nz-form-control>
+      <nz-form-control [nzSm]="8" [nzXs]="12" *ngIf="baseMaterialFileProduct.status == 1">
+        {{ 'enabled' | translate }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 产品属性  1采购    2销售 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'property' | translate }}</nz-form-label>
+      <nz-form-control [nzSm]="8" [nzXs]="12" *ngIf="baseMaterialFileProduct.attribute == 1">
+        {{ 'procurement' | translate }}
+      </nz-form-control>
+      <nz-form-control [nzSm]="8" [nzXs]="12" *ngIf="baseMaterialFileProduct.attribute == 2">
+        {{ 'sales' | translate }}
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <!-- 模块 表 -->
+  <div nz-row nzGutter="24">
+    <div nz-col nzMd="18" nzLg="24">
+      <nz-table nzSize="small" #basicTable [nzData]="modData" [nzFrontPagination]="false" [nzShowPagination]="false">
+        <thead>
+          <tr>
+            <th style="width:150px;">{{ 'module.code' | translate }}</th>
+            <th style="width:150px;">{{ 'module.name' | translate }}</th>
+            <th style="width:150px;">{{ 'standard.quotation' | translate }}</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <!-- 模块编码 -->
+            <td>{{ data.code }}</td>
+            <!-- 模块名称 -->
+            <td>{{ data.name }}</td>
+            <!-- 标准报价 -->
+            <td>{{ data.standardQuotation }}</td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-spin>
+
+<!-- 底部 -->
+<div class="footer">
+  <button nz-button (click)="close()">
+    <span>{{ 'button.close' | translate }}</span>
+  </button>
+</div>

@@ -1,0 +1,30 @@
+<div nz-row nzGutter="24">
+  <div nz-col nzMd="24" nzLg="24">
+    <h3>{{ 'customer.abbreviation' | translate }}<nz-tag style="margin-left: 10px;" [nzColor]="'red'">{{abbreviation}}</nz-tag>{{ 'Already.exists.do.you.want.to.save' | translate }}</h3>
+  </div>
+</div>
+<!-- 数据表 -->
+<div nz-row nzGutter="24">
+  <div nz-col nzMd="24" nzLg="24">
+    <nz-table nzSize="small" #basicTable [nzData]="listOfData" [nzFrontPagination]=true>
+      <thead>
+        <tr>
+          <th>{{ 'customer.code' | translate }}</th>
+          <th>{{ 'customer.name' | translate }}</th>
+          <th>{{ 'customer.shortName' | translate }}</th>
+          <th>{{ 'customer.abbreviation' | translate }}</th>
+          <!-- <th>{{ 'customer.contacts.name' | translate }}</th> -->
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data">
+          <td>{{ data.code }}</td>
+          <td>{{ data.name }}</td>
+          <td>{{ data.shortName }}</td>
+          <td>{{ data.abbreviation }}</td>
+          <!-- <td>{{ data.contactPsn }}</td> -->
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

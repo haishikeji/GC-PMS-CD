@@ -1,0 +1,46 @@
+<nz-modal [(nzVisible)]="isVisible" nzTitle="" nzClosable="false" nzWidth="900" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <nz-tabset>
+    <nz-tab nzTitle="{{'directional.icon'|translate}}">
+      <ul>
+        <li *ngFor="let item of directionIcons">
+          <i nz-icon nzType="{{item}}" nzTheme="outline" (click)="chooseIcon(item);" class="{{activeIcon===item?'active':''}}"></i>
+        </li>
+      </ul>
+    </nz-tab>
+    <nz-tab nzTitle="{{'indicative.icon'|translate}}">
+      <ul>
+        <li *ngFor="let item of suggestionIcons">
+          <i nz-icon nzType="{{item}}" nzTheme="outline" (click)="chooseIcon(item);" class="{{activeIcon===item?'active':''}}"></i>
+        </li>
+      </ul>
+    </nz-tab>
+    <nz-tab nzTitle="{{'edit.class.icon'|translate}}">
+      <ul>
+        <li *ngFor="let item of editIcons">
+          <i nz-icon nzType="{{item}}" nzTheme="outline" (click)="chooseIcon(item);" class="{{activeIcon===item?'active':''}}"></i>
+        </li>
+      </ul>
+    </nz-tab>
+    <nz-tab nzTitle="{{'data.class.icon'|translate}}">
+      <ul>
+        <li *ngFor="let item of dataIcons">
+          <i nz-icon nzType="{{item}}" nzTheme="outline" (click)="chooseIcon(item);" class="{{activeIcon===item?'active':''}}"></i>
+        </li>
+      </ul>
+    </nz-tab>
+    <nz-tab nzTitle="{{'website.universal.icon'|translate}}">
+      <ul>
+        <li *ngFor="let item of webIcons">
+          <i nz-icon nzType="{{item}}" nzTheme="outline" (click)="chooseIcon(item);" class="{{activeIcon===item?'active':''}}"></i>
+        </li>
+      </ul>
+    </nz-tab>
+    <nz-tab nzTitle="{{'brand.and.logo'|translate}}">
+      <ul>
+        <li *ngFor="let item of logoIcons">
+          <i nz-icon nzType="{{item}}" nzTheme="outline" (click)="chooseIcon(item);" class="{{activeIcon===item?'active':''}}"></i>
+        </li>
+      </ul>
+    </nz-tab>
+  </nz-tabset>
+</nz-modal>

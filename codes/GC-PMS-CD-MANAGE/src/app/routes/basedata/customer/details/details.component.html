@@ -1,0 +1,385 @@
+<nz-spin [nzSpinning]="isLoading">
+  <form nz-form>
+    <nz-form-item>
+      <!--客户编码-->
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'customer.code' | translate }}</nz-form-label>
+
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.code }}
+      </nz-form-control>
+      <!--客户名称-->
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'customer.name' | translate }}</nz-form-label>
+
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.name }}
+      </nz-form-control>
+      <!--客户简称-->
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.shortName' | translate }}</nz-form-label>
+
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.shortName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'customer.abbreviation' | translate }}</nz-form-label>
+      <!--客户缩写-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.abbreviation }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.contacts.name' | translate }}</nz-form-label>
+      <!--联系人-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.contacts }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.contacts.telephone' | translate }}</nz-form-label>
+      <!--联系人电话-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.telephone }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.contacts.mail' | translate }}</nz-form-label>
+      <!-- 联系人邮箱 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.email }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.company.address' | translate }}</nz-form-label>
+      <!-- 公司地址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.address }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.company.phone' | translate }}</nz-form-label>
+      <!-- 公司电话 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.phone }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.tax.no' | translate }}</nz-form-label>
+      <!-- 税号 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.taxNo }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.account.bank' | translate }}</nz-form-label>
+      <!-- 开户行 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.bank }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.account.number' | translate }}</nz-form-label>
+      <!-- 账号 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.account }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24"
+        >{{ 'customer.whether.using.or.not' | translate }}
+        <!-- 是否停用 -->
+      </nz-form-label>
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-switch
+          [nzDisabled]="true"
+          [(ngModel)]="enable"
+          name="enable"
+          [ngModelOptions]="{ standalone: true }"
+          nzCheckedChildren="{{ 'store.yes' | translate }}"
+          nzUnCheckedChildren="{{ 'store.no' | translate }}"
+        ></nz-switch>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.credit.grade' | translate }}</nz-form-label>
+      <!-- 信用等级 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.creditGrade }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.credit.period' | translate }}</nz-form-label>
+      <!-- 信用期 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.creditPeriod }}
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.zipCode' | translate }}</nz-form-label>
+      <!-- 邮编 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.zipCode }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.Postal.address' | translate }}</nz-form-label>
+      <!-- 注册地址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.postalAddress }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'cost.item.category' | translate }}</nz-form-label
+      >
+      <!-- 客商分类 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.customerClassificationDictName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第七行 ------------->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.source' | translate }}</nz-form-label>
+      <!-- 客商来源 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.customerSourceDictName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'industry' | translate }}
+      </nz-form-label>
+      <!-- 客商行业 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.baseCustomerIndustryName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'sales.status' | translate }}</nz-form-label>
+      <!-- 销售状态 树 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.baseSalesStatusName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第八行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'property' | translate }}
+      </nz-form-label>
+      <!-- 客商属性 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <span *ngIf="customer.customerAttribute == 1">
+          {{ 'customer' | translate }}
+        </span>
+        <span *ngIf="customer.customerAttribute == 2">
+          {{ 'supplier' | translate }}
+        </span>
+        <span *ngIf="customer.customerAttribute == 3">
+          {{ 'customer' | translate }}、{{ 'supplier' | translate }}
+        </span>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'group' | translate }}
+      </nz-form-label>
+      <!-- 客商分组 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.customerGroupingDictName }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'business.affairs' | translate }}{{ 'relation' | translate }}
+      </nz-form-label>
+      <!-- 商务关系-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.businessRelationsDictName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第九行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'higher.unit' | translate }}
+      </nz-form-label>
+      <!-- 上级单位  禁选 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.parentName }}
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'use.status' | translate }}
+      </nz-form-label>
+      <!-- 使用状态-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.useStatusDictName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'sleep.type' | translate }}
+      </nz-form-label>
+      <!-- 休眠类型 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.sleepTypeDictName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第十行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'unit' | translate }}{{ 'web.address' | translate }}</nz-form-label>
+      <!-- 单位网址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.companyWebsite }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'in.company' | translate }}{{ 'establish.date' | translate }}
+      </nz-form-label>
+      <!-- 公司成立日期 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.companyEstablishDate }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'unit' | translate }}{{ 'size' | translate }} </nz-form-label>
+      <!-- 单位规模 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.unitSizeDictName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第11行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'personnel' | translate }}{{ 'size' | translate }} </nz-form-label>
+      <!-- 人员规模 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.personnelSizeDictName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'app.register.register' | translate }}{{ 'capital' | translate }}
+      </nz-form-label>
+      <!-- 注册资金 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.registeredCapitalDictName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'annual.turnover' | translate }}</nz-form-label>
+      <!-- 年营业额 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.annualTurnover }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第12行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'customer' | translate }}{{ 'relation' | translate }} </nz-form-label>
+      <!-- 客户关系 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.customerRelationshipDictName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'value.level' | translate }}
+      </nz-form-label>
+      <!-- 价值级别 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.valueLevelDictName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'sales.staff' | translate }}
+      </nz-form-label>
+      <!-- 销售人员 树 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.salesmanName }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第13行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.unit.name' | translate }}</nz-form-label>
+      <!-- 开票单位名称 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.billingUnitName }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'taxpayer.identification.Num' | translate }}</nz-form-label>
+      <!-- 纳税人识别号 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.taxpayerIdentificationNumber }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.address' | translate }}</nz-form-label>
+      <!-- 开票地址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.billingAddress }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第14行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.telephone' | translate }}</nz-form-label>
+      <!--开票电话-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.billingTelephone }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.bank' | translate }}</nz-form-label>
+      <!-- 开票银行 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.billingBank }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'billing.bank' | translate }}{{ 'customer.account.number' | translate }}
+      </nz-form-label>
+      <!--开票银行账号-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.billingBankAccountNumber }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第15行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'development' | translate }}{{ 'personnel' | translate }}</nz-form-label>
+      <!-- 开发人员 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.developer }}
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'development' | translate }}{{ 'date' | translate }} </nz-form-label>
+      <!-- 开发日期-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        {{ customer.developmentDate }}
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 联系人 -->
+    <nz-form-item>
+      <!-- 数据表 -->
+      <div nz-row nzGutter="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-table
+            nzSize="small"
+            #basicTable
+            [nzData]="listOfData"
+            [nzFrontPagination]="false"
+            [nzShowPagination]="false"
+          >
+            <thead>
+              <tr>
+                <th style="width:150px;">{{ 'customer.contacts.name' | translate }}</th>
+                <th style="width:150px;">{{ 'customer.contacts.telephone' | translate }}</th>
+                <th style="width:150px;">{{ 'customer.contacts.mail' | translate }}</th>
+                <th style="width:150px;">{{ 'customer.is.it.default' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td>{{ data.contactPsn }}</td>
+                <td>{{ data.contectTel }}</td>
+                <td>{{ data.email }}</td>
+                <td>
+                  <ng-container *ngIf="data.isDefault == 0">
+                    {{ 'no' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="data.isDefault == 1">
+                    {{ 'yes' | translate }}
+                  </ng-container>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-form-item>
+  </form>
+</nz-spin>
+<div class="footer">
+  <button nz-button (click)="close()">
+    <span>{{ 'button.close' | translate }}</span>
+  </button>
+</div>

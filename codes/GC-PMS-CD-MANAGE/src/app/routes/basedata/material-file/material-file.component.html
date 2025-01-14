@@ -1,0 +1,224 @@
+<!-- 头部导航 -->
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- 新增分类 标题 -->
+    <span id="titleAdd" hidden="true"> {{ 'button.add' | translate }}{{ 'material.classification' | translate }} </span>
+    <!-- 修改分类 -->
+    <span id="titleUpdate" hidden="true">
+      {{ 'table.update' | translate }}{{ 'material.classification' | translate }}
+    </span>
+    <!-- 产品新增 标题-->
+    <span id="proTitAdd" hidden="true"> {{ 'button.add' | translate }}{{ 'product' | translate }} </span>
+    <!-- 产品修改 -->
+    <span id="proTitUpdate" hidden="true"> {{ 'table.update' | translate }}{{ 'product' | translate }} </span>
+
+    <!-- 按钮 新增产品 -->
+    <button nz-button nzType="primary" (click)="addProduct('')">
+      {{ 'button.add' | translate }}{{ 'product' | translate }}
+    </button>
+  </ng-template>
+</page-header>
+
+<div nz-row [nzGutter]="24">
+  <!-- 左边 card -->
+  <div nz-col nzMd="24" nzLg="6">
+    <nz-card>
+      <!-- 添加一级 -->
+      <div nz-row [nzGutter]="24" style="margin-bottom: 10px;">
+        <div nz-col nzMd="24" nzLg="24">
+          <button nz-button nzType="primary" (click)="addMaterial(0)">
+            {{ 'button.leve.one' | translate }}
+          </button>
+        </div>
+      </div>
+      <!-- 搜索框 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-input-group [nzSuffix]="suffixIcon" style="width:100%">
+            <input
+              type="text"
+              nz-input
+              placeholder="{{ 'placeholder' | translate }}{{ 'material.classification.name' | translate }}"
+              [(ngModel)]="searchValue"
+            />
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <i nz-icon type="search"></i>
+          </ng-template>
+        </div>
+      </div>
+      <!-- 物料 树 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-tree
+            [nzData]="materialNodes"
+            [nzSearchValue]="searchValue"
+            (nzClick)="treeClick($event)"
+            (nzDblClick)="openFolder($event)"
+          >
+            <!-- 下拉菜单 4个按钮 -->
+            <ng-template #contextTemplate>
+              <ul nz-menu nzInDropDown>
+                <li nz-menu-item (click)="addMaterial(1)">
+                  {{ 'button.add' | translate }}{{ 'material.classification' | translate }}
+                </li>
+                <li nz-menu-item (click)="addMaterial(2)">
+                  {{ 'table.update' | translate }}
+                </li>
+                <li nz-menu-item (click)="delMaterial()">
+                  {{ 'table.delete' | translate }}
+                </li>
+                <li nz-menu-item (click)="addProduct('')">{{ 'button.add' | translate }}{{ 'product' | translate }}</li>
+                <li nz-menu-item (click)="cancel()">{{ 'button.cancel' | translate }}</li>
+              </ul>
+            </ng-template>
+
+            <ng-template #nzTreeTemplate let-node>
+              <span class="custom-node">
+                <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu(node.key, $event, contextTemplate)">
+                  <span class="folder-name">{{ node.title }}</span>
+                </span>
+                <span *ngIf="node.isLeaf" (contextmenu)="contextMenu(node.key, $event, contextTemplate)">
+                  <span class="file-name">{{ node.title }}</span>
+                </span>
+              </span>
+            </ng-template>
+          </nz-tree>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+
+  <!-- 右边 card -->
+  <div nz-col nzMd="24" nzLg="18">
+    <nz-card nz-col nzMd="24" nzLg="24">
+      <form>
+        <!--查询 条件-->
+        <div nz-row nzGutter="24">
+          <!-- 物料分类名称 -->
+          <!-- <div nz-col nzMd="24" nzLg="2">
+            <nz-form-label nzNoColon="false"> {{ 'material.classification' | translate }} </nz-form-label>
+          </div>
+          <div nz-col nzMd="24" nzLg="4" *ngIf="materialNodes">
+            <nz-tree-select
+              nzAllowClear="false"
+              [nzNodes]="materialNodes"
+              nzShowSearch
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              [(ngModel)]="baseMaterialFileProduct.baseMaterialFileClassificationId"
+              name="baseMaterialFileClassificationId"
+            >
+            </nz-tree-select>
+          </div> -->
+          <!-- 产品编码 -->
+          <div nz-col nzMd="24" nzLg="2">
+            <nz-form-label> {{ 'product' | translate }}{{ 'table.thead.code' | translate }} </nz-form-label>
+          </div>
+          <div nz-col nzMd="24" nzLg="4">
+            <input nz-input [(ngModel)]="baseMaterialFileProduct.code" name="code" />
+          </div>
+
+          <!-- 产品名称 -->
+          <div nz-col nzMd="24" nzLg="2">
+            <nz-form-label> {{ 'product' | translate }}{{ 'Name' | translate }} </nz-form-label>
+          </div>
+          <div nz-col nzMd="24" nzLg="4">
+            <input nz-input [(ngModel)]="baseMaterialFileProduct.name" name="name" />
+          </div>
+
+          <!-- 列表查询重置 -->
+          <div nz-col nzMd="24" nzLg="3">
+            <button (click)="query()" nz-button nzType="primary">{{ 'button.query' | translate }}</button>
+            <button (click)="rest()" nz-button nzType="primary">{{ 'button.reset' | translate }}</button>
+          </div>
+        </div>
+      </form>
+
+      <!-- 产品数据 表 -->
+      <div nz-row nzGutter="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-table
+            #basicTable
+            nzSize="small"
+            class="tableTdPadding"
+            [nzData]="proTable"
+            [nzTotal]="page.total"
+            [nzPageIndex]="page.current"
+            [nzFrontPagination]="false"
+            [nzLoading]="isSpinning"
+            (nzPageIndexChange)="pageIndexChange($event)"
+          >
+            <thead>
+              <tr>
+                <!-- 产品编码 -->
+                <th nzWidth="8vw" nzLeft="0px" nzAlign="center">
+                  {{ 'product' | translate }}{{ 'table.thead.code' | translate }}
+                </th>
+                <!-- 名称 -->
+                <th nzAlign="center" nzLeft="8vw">{{ 'contract.name' | translate }}</th>
+                <!-- 属性 -->
+                <th nzAlign="center">{{ 'property' | translate }}</th>
+                <!-- 状态 -->
+                <th nzAlign="center">{{ 'state' | translate }}</th>
+                <!-- 操作 -->
+                <th nzAlign="center" nzRight="0px">
+                  {{ 'table.operation' | translate }}
+                </th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td style="width: 8vw" nzAlign="center" nzLeft="0px">{{ data.code }}</td>
+                <td nzAlign="center" nzLeft="8vw">{{ data.name }}</td>
+
+                <!-- 属性  1采购   2销售 -->
+                <td nzAlign="center">
+                  <ng-container *ngIf="data.attribute == 1">
+                    <span style="color:#f50;">{{ 'procurement' | translate }}</span>
+                  </ng-container>
+                  <ng-container *ngIf="data.attribute == 2">
+                    <span style="color:#108ee9;">{{ 'sales' | translate }}</span>
+                  </ng-container>
+                </td>
+
+                <!-- 状态  0未启用    1启用-->
+                <td nzAlign="center">
+                  <ng-container *ngIf="data.status == 0">
+                    <nz-tag [nzColor]="'orange'">{{ 'enabled.not' | translate }}</nz-tag>
+                  </ng-container>
+                  <ng-container *ngIf="data.status == 1">
+                    <nz-tag [nzColor]="'green'">{{ 'enabled' | translate }}</nz-tag>
+                  </ng-container>
+                </td>
+
+                <!-- 操作按钮 详情 修改 删除-->
+                <td nzAlign="center" nzRight="0px" style="width: 30%;">
+                  <a href="javascript:void(0);" (click)="detailProduct(data.id)">
+                    {{ 'table.view' | translate }}
+                  </a>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <!-- 修改 跟新增同一个抽屉-->
+                  <a href="javascript:void(0);" (click)="addProduct(data.id)">
+                    {{ 'table.update' | translate }}
+                  </a>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <!-- 删除 -->
+                  <a
+                    nz-popconfirm
+                    nzTitle="{{ 'isdelete' | translate }}"
+                    nzOkText="{{ 'yes' | translate }}"
+                    nzCancelText="{{ 'no' | translate }}"
+                    (nzOnConfirm)="delPro(data.id)"
+                  >
+                    {{ 'table.delete' | translate }}
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</div>

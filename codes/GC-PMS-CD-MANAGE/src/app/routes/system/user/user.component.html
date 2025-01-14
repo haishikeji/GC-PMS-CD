@@ -1,0 +1,157 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button nz-button nzType="primary" acl [acl-ability]="'user:add'"
+      (click)="systemUserAddComponent.add()">{{'button.add'|translate}}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <form nz-form>
+    <div nz-row [nzGutter]="24">
+      <div nz-col nzMd="24" nzLg="6">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">{{'customer.account.number'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <input nz-input [(ngModel)]="user.username" name="username" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">{{'user.name'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <input nz-input [(ngModel)]="user.realname" name="realname" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="">{{'pm.project.archives.role'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="18" [nzXs]="24">
+            <nz-select nzShowSearch nzAllowClear [(ngModel)]="role" name="role"
+              nzPlaceHolder="{{'select.please.choose'|translate}}" nzMode="multiple">
+              <nz-option *ngFor="let role of roleList" [nzValue]="role.id" [nzLabel]="role.roleName"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <button nz-button nzType="primary" (click)="getUsers(1)">{{'button.query'|translate}}</button>
+        </nz-form-control>
+      </div>
+    </div>
+  </form>
+  <nz-table nzSize="small" #userTable [nzData]="listOfMapData" [nzFrontPagination]="false" [nzLoading]="isSpinning"
+    [nzPageIndex]="page.current" [nzTotal]="page.total" (nzPageIndexChange)="pageIndexChange($event)">
+    <thead>
+      <tr>
+        <!-- <th>图标</th> -->
+        <th>{{'customer.account.number'|translate}}</th>
+        <th>{{'user.name'|translate}}</th>
+        <th>{{'agent'|translate}}</th>
+        <!-- <th>{{'avatar'|translate}}</th> -->
+        <th>{{'sex'|translate}}</th>
+        <th>{{'role.assignments'|translate}}</th>
+        <!-- <th>{{'phone'|translate}}</th> -->
+        <th>{{'e-mail'|translate}}</th>
+        <th>{{'state'|translate}}</th>
+        <th>{{'table.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of userTable.data">
+        <td>{{ item.username }}</td>
+        <td>{{ item.realname}}</td>
+        <td>{{ item.personnelName}}</td>
+        <!-- <td>
+          <nz-avatar nzIcon="user" nzSrc="{{picturePrefix}}{{item.avatar}}"></nz-avatar>
+        </td> -->
+        <!-- 性别 -->
+        <td>
+          <!-- 男 -->
+          <nz-tag *ngIf="item.sex===1" [nzColor]="'blue'">{{'male'|translate}}</nz-tag>
+          <!-- 女 -->
+          <nz-tag *ngIf="item.sex===2" [nzColor]="'magenta'">{{'female'|translate}}</nz-tag>
+        </td>
+        <!-- <td>{{ item.phone }}</td> -->
+        <td>{{ item.roleName}}</td>
+        <td>{{ item.email}}</td>
+        <!-- 状态 -->
+        <td>
+          <!-- 正常 -->
+          <nz-tag *ngIf="item.status===1" [nzColor]="'green'">{{'TimedTask.Status.normal'|translate}}</nz-tag>
+          <!-- 冻结 -->
+          <nz-tag *ngIf="item.status===2" [nzColor]="'red'">{{'TimedTask.Status.Frozen'|translate}}</nz-tag>
+        </td>
+        <td>
+          <a href="javascript:;" (click)="systemUserViewComponent.openView(item.id)">{{'table.view'|translate}}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <nz-dropdown>
+            <a nz-dropdown> {{'menu.more'|translate}} <i nz-icon type="down"></i> </a>
+            <ul nz-menu nzSelectable>
+              <!-- 修改 -->
+              <li nz-menu-item acl [acl-ability]="'user:edit'">
+                <a href="javascript:;" (click)="systemUserEditComponent.edit(item.id)">{{'table.update'|translate}}</a>
+              </li>
+              <!-- 密码 -->
+              <li nz-menu-item acl [acl-ability]="'user:password'">
+                <a href="javascript:;"
+                  (click)="systemUserPasswordComponent.openPassword(item.id)">{{'password'|translate}}</a>
+              </li>
+              <!-- 删除 -->
+              <li nz-menu-item acl [acl-ability]="'user:delete'">
+                <a nz-popconfirm nzTitle="{{'confirm.to.delete'|translate}}?" nzOkText="{{'yes'|translate}}"
+                  nzCancelText="{{'no'|translate}}" (nzOnConfirm)="confirmDel(item.id)"
+                  (nzOnCancel)="cancelDel()">{{'table.delete'|translate}}</a>
+              </li>
+              <!-- 冻结 -->
+              <li nz-menu-item acl [acl-ability]="'user:frozen'">
+                <a href="javascript:;" nz-popconfirm nzTitle="{{'are.you.sure.to.freeze'|translate}}?"
+                  nzOkText="{{'yes'|translate}}" nzCancelText="{{'no'|translate}}"
+                  (nzOnConfirm)="confirmFrozen(item.id)" (nzOnCancel)="cancelDel()">{{'freeze'|translate}}</a>
+              </li>
+              <!-- 解冻 -->
+              <li nz-menu-item acl [acl-ability]="'user:unfrozen'">
+                <a href="javascript:;" nz-popconfirm nzTitle="{{'are.you.sure.to.thaw'|translate}}?"
+                  nzOkText="{{'yes'|translate}}" nzCancelText="{{'no'|translate}}"
+                  (nzOnConfirm)="confirmUnfrozen(item.id)" (nzOnCancel)="cancelDel()">{{'thaw'|translate}}</a>
+              </li>
+              <!-- 代理人 -->
+              <li nz-menu-item acl [acl-ability]="'user:agent-person'">
+                <a href="javascript:;"
+                  (click)="agentPerson(item.id,item.username,item.personnelId)">{{'agent'|translate}}</a>
+              </li>
+            </ul>
+          </nz-dropdown>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+</nz-card>
+<app-system-user-add #systemUserAddComponent (afterSave)="getUsers(pageNo)"></app-system-user-add>
+<app-system-user-edit #systemUserEditComponent (afterSave)="getUsers(pageNo)"></app-system-user-edit>
+<app-system-user-view #systemUserViewComponent></app-system-user-view>
+<app-system-user-password #systemUserPasswordComponent></app-system-user-password>
+
+<nz-modal [(nzVisible)]="isVisible" nzTitle="{{title}}" (nzOnCancel)="handleCancel()" (nzOnOk)="handleOk()">
+  <div nz-row [nzGutter]="24">
+    <div nz-col nzMd="24" nzLg="24">
+      <form nz-form [formGroup]="validateForm">
+        <nz-form-item>
+          <nz-form-label [nzSm]="3" [nzXs]="24" nzFor="" nzRequired="true">{{'personnel'|translate}}</nz-form-label>
+          <nz-form-control [nzSm]="21" [nzXs]="24">
+            <nz-cascader formControlName="values" style="width: 100%"
+              nzPlaceHolder="{{'please.select.person'|translate}}" [nzOptions]="nzOptions" [nzLabelProperty]="'label'"
+              [nzValueProperty]="'value'" [nzShowSearch]="true">
+            </nz-cascader>
+            <nz-form-explain *ngIf="validateForm.get('values')?.dirty && validateForm.get('values')?.errors">
+              <ng-container *ngIf="validateForm.get('values')?.hasError('required')">
+                {{'please.select.user.agent'|translate}}
+              </ng-container>
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </form>
+    </div>
+  </div>
+</nz-modal>

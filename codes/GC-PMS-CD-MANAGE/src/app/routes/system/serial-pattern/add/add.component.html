@@ -1,0 +1,31 @@
+<form nz-form>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{'table.name'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="serialPattern.tableName" name="tableName" nz-input placeholder="{{'enter.table.name'|translate}}"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{'field.name'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" >
+      <input [(ngModel)]="serialPattern.fieldName" name="fieldName" nz-input placeholder="{{'input.field.name'|translate}}"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{'menu.Numbering.Mode'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24" >
+      <input [(ngModel)]="serialPattern.serialPattern" name="serialPattern" nz-input placeholder="{{'menu.Numbering.Mode'|translate}}({{'format'|translate}}：{固定字符串}+[{{'form.field'|translate}}]+yyyyMMdd+4)。{{'the.first.letter.of.the.table.field.is.capitalized'|translate}}，{{'like'|translate}}role_code{{'written'|translate}}RoleCode"/>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{'description'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="serialPattern.description" name="description" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>{{'button.close'|translate}}</span></button>
+    <button type="button" (click)="save()" class="ant-btn ant-btn-primary"><span>{{'button.save'|translate}}</span></button>
+  </div>
+</form>

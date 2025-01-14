@@ -1,0 +1,194 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 人员 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'personnel' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-tree-select
+              style="width: 100%"
+              [nzNodes]="personnelList"
+              nzShowSearch
+              [nzMultiple]="true"
+              formControlName="personIds"
+              id="personIds"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              [(ngModel)]="personIds"
+              [nzMaxTagCount]="3"
+              [nzAllowClear]="true"
+            >
+            </nz-tree-select>
+            <nz-form-explain *ngIf="validateForm.get('personIds')?.dirty && validateForm.get('personIds')?.errors">
+              <!--请选择人员  -->
+              {{ 'select.please.choose' | translate }}{{ 'personnel' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!--日期  -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'Date' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-date-picker formControlName="date" id="date" [(ngModel)]="reExpenseSlip.date"> </nz-date-picker>
+            <nz-form-explain *ngIf="validateForm.get('date')?.dirty && validateForm.get('date')?.errors">
+              <!-- 请选择日期 -->
+              {{ 'select.please.choose' | translate }}{{ 'Date' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              formControlName="proId"
+              id="proId"
+              [(ngModel)]="reExpenseSlip.proId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+            >
+              <nz-option *ngFor="let i of proList" [nzValue]="i.id" [nzLabel]="i.proName"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('proId')?.dirty && validateForm.get('proId')?.errors">
+              <!-- 请选择项目名称 -->
+              {{ 'select.please.choose' | translate }}{{ 'cost.item.name' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 制单人 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'pm.quotation.Single.person' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ reExpenseSlip.producer }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 审核人 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">
+            {{ 'pm.quotation.check' | translate }}{{ 'person' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ reExpenseSlip.reviewer }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <!-- 新增按钮 -->
+        <!-- <button (click)="addRow()" nz-button nzType="primary">{{ 'button.add' | translate }}</button> -->
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+          style="padding-top: 5px;"
+          nzSize="small"
+          class="tableTdPadding"
+          #basicTable
+          [nzData]="itemDataList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <!-- 序号 -->
+              <th nzAlign="center">{{ 'milestone.serial.number' | translate }}</th>
+              <!-- 费用项目 -->
+              <th>{{ 'pm.quotation.fee' | translate }}{{ 'project' | translate }}</th>
+              <!-- 金额 -->
+              <th>{{ 'their.fees.money' | translate }}</th>
+              <!-- 上传附件 -->
+              <th>
+                {{ 'pm.project.archives.file.up.load' | translate}}
+                {{ 'pm.project.archives.file.up.Enclosure' | translate }}
+              </th>
+              <!--操作  -->
+              <th>{{ 'table.operation' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td nzAlign="center">{{ i + 1 }}</td>
+              <td style="width: 20%;">
+                <nz-select
+                  style="width: 100%;"
+                  nzShowSearch
+                  [(ngModel)]="data.costId"
+                  nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                >
+                  <nz-option *ngFor="let i of costIdList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+                </nz-select>
+              </td>
+              <td>
+                <nz-input-number
+                  [(ngModel)]="data.price"
+                  [nzMin]="0"
+                  [nzMax]="10000000000"
+                  [nzStep]="1"
+                  [nzFormatter]="formatterDollar"
+                  [nzParser]="parserDollar"
+                ></nz-input-number>
+              </td>
+              <td>
+                <button nz-button nzType="primary" (click)="uploadDownload(data)">
+                  {{ 'pm.project.archives.files.needed.to.be.uploaded.to.the.software' | translate }}
+                </button>
+                <!-- 几个文件 -->
+                &nbsp;<nz-tag [nzColor]="'blue'">{{ data.files.length }}</nz-tag
+                >{{ 'File' | translate }}
+              </td>
+              <td>
+                <!-- 是否删除 -->
+                <a
+                  nz-popconfirm
+                  nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+                  (nzOnConfirm)="deleteRow(data.sort)"
+                >
+                  {{ 'table.delete' | translate }}
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td colSpan="5">
+                <button (click)="addRow()" nz-button nzType="dashed" nzBlock>{{ 'button.add' | translate }}</button>
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+</nz-spin>
+
+<!-- 按钮 -->
+<div class="base">
+  <!-- 关闭按钮 -->
+  <a
+    nz-popconfirm
+    nzTitle="{{ 'pm.contract.contract.add.button.cancel' | translate }}"
+    (nzOnConfirm)="close()"
+    style="padding-right: 8px"
+  >
+    <button nz-button>{{ 'pm.quotation.cancel' | translate }}</button>
+  </a>
+  <!-- 保存按钮 -->
+  <button nz-button nzType="primary" class="ant-btn ant-btn-primary" (click)="submitForm()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.finish' | translate }}</span>
+  </button>
+</div>

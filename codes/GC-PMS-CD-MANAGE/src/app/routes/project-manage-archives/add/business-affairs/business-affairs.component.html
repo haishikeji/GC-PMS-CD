@@ -1,0 +1,878 @@
+<!-- 开发 -->
+<form nz-form>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户编码 -->
+        <nz-form-label [nzSpan]="8">{{ 'customer.code' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.cusCode }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户名称 -->
+        <nz-form-label [nzSpan]="8">{{ 'customer.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.cusName }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 销售经理 -->
+        <nz-form-label [nzSpan]="8">{{ 'sales' | translate }}{{ 'manager' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.saleManager }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 业务员 -->
+        <nz-form-label [nzSpan]="8">{{ 'salesman' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.saleMan }}</nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目总金额 -->
+        <nz-form-label [nzSpan]="8">{{ 'total.amount.of.the.project' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.totalPrice }}</nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 已回款金额 -->
+        <nz-form-label [nzSpan]="8">{{ 'amount.paid.back' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="16" [nzXs]="24">{{ projectManageArchives.received }}</nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<!-- 收款计划 -->
+<nz-card nzTitle="收款计划" nzSize="small">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <!-- 新增按钮 -->
+      <button (click)="collectionPlanAdd()" nz-button nzType="primary">{{ 'button.add' | translate }}</button>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        style="padding-top: 5px;"
+        nzSize="small"
+        class="tableTdPadding"
+        #basicTable
+        [nzData]="collectionPlanList"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+        [nzScroll]="{ x: '123vw' }"
+      >
+        <!-- <thead>
+          <tr>
+            <th>{{ 'customer.contacts.name' | translate }}</th>
+            <th>{{ 'customer.contacts.telephone' | translate }}</th>
+            <th>{{ 'customer.contacts.mail' | translate }}</th>
+            <th>{{ 'customer.is.it.default' | translate }}</th>
+            <th>{{ 'customer.contacts.client.address' | translate }}</th>
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead> -->
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td style="width: 7%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.planId"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="planIdChange(data, '1')"
+              >
+                <nz-option *ngFor="let i of planList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <!-- 第一笔 -->
+            <td style="width: 4%;">{{ 'the.first' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price1"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                (nzBlur)="priceBlur()"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId1"
+                nzPlaceHolder="请选择"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileIdChange(data)"
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc1" nz-input maxlength="140" (blur)="descChange()" />
+            </td>
+            <!-- 第二笔 -->
+            <td style="width: 4%;">{{ 'the.second' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price2"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                (nzBlur)="priceBlur()"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId2"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileIdChange(data)"
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc2" nz-input maxlength="140" (blur)="descChange()" />
+            </td>
+            <!-- 第三笔 -->
+            <td style="width: 4%;">{{ 'the.third' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price3"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                (nzBlur)="priceBlur()"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId3"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileIdChange(data)"
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc3" nz-input maxlength="140" (blur)="descChange()" />
+            </td>
+            <!-- 第四笔 -->
+            <td style="width: 4%;">{{ 'the.fourth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price4"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                (nzBlur)="priceBlur()"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId4"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileIdChange(data)"
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc4" nz-input maxlength="140" (blur)="descChange()" />
+            </td>
+            <!-- 第五笔 -->
+            <td style="width: 4%;">{{ 'the.fifth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price5"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                (nzBlur)="priceBlur()"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId5"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileIdChange(data)"
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc5" nz-input maxlength="140" (blur)="descChange()" />
+            </td>
+            <td nzRight="0">
+              <!-- 是否删除 -->
+              <a
+                nz-popconfirm
+                nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+                (nzOnConfirm)="collectionPlanDelete(data.sort)"
+                >{{ 'table.delete' | translate }}</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>
+
+<!-- 回款情况 -->
+<nz-card nzTitle="{{ 'receivable.situation' | translate }}" nzSize="small">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <!-- 新增按钮 -->
+      <!-- <button (click)="paymentCollectionAdd()" nz-button nzType="primary">{{ 'button.add' | translate }}</button> -->
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        style="padding-top: 5px;"
+        nzSize="small"
+        class="tableTdPadding"
+        #basicTable2
+        [nzData]="paymentCollectionList"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+        [nzScroll]="{ x: '123vw' }"
+      >
+        <!-- <thead>
+          <tr>
+            <th>{{ 'customer.contacts.name' | translate }}</th>
+            <th>{{ 'customer.contacts.telephone' | translate }}</th>
+            <th>{{ 'customer.contacts.mail' | translate }}</th>
+            <th>{{ 'customer.is.it.default' | translate }}</th>
+            <th>{{ 'customer.contacts.client.address' | translate }}</th>
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead> -->
+        <tbody>
+          <tr *ngFor="let data of basicTable2.data">
+            <td style="width: 7%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.planId"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="planIdChange(data, '2')"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of planList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 4%;">{{ 'the.first' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price1"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId1"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileChange(data)"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc1" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td style="width: 4%;">{{ 'the.second' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price2"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId2"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileChange(data)"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc2" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td style="width: 4%;">{{ 'the.third' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price3"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId3"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileChange(data)"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc3" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td style="width: 4%;">{{ 'the.fourth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price4"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId4"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileChange(data)"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc4" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td style="width: 4%;">{{ 'the.fifth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price5"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId5"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="mileChange(data)"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc5" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td nzRight="0">
+              <!-- 是否删除 -->
+              <a
+                nz-popconfirm
+                nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+                (nzOnConfirm)="paymentCollectionDelete(data.sort)"
+              >
+                {{ 'table.delete' | translate }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>
+
+<!-- 付款计划 -->
+<nz-card nzTitle="{{ 'payFor' | translate }}{{ 'the.plan' | translate }}" nzSize="small">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <!-- 新增按钮 -->
+      <!-- <button (click)="paymentPlanAdd()" nz-button nzType="primary">{{ 'button.add' | translate }}</button> -->
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        style="padding-top: 5px;"
+        nzSize="small"
+        class="tableTdPadding"
+        #basicTable3
+        [nzData]="paymentPlanList"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+        [nzScroll]="{ x: '123vw' }"
+      >
+        <!-- <thead>
+          <tr>
+            <th>{{ 'customer.contacts.name' | translate }}</th>
+            <th>{{ 'customer.contacts.telephone' | translate }}</th>
+            <th>{{ 'customer.contacts.mail' | translate }}</th>
+            <th>{{ 'customer.is.it.default' | translate }}</th>
+            <th>{{ 'customer.contacts.client.address' | translate }}</th>
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead> -->
+        <tbody>
+          <tr *ngFor="let data of basicTable3.data">
+            <td style="width: 7%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.planId"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="planIdChange(data, '3')"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of planList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <!-- 第一笔 -->
+            <td style="width: 4%;">{{ 'the.first' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price1"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId1"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc1" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <!-- 第二笔 -->
+            <td style="width: 4%;">{{ 'the.second' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price2"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId2"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc2" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <!-- 第三笔 -->
+            <td style="width: 4%;">{{ 'the.third' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price3"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId3"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc3" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <!-- 第四笔 -->
+            <td style="width: 4%;">{{ 'the.fourth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price4"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId4"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc4" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <!-- 第五笔 -->
+            <td style="width: 4%;">{{ 'the.fifth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price5"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId5"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc5" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td nzRight="0">
+              <!-- 是否删除 -->
+              <a
+                nz-popconfirm
+                nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+                (nzOnConfirm)="paymentPlanDelete(data.sort)"
+              >
+                {{ 'table.delete' | translate }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>
+
+<!-- 付款情况 -->
+<nz-card nzTitle="{{ 'payFor' | translate }}{{ 'situation' | translate }}" nzSize="small">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <!-- 新增按钮 -->
+      <!-- <button (click)="paymentStatusAdd()" nz-button nzType="primary">{{ 'button.add' | translate }}</button> -->
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        style="padding-top: 5px;"
+        nzSize="small"
+        class="tableTdPadding"
+        #basicTable4
+        [nzData]="paymentStatusList"
+        [nzFrontPagination]="false"
+        [nzShowPagination]="false"
+        [nzScroll]="{ x: '123vw' }"
+      >
+        <!-- <thead>
+          <tr>
+            <th>{{ 'customer.contacts.name' | translate }}</th>
+            <th>{{ 'customer.contacts.telephone' | translate }}</th>
+            <th>{{ 'customer.contacts.mail' | translate }}</th>
+            <th>{{ 'customer.is.it.default' | translate }}</th>
+            <th>{{ 'customer.contacts.client.address' | translate }}</th>
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead> -->
+        <tbody>
+          <tr *ngFor="let data of basicTable4.data">
+            <td style="width: 7%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.planId"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                (ngModelChange)="planIdChange(data, '4')"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of planList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 4%;">{{ 'the.first' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price1"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId1"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc1" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td style="width: 4%;">{{ 'the.second' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price2"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId2"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc2" nz-input maxlength="140" [disabled]="true" />
+            </td>
+
+            <!-- 1 -->
+            <td style="width: 4%;">{{ 'the.third' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price3"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId3"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc3" nz-input maxlength="140" [disabled]="true" />
+            </td>
+
+            <!-- 2 -->
+            <td style="width: 4%;">{{ 'the.fourth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price4"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId4"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc4" nz-input maxlength="140" [disabled]="true" />
+            </td>
+
+            <!-- 3 -->
+            <td style="width: 4%;">{{ 'the.fifth' | translate }}</td>
+            <td style="width: 4%;">
+              <nz-input-number
+                [(ngModel)]="data.price5"
+                [nzMin]="0"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+                [nzMax]="1000000000"
+                [disabled]="true"
+              ></nz-input-number>
+            </td>
+            <td style="width: 5%;">
+              <nz-select
+                style="width: 100%;"
+                nzShowSearch
+                nzAllowClear
+                [(ngModel)]="data.mileId5"
+                nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                [nzDropdownMatchSelectWidth]="false"
+                nzDisabled
+              >
+                <nz-option *ngFor="let i of milestoneList" [nzValue]="i.id" [nzLabel]="i.name"></nz-option>
+              </nz-select>
+            </td>
+            <td style="width: 5%;">
+              <input [(ngModel)]="data.desc5" nz-input maxlength="140" [disabled]="true" />
+            </td>
+            <td nzRight="0">
+              <a
+                nz-popconfirm
+                nzTitle=" {{ 'table.Whether.to.delete' | translate }}?"
+                (nzOnConfirm)="paymentStatusDelete(data.sort)"
+              >
+                {{ 'table.delete' | translate }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

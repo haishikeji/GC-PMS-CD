@@ -1,0 +1,86 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <span id="titleAdd" hidden="true">{{ 'button.add' | translate }}{{ 'customer.archives' | translate }}</span>
+    <span id="titleUpdate" hidden="true">{{ 'table.update' | translate }}{{ 'customer.archives' | translate }}</span>
+    <button (click)="edit('')" nz-button nzType="primary" acl [acl-ability]="'customer:add'">
+      {{ 'button.add' | translate }}
+    </button>
+  </ng-template>
+</page-header>
+
+<nz-card>
+  <form nz-form>
+    <!-- 查询条件 -->
+    <div nz-row nzGutter="24">
+      <div nz-col nzMd="24" nzLg="3">
+        <nz-form-label>{{ 'customer.abbreviation' | translate }}</nz-form-label>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <input nz-input [(ngModel)]="customer.abbreviation" name="abbreviation" />
+      </div>
+      <div nz-col nzMd="24" nzLg="3">
+        <nz-form-label>{{ 'customer.name' | translate }}</nz-form-label>
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <input nz-input [(ngModel)]="customer.name" name="name" />
+      </div>
+      <div nz-col nzMd="24" nzLg="6">
+        <button (click)="query()" nz-button nzType="primary">{{ 'button.query' | translate }}</button>
+        <!-- <button nz-button nzType="primary">{{ 'button.reset' | translate }}</button> -->
+      </div>
+    </div>
+  </form>
+  <!-- 数据表 -->
+  <div nz-row nzGutter="24">
+    <div nz-col nzMd="24" nzLg="24">
+      <nz-table
+        nzSize="small"
+        #basicTable
+        [nzData]="listOfData"
+        [nzFrontPagination]="false"
+        [nzTotal]="page.total"
+        [nzPageIndex]="page.current"
+        (nzPageIndexChange)="pageIndexChange($event)"
+        [nzLoading]="isSpinning"
+      >
+        <thead>
+          <tr>
+            <th>{{ 'customer.code' | translate }}</th>
+            <th>{{ 'customer.name' | translate }}</th>
+            <th>{{ 'customer.shortName' | translate }}</th>
+            <th>{{ 'customer.abbreviation' | translate }}</th>
+            <th>{{ 'customer.contacts.name' | translate }}</th>
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.code }}</td>
+            <td>{{ data.name }}</td>
+            <td>{{ data.shortName }}</td>
+            <td>{{ data.abbreviation }}</td>
+            <td>{{ data.contactPsn }}</td>
+            <td>
+              <a (click)="openDetails(data.id)">{{ 'table.view' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a href="javascript:void(0);" (click)="edit(data.id)" acl [acl-ability]="'customer:update'">{{
+                'table.update' | translate
+              }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <a
+                nz-popconfirm
+                nzTitle="{{ 'confirm.to.delete' | translate }}?"
+                nzOkText="{{ 'yes' | translate }}"
+                nzCancelText="{{ 'no' | translate }}"
+                (nzOnConfirm)="delete(data.id)"
+                acl
+                [acl-ability]="'customer:delete'"
+                >{{ 'table.delete' | translate }}</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

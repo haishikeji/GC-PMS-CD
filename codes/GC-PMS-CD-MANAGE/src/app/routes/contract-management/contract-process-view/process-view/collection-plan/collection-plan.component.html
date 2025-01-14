@@ -1,0 +1,188 @@
+<!-- 收款计划 -->
+<nz-card nzTitle="{{ 'payment.plan' | translate }}" nzSize="small">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+        nzBordered
+          style="padding-top: 5px;"
+          nzSize="small"
+          #basicTable
+          [nzData]="collectionPlanList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+          [nzScroll]="{ x: '123vw' }"
+        >
+          <!-- <thead>
+            <tr>
+              <th>{{ 'customer.contacts.name' | translate }}</th>
+              <th>{{ 'customer.contacts.telephone' | translate }}</th>
+              <th>{{ 'customer.contacts.mail' | translate }}</th>
+              <th>{{ 'customer.is.it.default' | translate }}</th>
+              <th>{{ 'customer.contacts.client.address' | translate }}</th>
+              <th>{{ 'table.operation' | translate }}</th>
+            </tr>
+          </thead> -->
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <td style="width: 7%;">
+                {{data.planName}}
+              </td>
+              <!-- 第一笔 -->
+              <td style="width: 4%;">{{ 'the.first' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price1}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone1}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc1}}
+              </td>
+              <!-- 第二笔 -->
+              <td style="width: 4%;">{{ 'the.second' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price2}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone2}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc2}}
+              </td>
+              <!-- 第三笔 -->
+              <td style="width: 4%;">{{ 'the.third' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price3}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone3}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc3}}
+              </td>
+              <!-- 第四笔 -->
+              <td style="width: 4%;">{{ 'the.fourth' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price4}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone4}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc4}}
+              </td>
+              <!-- 第五笔 -->
+              <td style="width: 4%;">{{ 'the.fifth' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price5}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone5}}
+              </td>
+              <td nzRight="0" style="width: 5%;">
+                {{data.desc5}}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+  
+  <!-- 回款情况 -->
+  <nz-card nzTitle="{{ 'receivable.situation' | translate }}" nzSize="small">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <!-- 新增按钮 -->
+        <!-- <button (click)="paymentCollectionAdd()" nz-button nzType="primary">{{ 'button.add' | translate }}</button> -->
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+        nzBordered
+          style="padding-top: 5px;"
+          nzSize="small"
+          #basicTable2
+          [nzData]="paymentCollectionList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+          [nzScroll]="{ x: '123vw' }"
+        >
+          <!-- <thead>
+            <tr>
+              <th>{{ 'customer.contacts.name' | translate }}</th>
+              <th>{{ 'customer.contacts.telephone' | translate }}</th>
+              <th>{{ 'customer.contacts.mail' | translate }}</th>
+              <th>{{ 'customer.is.it.default' | translate }}</th>
+              <th>{{ 'customer.contacts.client.address' | translate }}</th>
+              <th>{{ 'table.operation' | translate }}</th>
+            </tr>
+          </thead> -->
+          <tbody>
+            <tr *ngFor="let data of basicTable2.data">
+              <td style="width: 7%;">
+               {{data.planName}}
+              </td>
+              <!-- 1 -->
+              <td style="width: 4%;">{{ 'the.first' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price1}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone1}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc1}}
+              </td>
+              <!-- 2 -->
+              <td style="width: 4%;">{{ 'the.second' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price2}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone2}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc2}}
+              </td>
+              <!-- 3 -->
+              <td style="width: 4%;">{{ 'the.third' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price3}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone3}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc3}}
+              </td>
+              <!-- 4 -->
+              <td style="width: 4%;">{{ 'the.fourth' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price4}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone4}}
+              </td>
+              <td style="width: 5%;">
+                {{data.desc4}}
+              </td>
+              <!-- 5 -->
+              <td style="width: 4%;">{{ 'the.fifth' | translate }}</td>
+              <td style="width: 4%;">
+                {{data.price5}}
+              </td>
+              <td style="width: 5%;">
+                {{data.milestone5}}
+              </td>
+              <td nzRight="0" style="width: 5%;">
+                {{data.desc5}}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+  

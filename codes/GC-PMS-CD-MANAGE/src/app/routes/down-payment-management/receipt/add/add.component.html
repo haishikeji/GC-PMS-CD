@@ -1,0 +1,201 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'documents.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 自动生成 -->
+            {{ 'aoto.create' | translate }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 客户编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'customer.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ managerPaymentAndReceiptSlip.cusCode }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 客户名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'customer.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ managerPaymentAndReceiptSlip.cusName }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 项目编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'project.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ managerPaymentAndReceiptSlip.proCode }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 项目名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-select
+              style="widows: 100%;"
+              nzShowSearch
+              nzAllowClear
+              formControlName="proId"
+              id="proId"
+              [(ngModel)]="managerPaymentAndReceiptSlip.proId"
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              (ngModelChange)="proChange($event)"
+            >
+              <nz-option *ngFor="let i of proList" [nzValue]="i.id" [nzLabel]="i.proName"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="validateForm.get('proId')?.dirty && validateForm.get('proId')?.errors">
+              {{ 'select.please.choose' | translate }}{{ 'cost.item.name' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <!-- 子表数据 -->
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <!-- 新增按钮 -->
+        <button (click)="addRow()" nz-button nzType="primary">{{ 'button.add' | translate }}</button>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+          style="padding-top: 5px;"
+          nzSize="small"
+          class="tableTdPadding"
+          #basicTable
+          [nzData]="itemDataList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <!-- 序号 -->
+              <th nzAlign="center">{{ 'milestone.serial.number' | translate }}</th>
+              <!-- 收付款条线 -->
+              <th>{{ 'receiving.line' | translate }}</th>
+              <!-- 里程碑 -->
+              <th>{{ 'milestone.milestone' | translate }}</th>
+              <!-- 收款金额 -->
+              <th>{{ 'collection' | translate }}{{ 'their.fees.money' | translate }}</th>
+              <!-- 说明 -->
+              <th>{{ 'instructions' | translate }}</th>
+              <!-- 对应发票 -->
+              <th>{{ 'corresponding.invoice' | translate }}</th>
+              <!-- 操作 -->
+              <th>{{ 'table.operation' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td nzAlign="center">{{ i + 1 }}</td>
+              <td style="width: 20%;">
+                <nz-select
+                  style="width: 100%;"
+                  nzShowSearch
+                  [(ngModel)]="data.coArchivesId"
+                  nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                  (ngModelChange)="coArchivesIdChange(data)"
+                >
+                  <nz-option *ngFor="let i of coArchivesList" [nzValue]="i.id" [nzLabel]="i.planName"></nz-option>
+                </nz-select>
+              </td>
+              <td style="width: 20%;">
+                <nz-select
+                  style="width: 100%;"
+                  nzShowSearch
+                  [(ngModel)]="data.proArchivesId"
+                  nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                  (ngModelChange)="proBusinessChange(data)"
+                >
+                  <nz-option
+                    *ngFor="let i of data.proArchivesIdList"
+                    [nzValue]="i.mileId"
+                    [nzLabel]="i.mileName"
+                  ></nz-option>
+                </nz-select>
+              </td>
+              <td>
+                <nz-input-number
+                  [(ngModel)]="data.coPrvice"
+                  [nzMin]="0"
+                  [nzMax]="10000000000"
+                  [nzStep]="1"
+                  [nzFormatter]="formatterDollar"
+                  [nzParser]="parserDollar"
+                  (ngModelChange)="coPrviceKeyUp()"
+                ></nz-input-number>
+              </td>
+              <td>
+                <textarea rows="1" nz-input [(ngModel)]="data.explain"></textarea>
+              </td>
+              <td style="width: 20%;">
+                <nz-select
+                  style="width: 100%;"
+                  nzAllowClear
+                  nzShowSearch
+                  [(ngModel)]="data.invoiceId"
+                  nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                >
+                  <nz-option *ngFor="let i of invoiceIdList" [nzValue]="i.id" [nzLabel]="i.billcode"></nz-option>
+                </nz-select>
+              </td>
+              <td>
+                <a
+                  nz-popconfirm
+                  nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+                  (nzOnConfirm)="deleteRow(data.sort)"
+                >
+                  {{ 'table.delete' | translate }}
+                </a>
+              </td>
+            </tr>
+            <tr *ngIf="itemDataList && itemDataList.length > 0">
+              <td colSpan="2"></td>
+              <!-- 收款总金额 -->
+              <td>
+                <strong>{{ 'collection.total.amount' | translate }}</strong>
+              </td>
+              <td>
+                <strong>$ {{ managerPaymentAndReceiptSlip.totalPrice }}</strong>
+              </td>
+              <td colSpan="3"></td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 关闭按钮 -->
+  <a
+    nz-popconfirm
+    nzTitle="{{ 'pm.contract.contract.add.button.cancel' | translate }}"
+    (nzOnConfirm)="close()"
+    style="padding-right: 8px"
+  >
+    <button nz-button>{{ 'pm.quotation.cancel' | translate }}</button>
+  </a>
+  <!-- 保存按钮 -->
+  <button nz-button nzType="primary" class="ant-btn ant-btn-primary" (click)="submitForm()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.finish' | translate }}</span>
+  </button>
+</div>

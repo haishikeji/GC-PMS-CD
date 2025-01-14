@@ -1,0 +1,81 @@
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="24">
+    <!-- 新增按钮 -->
+    <!-- <button (click)="addRow()" nz-button nzType="primary">{{ 'button.add' | translate }}</button> -->
+  </div>
+</div>
+<div nz-row [nzGutter]="24">
+  <div nz-col [nzSpan]="24">
+    <nz-table
+      style="padding-top: 5px;"
+      nzSize="small"
+      class="tableTdPadding"
+      #basicTable
+      [nzData]="itemDataList"
+      [nzFrontPagination]="false"
+      [nzShowPagination]="false"
+    >
+      <thead>
+        <tr>
+          <!-- 序号 -->
+          <th nzAlign="center">{{ 'milestone.serial.number' | translate }}</th>
+          <!-- 公司 -->
+          <th>{{ 'in.company' | translate }}</th>
+          <!-- 部门 -->
+          <th>{{ 'depart' | translate }}</th>
+          <!-- 操作 -->
+          <th>{{ 'table.operation' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let data of basicTable.data; let i = index">
+          <td style="width: 10%;" nzAlign="center">{{ i + 1 }}</td>
+          <td style="width: 50%;">
+            <nz-select
+              style="width: 100%;"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              [nzDisabled]="false"
+              [(ngModel)]="data.pkOrgId"
+              (ngModelChange)="companyChange(data)"
+            >
+              <ng-container *ngFor="let org of listOrg">
+                <nz-option nzLabel="{{ org.departName }}" nzValue="{{ org.id }}"></nz-option>
+              </ng-container>
+            </nz-select>
+          </td>
+          <td style="width: 30%;">
+            <nz-select
+              style="width: 100%;"
+              nzShowSearch
+              nzAllowClear
+              nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+              [nzDisabled]="false"
+              [(ngModel)]="data.departId"
+              name="departId"
+            >
+              <ng-container *ngFor="let de of data.listDepart">
+                <nz-option nzLabel="{{ de.departName }}" nzValue="{{ de.id }}"></nz-option>
+              </ng-container>
+            </nz-select>
+          </td>
+          <td style="width: 10%;">
+            <!-- 是否删除 -->
+            <a
+              nz-popconfirm
+              nzTitle="{{ 'table.Whether.to.delete' | translate }}?"
+              (nzOnConfirm)="deleteRow(data.sort)"
+              >{{ 'table.delete' | translate }}</a
+            >
+          </td>
+        </tr>
+        <tr>
+          <td colSpan="4">
+            <button (click)="addRow()" nz-button nzType="dashed" nzBlock>{{ 'button.add' | translate }}</button>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+  </div>
+</div>

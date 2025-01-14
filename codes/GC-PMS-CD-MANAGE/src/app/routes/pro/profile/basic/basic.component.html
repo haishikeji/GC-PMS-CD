@@ -1,0 +1,55 @@
+<!-- 基础详情页 -->
+<page-header [title]="'{{ 'menu.profile.basic' | translate }}'"></page-header>
+<nz-card [nzHoverable]="true" [nzBordered]="false">
+
+  <!-- 退款申请 -->
+  <sv-container size="large" title="{{ 'refund.application' | translate }}">
+    <!-- 取货单号 -->
+    <sv label="{{ 'take.invoice.number' | translate }}">1000000000</sv>
+    <!-- 状态 -->
+    <sv label="{{ 'state' | translate }}">已取货</sv>
+    <!-- 销售单号 -->
+    <sv label="{{ 'sales.orderNumber' | translate }}">1234123421</sv>
+    <!-- 子订单 -->
+    <sv label="{{ 'child.orders' | translate }}">3214321432</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+
+  <!-- 用户信息 -->
+  <sv-container size="large" title="{{ 'user.info' | translate }}">
+    <!-- 用户姓名 -->
+    <sv label="{{ 'user.name' | translate }}">付小小</sv>
+    <!-- 联系电话 -->
+    <sv label="{{ 'contact.phone.number' | translate }}">18100000000</sv>
+    <!-- 常用快递 -->
+    <sv label="{{ 'commonly.used.express' | translate }}">菜鸟仓储</sv>
+    <!-- 取货地址 -->
+    <sv label="{{ 'pickup.address' | translate }}">浙江省杭州市西湖区万塘路18号</sv>
+    <!-- 备注 -->
+    <sv label="{{ 'memo' | translate }}">无</sv>
+  </sv-container>
+  <nz-divider></nz-divider>
+  
+  <!-- 退货商品 -->
+  <div class="text-lg mb-md">{{ 'return.goods' | translate }}</div>
+  <st #st [data]="goods" [columns]="goodsColumns" [body]="goodsBody" [page]="{ show: false }">
+    <ng-template #goodsBody>
+      <tr>
+        <!--  合计-->
+        <td>{{ 'pm.total' | translate }}</td>
+        <td></td>
+        <td></td>
+        <td class="text-right"></td>
+        <td class="text-right">
+          <strong>{{ basicNum }}</strong>
+        </td>
+        <td class="text-right">
+          <strong>{{ amountNum | _currency }}</strong>
+        </td>
+      </tr>
+    </ng-template>
+  </st>
+  <!--退货进度  -->
+  <div class="text-lg my-md">{{ 'return.schedule' | translate }}</div>
+  <st [data]="progress" [columns]="progressColumns" [page]="{ show: false }"></st>
+</nz-card>

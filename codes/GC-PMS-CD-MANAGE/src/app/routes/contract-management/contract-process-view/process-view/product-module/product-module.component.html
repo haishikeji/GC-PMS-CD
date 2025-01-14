@@ -1,0 +1,130 @@
+<!-- 产品 -->
+<nz-card nzTitle="{{ 'product' | translate }}">
+  <!-- 表格 -->
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table #productRowTable nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false" nzBordered
+        [nzData]="productList">
+        <thead>
+          <tr>
+            <!-- 产品编码 -->
+            <th nzWidth="10%">{{ 'product' | translate }}{{ 'table.thead.code' | translate }}</th>
+            <!-- 产品名称 -->
+            <th nzWidth="17%">{{ 'product' | translate }}{{ 'contract.name' | translate }}</th>
+
+            <!-- 折扣率 -->
+            <th nzWidth="9%">{{ 'The discount' | translate }}</th>
+            <!-- 标准报价 -->
+            <th nzWidth="9%">{{ 'standard.quotation' | translate }}</th>
+
+            <!-- 折扣后单价 -->
+            <th nzWidth="9%">
+              {{ 'pm.quotation.Discount' | translate }}
+              {{ 'after' | translate }}
+              {{ 'price' | translate }}
+            </th>
+
+            <!-- 标准金额 -->
+            <th nzWidth="9%">{{ 'standard.amount' | translate }}</th>
+
+            <!-- 折扣后金额 -->
+            <th nzWidth="9%">
+              {{ 'pm.quotation.Discount' | translate }}
+              {{ 'after' | translate }}
+              {{ 'their.fees.money' | translate }}
+            </th>
+
+            <!-- 成本单价 -->
+            <th nzWidth="9%">
+              {{ 'cost' | translate }}
+              {{ 'price' | translate }}
+            </th>
+
+            <!--成本金额  -->
+            <th nzWidth="9%">
+              {{ 'cost' | translate }}
+              {{ 'their.fees.money' | translate }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of productRowTable.data" class="editable-row">
+            <td>{{ data.code }}</td>
+            <td>
+              {{ data.name }}
+            </td>
+            <td>
+              {{ data.discountRate }}
+            </td>
+            <td>
+              {{ data.standardQuotation }}
+            </td>
+            <td>
+              {{ data.unitPriceAfterDiscount }}
+            </td>
+            <td>
+              {{ data.standardAmount }}
+            </td>
+            <td>
+              {{ data.amountAfterDiscount }}
+            </td>
+            <td>
+              {{ data.costUnitPrice }}
+            </td>
+            <td>
+              {{ data.costAmount }}
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>
+
+<!-- 模块 -->
+<nz-card nzTitle="{{ 'module' | translate }}">
+  <nz-tabset>
+    <nz-tab *ngFor="let product of productList" [nzTitle]="product.name">
+      <!-- 表格 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-table #moduleRowTable nzSize="small" [nzFrontPagination]="false" [nzShowPagination]="false" nzBordered
+            [nzData]="product.contractFileModularList">
+            <thead>
+              <tr>
+                <!-- 产品模块编码 -->
+                <th nzWidth="30%">{{ 'product' | translate }}{{ 'module.code' | translate }}</th>
+
+                <!-- 产品模块名称 -->
+                <th nzWidth="30%">{{ 'product' | translate }}{{ 'module.name' | translate }}</th>
+
+                <!-- 标准报价 -->
+                <th nzWidth="10%">{{ 'standard.quotation' | translate }}</th>
+
+                <!-- 采购价格 -->
+                <th nzWidth="10%">
+                  {{ 'procurement' | translate }}
+                  {{ 'the.price' | translate }}
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of moduleRowTable.data" class="editable-row">
+                <td>{{ data.code }}</td>
+                <td>
+                  {{ data.baseMaterialFileModularId }}
+                </td>
+                <td>
+                  {{ data.standardQuotation }}
+                </td>
+                <td>
+                  {{ data.purchasePrice }}
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

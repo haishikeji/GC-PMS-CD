@@ -1,0 +1,201 @@
+<!-- 项目情况统计表 -->
+<nz-card>
+  <form nz-form>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'project.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="proArchivesCode" [(ngModel)]="projectStatisticsWhere.proArchivesCode" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!--  项目名称-->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{'cost.item.name' | translate}}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="proArchivesName" [(ngModel)]="projectStatisticsWhere.proArchivesName" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="2" [nzXs]="24" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <button nzType="primary" (click)="query()" nz-button>
+              <!-- 查询 -->
+              <span>{{ 'store.search' | translate }}</span>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        [nzScroll]="{ x: '1930px', y: '400px' }"
+        class="tableTdPadding"
+        #expandTable
+        [nzData]="listOfMapData"
+        nzTableLayout="fixed"
+        nzSize="small"
+        [nzShowPagination]="false"
+        [nzFrontPagination]="false"
+        [nzLoading]="isSpinning"
+      >
+        <thead>
+          <tr>
+            <!-- 项目编码 -->
+            <th nzWidth="180px" nzLeft="0px">{{ 'project.code' | translate }}</th>
+
+            <!-- 项目名称 -->
+            <th nzWidth="150px" nzLeft="173px">
+              {{ 'cost.item.name' | translate }}
+            </th>
+
+            <!-- 项目组成员 -->
+            <th nzWidth="150px">
+              {{ 'project' | translate }}
+              {{ 'group.members' | translate }}
+            </th>
+
+            <!-- 收付款条线编码 -->
+            <th nzWidth="100px">
+              {{ 'receiving' | translate }}
+              {{ 'line.code' | translate }}
+            </th>
+
+            <!-- 收付款条线名称 -->
+            <th nzWidth="100px">
+              {{ 'receiving' | translate }}
+              {{ 'line.name' | translate }}
+            </th>
+
+            <!-- 里程碑名称 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'Name' | translate }}
+            </th>
+
+            <!--  里程碑计划开始时间-->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'the.plan' | translate }}
+              {{ 'contract.start.date' | translate }}
+            </th>
+
+            <!-- 里程碑实际开始时间 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'actual.start.time' | translate }}
+            </th>
+
+            <!--里程碑计划结束时间  -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'the.plan' | translate }}
+              {{ 'contract.end.date' | translate }}
+            </th>
+
+            <!-- 里程碑实际结束时间 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'actual' | translate }}
+              {{ 'contract.end.date' | translate }}
+            </th>
+
+            <!-- 里程碑计划工时 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'working.actual.hours' | translate }}
+              {{ 'working.time' | translate }}
+            </th>
+
+            <!-- 里程碑实际工时 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'working.actual.hours' | translate }}
+            </th>
+
+            <!-- 里程碑计划收款 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'the.plan' | translate }}
+              {{ 'collection' | translate }}
+            </th>
+
+            <!-- 里程碑开票金额 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'invoice.amount' | translate }}
+            </th>
+
+            <!-- 里程碑实际收款 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'actual' | translate }}
+              {{ 'collection' | translate }}
+            </th>
+
+            <!-- 里程碑计划付款 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'the.plan' | translate }}
+              {{ 'payFor' | translate }}
+            </th>
+
+            <!-- 里程碑收票金额 -->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'ticket.amount' | translate }}
+            </th>
+
+            <!--  里程碑实际付款-->
+            <th nzWidth="100px">
+              {{ 'financial.management.milestoneName' | translate }}
+              {{ 'actual' | translate }}
+              {{ 'payFor' | translate }}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let data of expandTable.data">
+            <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+              <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+                <td
+                  nzLeft="0px"
+                  [nzIndentSize]="item.level! * 20"
+                  [nzShowExpand]="!!item.children"
+                  [(nzExpand)]="item.expand"
+                  (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)"
+                >
+                  {{ item.proCode }}
+                </td>
+                <td nzLeft="173px">{{ item.proName }}</td>
+                <td>{{ item.member }}</td>
+                <td>{{ item.coArchivesCode }}</td>
+                <td>{{ item.coArchivesName }}</td>
+                <td>{{ item.milesName }}</td>
+                <td>{{ item.mileStartDate }}</td>
+                <td>{{ item.mileRealStartDate }}</td>
+                <td>{{ item.mileEndDate }}</td>
+                <td>{{ item.mileRealEndtDate }}</td>
+                <td>{{ item.mileDuration }}</td>
+                <td>{{ item.mileRealDuration }}</td>
+                <td>{{ item.mileCoPlan }}</td>
+                <td>{{ item.mileInvoice }}</td>
+                <td>{{ item.mileRealCollecion }}</td>
+                <td>{{ item.milePayPlan }}</td>
+                <td>{{ item.mileTicket }}</td>
+                <td>{{ item.mileRealPayment }}</td>
+              </tr>
+            </ng-container>
+          </ng-container>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

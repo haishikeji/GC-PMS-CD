@@ -1,0 +1,39 @@
+<nz-table nzSize="small" #nzTable [nzData]="listOfMapData"
+[nzFrontPagination]="false"
+[nzTotal]="page.total"
+[nzPageIndex]="page.current"
+(nzPageIndexChange)="pageIndexChange($event)"
+>
+    <thead>
+      <tr>
+          <th nzShowExpand></th>
+          <th>日志内容</th>
+          <th>操作人</th>
+          <th>IP</th>
+          <th>耗时(毫秒)</th>
+          <th>日志类型</th>
+          <th>创建时间</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-template ngFor let-data [ngForOf]="nzTable.data">
+        <tr>
+          <td nzShowExpand [(nzExpand)]="mapOfExpandData[data.id]"></td>
+          <td>{{ data.logContent }}</td>
+          <td>{{ data.username }}</td>
+          <td>{{ data.ip }}</td>
+          <td>{{ data.costTime }}</td>
+          <td>{{ data.logType_dictText }}</td>
+          <td>{{ data.createTime }}</td>
+        </tr>
+        <tr [nzExpand]="mapOfExpandData[data.id]">
+          <td></td>
+          <td colspan="6">请求方法：{{ data.method }}</td>
+        </tr>
+        <tr [nzExpand]="mapOfExpandData[data.id]">
+            <td></td>
+            <td colspan="6">请求参数：{{ data.requestParam }}</td>
+          </tr>
+      </ng-template>
+    </tbody>
+  </nz-table>

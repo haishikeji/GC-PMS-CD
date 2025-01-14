@@ -1,0 +1,674 @@
+<nz-spin [nzSpinning]="isLoading">
+  <form nz-form>
+    <!-- 第一行 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'customer.code' | translate }}</nz-form-label>
+      <!--客户编码-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input
+          [(ngModel)]="customer.code"
+          name="code"
+          nz-input
+          [disabled]="true"
+          placeholder="{{ 'automatic.generated' | translate }}"
+        />
+      </nz-form-control>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'customer.name' | translate }}</nz-form-label>
+      <!--客户名称-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input
+          [(ngModel)]="customer.name"
+          name="name"
+          nz-input
+          placeholder="{{ 'placeholder' | translate }}{{ 'customer.name' | translate }}"
+          maxlength="20"
+        />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.shortName' | translate }}</nz-form-label>
+      <!--客户简称-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input
+          [(ngModel)]="customer.shortName"
+          name="shortName"
+          nz-input
+          placeholder="{{ 'placeholder' | translate }}{{ 'customer.shortName' | translate }}"
+          maxlength="20"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第二行 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">{{ 'customer.abbreviation' | translate }}</nz-form-label>
+      <!--客户缩写-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.abbreviation" maxlength="3" name="abbreviation" nz-input />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.contacts.name' | translate }}</nz-form-label>
+      <!--客户联系人-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [disabled]="true" name="contacts" nz-input [(ngModel)]="customer.contacts" maxlength="10" />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.contacts.telephone' | translate }}</nz-form-label>
+      <!--客户联系电话-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [disabled]="true" name="telephone" nz-input [(ngModel)]="customer.telephone" maxlength="20" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第三行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.contacts.mail' | translate }}</nz-form-label>
+      <!-- 联系人邮箱 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [disabled]="true" name="email" nz-input [(ngModel)]="customer.email" maxlength="30" />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.company.address' | translate }}</nz-form-label>
+      <!-- 公司地址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.address" name="address" nz-input maxlength="100" />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.company.phone' | translate }}</nz-form-label>
+      <!-- 公司电话 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.phone" name="phone" nz-input maxlength="30" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第四行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.tax.no' | translate }}</nz-form-label>
+      <!-- 税号 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.taxNo" name="taxNo" nz-input maxlength="30" />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.account.bank' | translate }}</nz-form-label>
+      <!-- 开户行 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.bank" name="bank" nz-input maxlength="30" />
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.account.number' | translate }}</nz-form-label>
+      <!-- 账号 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.account" name="account" nz-input maxlength="30" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第五行 -->
+    <nz-form-item>
+      <nz-form-label nzRequired [nzSm]="3" [nzXs]="24">
+        {{ 'customer.whether.using.or.not' | translate }}
+      </nz-form-label>
+      <!-- 是否停用 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-switch
+          [(ngModel)]="enable"
+          name="enable"
+          [ngModelOptions]="{ standalone: true }"
+          nzCheckedChildren="{{ 'store.yes' | translate }}"
+          nzUnCheckedChildren="{{ 'store.no' | translate }}"
+        ></nz-switch>
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.credit.grade' | translate }}</nz-form-label>
+      <!-- 信用等级 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzAllowClear="false"
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.creditGrade"
+          name="creditGrade"
+          (ngModelChange)="creditGradeChange($event)"
+        >
+          <nz-option
+            *ngIf="customer.creditGrade == ''"
+            nzLabel="{{ 'select.please.choose' | translate }}"
+            nzValue=""
+            selected="selected"
+          >
+          </nz-option>
+          <!-- <ng-container *ngFor="let de of listClass">
+          <nz-option nzLabel="{{de.name}}" nzValue="{{de.id}}"></nz-option>
+        </ng-container> -->
+          <nz-option nzLabel="A" nzValue="1"></nz-option>
+          <nz-option nzLabel="B" nzValue="2"></nz-option>
+          <nz-option nzLabel="C" nzValue="3"></nz-option>
+          <nz-option nzLabel="D" nzValue="4"></nz-option>
+        </nz-select>
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.credit.period' | translate }}</nz-form-label>
+      <!-- 信用期(天) -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-input-number
+          [(ngModel)]="customer.creditPeriod"
+          name="creditPeriod"
+          nzMin="1"
+          [nzMax]="100000"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第六行 客商分类 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.zipCode' | translate }}</nz-form-label>
+      <!-- 邮编 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.zipCode" name="zipCode" nz-input maxlength="20" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.Postal.address' | translate }}</nz-form-label>
+      <!-- 注册地址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.postalAddress" name="postalAddress" nz-input maxlength="100" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'cost.item.category' | translate }}
+      </nz-form-label>
+
+      <!-- 客商分类 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.customerClassificationDictValue"
+          name="customerClassificationDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of customerClassificationList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第七行 ------------->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'customer.source' | translate }}</nz-form-label>
+      <!-- 客商来源 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.customerSourceDictValue"
+          name="customerSourceDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of customerSourceList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'industry' | translate }}
+      </nz-form-label>
+      <!-- 客商行业 (ngModelChange)="onChangeMI($event)" -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-tree-select
+          nzAllowClear="false"
+          [nzNodes]="merchantsIndustryList"
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [(ngModel)]="customer.baseCustomerIndustryId"
+          name="baseCustomerIndustryId"
+        >
+        </nz-tree-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'sales.status' | translate }}</nz-form-label>
+      <!-- 销售状态 树 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-tree-select
+          nzAllowClear="false"
+          [nzNodes]="salesStatusList"
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [(ngModel)]="customer.baseSalesStatusId"
+          name="baseSalesStatusId"
+          (ngModelChange)="onChangeSS($event)"
+        >
+        </nz-tree-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第八行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'property' | translate }}
+      </nz-form-label>
+      <!-- 客商属性 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-radio-group [(ngModel)]="customer.customerAttribute" name="customerAttribute">
+          <label nz-radio nzValue="1">{{ 'customer' | translate }}</label>
+          <label nz-radio nzValue="2">{{ 'supplier' | translate }}</label>
+          <label nz-radio nzValue="3"> {{ 'customer' | translate }}、{{ 'supplier' | translate }} </label>
+        </nz-radio-group>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'quotation.merchants' | translate }}{{ 'group' | translate }}
+      </nz-form-label>
+      <!-- 客商分组 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.customerGroupingDictValue"
+          name="customerGroupingDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of customerGroupList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'business.affairs' | translate }}{{ 'relation' | translate }}
+      </nz-form-label>
+      <!-- 商务关系-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.businessRelationsDictValue"
+          name="businessRelationsDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of busRelDictList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第九行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'higher.unit' | translate }}
+      </nz-form-label>
+      <!-- 上级单位  禁选 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+          <input
+            type="text"
+            [(ngModel)]="customer.parentName"
+            name="parentName"
+            nz-input
+            placeholder="{{ 'select.please.choose' | translate }}"
+            [disabled]="true"
+          />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <!-- 放大镜  勾选列表 -->
+          <button nz-button nzType="primary" nzSearch (click)="modalTable()">
+            <i nz-icon type="search"></i>
+          </button>
+        </ng-template>
+      </nz-form-control>
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'use.status' | translate }}
+      </nz-form-label>
+      <!-- 使用状态-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.useStatusDictValue"
+          name="useStatusDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of useStatusList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"> </nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'sleep.type' | translate }}
+      </nz-form-label>
+      <!-- 休眠类型 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.sleepTypeDictValue"
+          name="sleepTypeDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of sleepTypeList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第十行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'unit' | translate }}{{ 'web.address' | translate }}</nz-form-label>
+      <!-- 单位网址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.companyWebsite" name="companyWebsite" nz-input maxlength="120" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'in.company' | translate }}{{ 'establish.date' | translate }}
+      </nz-form-label>
+      <!-- 公司成立日期 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-date-picker
+          [nzAllowClear]="false"
+          [(ngModel)]="customer.companyEstablishDate"
+          name="companyEstablishDate"
+          (ngModelChange)="companyDateChange($event)"
+        ></nz-date-picker>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'unit' | translate }}{{ 'size' | translate }} </nz-form-label>
+      <!-- 单位规模 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.unitSizeDictValue"
+          name="unitSizeDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of unitSizeList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第11行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'personnel' | translate }}{{ 'size' | translate }} </nz-form-label>
+      <!-- 人员规模 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.personnelSizeDictValue"
+          name="personnelSizeDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of personnelSizeList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'app.register.register' | translate }}{{ 'capital' | translate }}
+      </nz-form-label>
+      <!-- 注册资金 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.registeredCapitalDictValue"
+          name="registeredCapitalDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of registeredCapitalList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'annual.turnover' | translate }}</nz-form-label>
+      <!-- 年营业额 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-input-number
+          [(ngModel)]="customer.annualTurnover"
+          name="annualTurnover"
+          [nzMin]="0"
+          [nzParser]="parserDollar"
+          [nzFormatter]="formatterDollar"
+          [nzMax]="100000000000000000"
+          [nzStep]="5000"
+        ></nz-input-number>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第12行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'customer' | translate }}{{ 'relation' | translate }} </nz-form-label>
+      <!-- 客户关系 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.customerRelationshipDictValue"
+          name="customerRelationshipDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of customerRelationshipList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'value.level' | translate }}
+      </nz-form-label>
+      <!-- 价值级别 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-select
+          nzShowSearch
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+          [nzDisabled]="false"
+          [(ngModel)]="customer.valueLevelDictValue"
+          name="valueLevelDictValue"
+        >
+          <nz-option nzLabel="{{ 'select.please.choose' | translate }}" nzValue="" selected="selected"> </nz-option>
+          <ng-container *ngFor="let customerClassification of valueLevelList">
+            <nz-option [nzValue]="customerClassification.value" [nzLabel]="customerClassification.text"></nz-option>
+          </ng-container>
+        </nz-select>
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24" nzRequired>
+        {{ 'sales.staff' | translate }}
+      </nz-form-label>
+      <!-- 销售人员 树 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24" >
+        <nz-tree-select
+          [nzNodes]="salesStaffList"
+          nzShowSearch
+          id="salesmanId"
+          name="salesmanId"
+          nzAllowClear="false"
+          [(ngModel)]="customer.salesmanId"
+          (ngModelChange)="onChangeSalesmanId($event)"
+          (getCheckedNodeList)="getSalesId()"
+          nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+        >
+        </nz-tree-select>
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第13行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.unit.name' | translate }}</nz-form-label>
+      <!-- 开票单位名称 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.billingUnitName" name="billingUnitName" nz-input maxlength="120" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'taxpayer.identification.Num' | translate }}</nz-form-label>
+      <!-- 纳税人识别号 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input
+          [(ngModel)]="customer.taxpayerIdentificationNumber"
+          name="taxpayerIdentificationNumber"
+          nz-input
+          maxlength="120"
+        />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.address' | translate }}</nz-form-label>
+      <!-- 开票地址 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.billingAddress" name="billingAddress" nz-input maxlength="120" />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第14行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.telephone' | translate }}</nz-form-label>
+      <!--开票电话-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input name="billingTelephone" nz-input [(ngModel)]="customer.billingTelephone" maxlength="20" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'billing.bank' | translate }}</nz-form-label>
+      <!-- 开票银行 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.billingBank" name="billingBank" nz-input maxlength="120" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24">
+        {{ 'billing.bank' | translate }}{{ 'customer.account.number' | translate }}
+      </nz-form-label>
+      <!--开票银行账号-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input
+          name="billingBankAccountNumber"
+          nz-input
+          [(ngModel)]="customer.billingBankAccountNumber"
+          maxlength="20"
+        />
+      </nz-form-control>
+    </nz-form-item>
+
+    <!-- 第15行 -->
+    <nz-form-item>
+      <nz-form-label [nzSm]="3" [nzXs]="24">{{ 'development' | translate }}{{ 'personnel' | translate }}</nz-form-label>
+      <!-- 开发人员 -->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <input [(ngModel)]="customer.developer" name="developer" nz-input maxlength="120" />
+      </nz-form-control>
+
+      <nz-form-label [nzSm]="3" [nzXs]="24"> {{ 'development' | translate }}{{ 'date' | translate }} </nz-form-label>
+      <!-- 开发日期-->
+      <nz-form-control [nzSm]="4" [nzXs]="24">
+        <nz-date-picker
+          [nzAllowClear]="false"
+          [(ngModel)]="customer.developmentDate"
+          name="developmentDate"
+          (ngModelChange)="companyDateChange($event)"
+        ></nz-date-picker>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+
+  <!-- 新增  联系人 -->
+  <nz-form-item>
+    <span id="titleAdd" hidden="true">{{ 'button.add' | translate }}{{ 'customer.contacts.name' | translate }}</span>
+    <span id="titleUpdate" hidden="true">
+      {{ 'table.update' | translate }}{{ 'customer.contacts.name' | translate }}
+    </span>
+    <!-- 按钮 -->
+    <div nz-row nzGutter="24">
+      <div nz-col nzMd="24" nzLg="24">
+        <button (click)="addRowContacts()" style="margin-bottom:10px;" nz-button nzType="primary">
+          {{ 'button.add' | translate }}
+        </button>
+      </div>
+    </div>
+
+    <!-- 数据表 -->
+    <div nz-row nzGutter="24">
+      <div nz-col nzMd="24" nzLg="24">
+        <nz-table
+          nzSize="small"
+          #basicTable
+          [nzData]="listOfData"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <th style="width:150px;">{{ 'customer.contacts.name' | translate }}</th>
+              <th style="width:150px;">{{ 'customer.contacts.telephone' | translate }}</th>
+              <th style="width:150px;">{{ 'customer.contacts.mail' | translate }}</th>
+              <th style="width:150px;">{{ 'customer.is.it.default' | translate }}</th>
+              <th style="width:150px;">{{ 'customer.contacts.client.address' | translate }}</th>
+              <th style="width:150px;">{{ 'table.operation' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data">
+              <!-- <td>{{ data.contactPsn}}</td>
+              <td>{{ data.contectTel }}</td>
+              <td>{{ data.email }}</td>
+              <td>
+                <ng-container *ngIf="data.isDefault==0">
+                  {{ 'no' | translate }}
+                </ng-container>
+                <ng-container *ngIf="data.isDefault==1">
+                  {{ 'yes' | translate }}
+                </ng-container>
+              </td> -->
+              <td><input type="text" [(ngModel)]="data.contactPsn" nz-input maxlength="20" /></td>
+              <td><input type="text" [(ngModel)]="data.contectTel" nz-input maxlength="20" /></td>
+              <td><input type="text" [(ngModel)]="data.email" nz-input maxlength="30" /></td>
+              <td>
+                <nz-switch
+                  [(ngModel)]="data.isDefaultBool"
+                  (ngModelChange)="isDefaultBoolChange(data)"
+                  nzCheckedChildren="{{ 'store.yes' | translate }}"
+                  nzUnCheckedChildren="{{ 'store.no' | translate }}"
+                >
+                </nz-switch>
+              </td>
+              <td><input [(ngModel)]="data.address" nz-input maxlength="100" /></td>
+              <td>
+                <!-- <a href="javascript:void(0);" (click)="addContacts(data)"
+                  *ngIf="id!=''">{{ 'table.update' | translate }}</a>
+                <nz-divider *ngIf="id!=''" nzType="vertical"></nz-divider> -->
+                <a
+                  nz-popconfirm
+                  nzTitle="{{ 'confirm.to.delete' | translate }}?"
+                  nzOkText="{{ 'yes' | translate }}"
+                  nzCancelText="{{ 'no' | translate }}"
+                  (nzOnConfirm)="deleteContacts(data)"
+                  >{{ 'table.delete' | translate }}</a
+                >
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-form-item>
+</nz-spin>
+
+<!-- 关闭 保存 -->
+<div class="footer">
+  <a
+    nz-popconfirm
+    style="margin-right: 2%"
+    nzTitle="{{ 'pm.contract.contract.add.button.cancel' | translate }}"
+    (nzOnConfirm)="close()"
+  >
+    <button nz-button>{{ 'button.close' | translate }}</button>
+  </a>
+
+  <button nz-button (click)="save()" nzType="primary">
+    <span>{{ 'button.save' | translate }}</span>
+  </button>
+</div>

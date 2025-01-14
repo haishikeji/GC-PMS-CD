@@ -1,0 +1,45 @@
+<form nz-form>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{'company'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="{{'select.please.choose'|translate}}" [(ngModel)]="opsition.pkOrg" name="pkOrg">
+        <ng-container *ngFor="let de of listCompany">
+          <nz-option nzLabel="{{de.departName}}" nzValue="{{de.id}}"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{'depart'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select nzShowSearch nzAllowClear nzPlaceHolder="{{'select.please.choose'|translate}}" [(ngModel)]="opsition.pkDepart" name="pkDepart">
+        <ng-container *ngFor="let de of listDepart">
+          <nz-option nzLabel="{{de.departName}}" nzValue="{{de.id}}"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{'position.code'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="opsition.code" name="code" placeholder="{{'please.enter.job.code'|translate}}" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{'position.name'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="opsition.name" name="name" placeholder="{{'please.enter.job.title'|translate}}" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{'memo'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <textarea [(ngModel)]="opsition.memo" name="memo" nz-input [nzAutosize]="{ minRows: 2, maxRows: 6 }"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;"><span>{{'button.close'|translate}}</span></button>
+    <button type="button" (click)="save()" class="ant-btn ant-btn-primary"><span>{{'button.save'|translate}}</span></button>
+  </div>
+</form>

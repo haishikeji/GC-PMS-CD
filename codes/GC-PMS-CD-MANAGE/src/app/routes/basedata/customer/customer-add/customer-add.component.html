@@ -1,0 +1,66 @@
+<!-- 【新增】一行数据的表 -->
+<form nz-form>
+  <nz-form-item>
+    <!--  联系人 -->
+    <nz-form-label nzRequired [nzSm]="5" [nzXs]="24">{{ 'customer.contacts.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="7" [nzXs]="24">
+      <input
+        nz-input
+        [(ngModel)]="contacts.contactPsn"
+        name="contactPsn"
+        placeholder="{{ 'please.input.contacts' | translate }}"
+      />
+    </nz-form-control>
+    
+    <!-- 联系人电话 -->
+    <nz-form-label [nzSm]="5" [nzXs]="24">{{ 'customer.contacts.telephone' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="7" [nzXs]="24">
+      <input
+        [(ngModel)]="contacts.contectTel"
+        name="contectTel"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'customer.contacts.telephone' | translate }}"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+
+    <!-- 联系人邮箱 -->
+    <nz-form-label [nzSm]="5" [nzXs]="24">{{ 'customer.contacts.mail' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="7" [nzXs]="24">
+      <input
+        [(ngModel)]="contacts.email"
+        name="email"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'customer.contacts.mail' | translate }}"
+      />
+    </nz-form-control>
+
+    <!-- 客户地址 -->
+    <nz-form-label [nzSm]="5" [nzXs]="24">{{ 'customer.contacts.address' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="7" [nzXs]="24">
+      <input [(ngModel)]="contacts.address" name="address" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!-- 是否默认 -->
+    <nz-form-label [nzSm]="5" [nzXs]="24">{{ 'customer.is.it.default' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="7" [nzXs]="24">
+      <!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="{{ 'select.please.choose' | translate }}" [nzDisabled]="false"
+        [(ngModel)]="contacts.isDefault" name="isDefault" (ngModelChange)="change($event)">
+        <nz-option *ngIf="contacts.isDefault==''" nzLabel="{{ 'select.please.choose' | translate }}" nzValue=""
+          selected="selected">
+        </nz-option>
+        <nz-option nzLabel="{{'no' | translate }}" nzValue="0"></nz-option>
+        <nz-option nzLabel="{{'yes' | translate }}" nzValue="1"></nz-option>
+      </nz-select> -->
+      <nz-switch
+        [(ngModel)]="isDefaults"
+        name="isDefaults"
+        nzCheckedChildren="{{ 'yes' | translate }}"
+        nzUnCheckedChildren="{{ 'no' | translate }}"
+        (ngModelChange)="change($event)"
+      ></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+</form>

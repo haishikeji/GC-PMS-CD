@@ -1,0 +1,68 @@
+<nz-modal
+  [(nzVisible)]="isVisible"
+  nzTitle="{{ title }}"
+  nzClosable="false"
+  nzWidth="900"
+  (nzOnCancel)="handleCancel()"
+  (nzOnOk)="handleOk('')"
+>
+  <form nz-form>
+    <nz-form-item>
+      <nz-form-label class="back-gauge" [nzSm]="6" [nzXs]="24" nzFor="itemText" nzRequired>{{
+        'contract.name' | translate
+      }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input
+          nz-input
+          placeholder="{{ 'please.enter.name' | translate }}"
+          [(ngModel)]="dictitem.itemText"
+          id="itemText"
+          name="itemText"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label class="back-gauge" [nzSm]="6" [nzXs]="24" nzFor="itemValue" nzRequired>{{
+        'data.value' | translate
+      }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input
+          nz-input
+          placeholder="{{ 'please.enter.data.value' | translate }}"
+          [(ngModel)]="dictitem.itemValue"
+          id="itemValue"
+          name="itemValue"
+        />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label class="back-gauge" [nzSm]="6" [nzXs]="24" nzFor="description">{{
+        'depart.description' | translate
+      }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input placeholder="" [(ngModel)]="dictitem.description" id="description" name="description" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label class="back-gauge" [nzSm]="6" [nzXs]="24" nzFor="sortOrder">{{
+        'depart.sort' | translate
+      }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <input nz-input placeholder="" [(ngModel)]="dictitem.sortOrder" id="sortOrder" name="sortOrder" />
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-label class="back-gauge" [nzSm]="6" [nzXs]="24" nzFor="status">{{
+        'depart.Whether.to.enable' | translate
+      }}</nz-form-label>
+      <nz-form-control [nzSm]="14" [nzXs]="24">
+        <nz-switch
+          [(ngModel)]="dictitem.status"
+          name="status"
+          nzCheckedChildren="{{ 'yes' | translate }}"
+          nzUnCheckedChildren="{{ 'no' | translate }}"
+        ></nz-switch>
+      </nz-form-control>
+    </nz-form-item>
+  </form>
+</nz-modal>

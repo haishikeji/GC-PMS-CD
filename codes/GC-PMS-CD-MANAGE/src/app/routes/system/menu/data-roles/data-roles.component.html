@@ -1,0 +1,58 @@
+<nz-card>
+  <!-- 查询条件 -->
+  <div nz-row [nzGutter]="{xs:12,sm:15,md:29,lg: 36, xl: 40}">
+    <!-- 规则名称 -->
+    <div class="backGauge" nz-col nzXs="24" nzSm="5" nzLg="3" >
+      <nz-form-label >{{'data.roles.name' | translate}}</nz-form-label>
+    </div>
+    <div nz-col nzXs="24" nzSm="5" nzLg="6">
+      <input nz-input [(ngModel)]="permissionDataRule.ruleName" />
+    </div>
+    <!-- 规则值 -->
+    <div class="backGauge" nz-col nzXs="24" nzSm="5" nzLg="3">
+      <nz-form-label>{{'data.roles.value' | translate}}</nz-form-label>
+    </div>
+    <div nz-col nzXs="24" nzSm="5" nzLg="6">
+      <input nz-input [(ngModel)]="permissionDataRule.ruleValue" />
+    </div>
+    <div class="diss" nz-col nzXs="24" nzSm="3" nzLg="6">
+      <!-- 查询 -->
+      <button nz-button nzType="primary" (click)="getDataRolesLiSTByMenuId()">{{'matrix.search' | translate}}</button>
+      <!-- 新增 -->
+      <button nz-button nzType="primary" (click)="add()">{{'button.add' | translate}}</button>
+    </div>
+  </div>
+
+  <!-- 规则数据表 -->
+  <div nz-row [nzGutter]="{xs:12,sm:15,md:29,lg: 36, xl: 40}">
+    <div class="backGauge" nz-col nzXs="24" nzSm="24" nzLg="24">
+      <nz-table nzSize="small" [nzData]="dataRolesList" #borderedTable [nzFrontPagination]="false" [nzLoading]="isSpinning"
+        [nzShowPagination]=false>
+        <thead>
+          <tr>
+            <!--规则名称-->
+            <th nzAlign="left">{{'data.roles.name'|translate}}</th>
+            <!--规则字段-->
+            <th nzAlign="left">{{ 'data.roles.field' | translate }}</th>
+            <!--规则值-->
+            <th nzAlign="left">{{ 'data.roles.value' | translate }}</th>
+            <!--操作-->
+            <th nzAlign="left">{{'table.operation'|translate}}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of  borderedTable.data">
+            <td nzAlign="left">{{item.ruleName}}</td>
+            <td nzAlign="left">{{item.ruleColumn}}</td>
+            <td nzAlign="left">{{item.ruleValue}}</td>
+            <td nzAlign="left">
+                <a href="javascript:;" (click)="update(item)">{{'table.update'|translate}}</a>
+                <span class="ant-divider ant-divider-vertical"></span> 
+                <a href="javascript:;" (click)="delete">{{'table.delete'|translate}}</a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

@@ -1,0 +1,210 @@
+<form nz-form>
+  <!-- <table>
+    <th style="width: 500px;"></th>
+  </table> -->
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'personnel.code' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <ng-container *ngIf="disabled">
+        <input
+          [(ngModel)]="personnel.code"
+          name="code"
+          nz-input
+          placeholder="{{ 'placeholder' | translate }}{{ 'personnel.code' | translate }}"
+          [disabled]="disabled"
+          maxlength="10"
+        />
+      </ng-container>
+
+      <ng-container *ngIf="!disabled">
+        <input
+          [(ngModel)]="personnel.code"
+          name="code"
+          nz-input
+          placeholder="{{ 'placeholder' | translate }}{{ 'personnel.code' | translate }}"
+          maxlength="10"
+        />
+      </ng-container>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'personnel.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="personnel.name"
+        name="name"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'personnel.name' | translate }}"
+        maxlength="10"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'english.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="personnel.enName" name="enName" nz-input maxlength="20" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'sex' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+        [nzDisabled]="false"
+        [(ngModel)]="personnel.gender"
+        name="gender"
+      >
+        <nz-option
+          *ngIf="personnel.gender == ''"
+          nzLabel="{{ 'select.please.choose' | translate }}"
+          nzValue=""
+          selected="selected"
+        ></nz-option>
+        <nz-option nzLabel="{{ 'male' | translate }}" nzValue="0"></nz-option>
+        <nz-option nzLabel="{{ 'female' | translate }}" nzValue="1"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24" nzNoColon="true"></nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <!-- 选择公司与部门 -->
+      <button nzType="dashed" nzBlock nz-button (click)="selectPkOrg()">
+        <span>{{ 'select.the.company.and.department' | translate }}</span>
+      </button>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'company' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="{{ 'select.please.choose' | translate }}" [nzDisabled]="false"
+        [(ngModel)]="personnel.pkOrg" name="pkOrg" (ngModelChange)="companyChange($event)">
+        <nz-option *ngIf="personnel.pkOrg==''" nzLabel="{{ 'select.please.choose' | translate }}" nzValue=""
+          selected="selected"></nz-option>
+        <ng-container *ngFor="let org of listOrg">
+          <nz-option nzLabel="{{org.departName}}" nzValue="{{org.id}}"></nz-option>
+        </ng-container>
+      </nz-select> -->
+
+      <!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="{{ 'select.please.choose' | translate }}" [nzDisabled]="false"
+        [(ngModel)]="pkOrgList" name="pkOrgList" (ngModelChange)="companyChange($event)" nzMode="multiple">
+        <ng-container *ngFor="let org of listOrg">
+          <nz-option nzLabel="{{org.departName}}" nzValue="{{org.id}}"></nz-option>
+        </ng-container>
+      </nz-select> -->
+      {{ personnel.pkOrgName }}
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'depart' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <!-- <nz-select nzShowSearch nzAllowClear nzPlaceHolder="{{ 'select.please.choose' | translate }}" [nzDisabled]="false"
+        [(ngModel)]="personnel.pkDepart" name="pkDepart">
+        <nz-option *ngIf="personnel.pkDepart==''" nzLabel="{{ 'select.please.choose' | translate }}" nzValue=""
+          selected="selected"></nz-option>
+        <ng-container *ngFor="let de of listDepart">
+          <nz-option nzLabel="{{de.departName}}" nzValue="{{de.id}}"></nz-option>
+        </ng-container>
+      </nz-select> -->
+      {{ personnel.pkDepartName }}
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'phone' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="personnel.mobile"
+        name="mobile"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'phone' | translate }}"
+        maxlength="20"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'telephone' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="personnel.tel" name="tel" nz-input maxlength="20" />
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'On.the.job.status' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+        [nzDisabled]="false"
+        [(ngModel)]="personnel.status"
+        name="status"
+      >
+        <nz-option
+          *ngIf="personnel.status == ''"
+          nzLabel="{{ 'select.please.choose' | translate }}"
+          nzValue=""
+          selected="selected"
+        ></nz-option>
+        <nz-option *ngFor="let item of storageTypes" nzLabel="{{ item.text }}" nzValue="{{ item.value }}"></nz-option>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'email' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="personnel.email"
+        name="email"
+        nz-input
+        placeholder="{{ 'placeholder' | translate }}{{ 'email' | translate }}"
+        maxlength="20"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzSm]="8" [nzXs]="24">{{ 'personnel.manager' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select
+        nzShowSearch
+        nzAllowClear
+        nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+        [nzDisabled]="false"
+        [(ngModel)]="personnel.pkPersonnel"
+        name="pkPersonnel"
+      >
+        <nz-option
+          *ngIf="personnel.pkPersonnel == ''"
+          nzLabel="{{ 'select.please.choose' | translate }}"
+          nzValue=""
+          selected="selected"
+        ></nz-option>
+        <ng-container *ngFor="let per of listPersonnel">
+          <nz-option nzLabel="{{ per.name }}" nzValue="{{ per.id }}"></nz-option>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+
+  <nz-form-item>
+    <nz-form-label nzRequired [nzSm]="8" [nzXs]="24">{{ 'whether.using.or.not' | translate }} </nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-switch
+        [(ngModel)]="enable"
+        name="enable"
+        [ngModelOptions]="{ standalone: true }"
+        nzCheckedChildren="{{ 'store.yes' | translate }}"
+        nzUnCheckedChildren="{{ 'store.no' | translate }}"
+      ></nz-switch>
+    </nz-form-control>
+  </nz-form-item>
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;">
+      <span>{{ 'button.close' | translate }}</span>
+    </button>
+    <button type="button" (click)="save('')" class="ant-btn ant-btn-primary">
+      <span>{{ 'button.save' | translate }}</span>
+    </button>
+  </div>
+</form>

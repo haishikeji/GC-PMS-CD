@@ -1,0 +1,292 @@
+<!-- 基本信息 -->
+<form nz-form style="margin-top: 5px;margin-right: 5px;">
+  <nz-card >
+    <div nz-row [nzGutter]="24">
+      <!-- 合同编码 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >
+            {{ 'project.file.upload.contract' | translate }}{{ 'contract.code' | translate }}</nz-form-label
+          >
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.code}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 项目名称 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.proName}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 合同日期 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >
+            {{ 'project.file.upload.contract' | translate }}{{ 'Date' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            {{contractFile.contractDate}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 里程碑类型 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" [nzXs]="24" >
+            {{ 'financial.management.milestoneName' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.milestoneName}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <!-- 免费售后起始 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >
+            {{ 'free.sale.start' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            {{contractFile.freeAfterSalesStart}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 免费售后截至 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >
+            {{ 'free.sale.until' | translate }}
+          </nz-form-label>
+          <nz-form-control>
+            {{contractFile.freeAfterSalesEnd}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+
+      <!-- 合同概述 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'project.file.upload.contract' | translate }}{{ 'summarize' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.overview}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 客户 -->
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >{{ 'customer' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.fdCustomerName}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="18">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'customer' | translate }}{{ 'address' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.fdCustomeraddress}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <!-- 客户人员 -->
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" 
+            >{{ 'customer' | translate }}{{ 'personnel' | translate }}</nz-form-label
+          >
+          <nz-form-control>
+            {{contractFile.fdCustomerPersonnelId}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 手机 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'phone' | translate }}</nz-form-label>
+          <nz-form-control>
+            {{contractFile.fdCustomerPersonnelTel}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 销售人员 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null" >{{ 'sales.staff' | translate }}</nz-form-label>
+          <nz-form-control>
+            {{contractFile.salesmanName}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 业务类型 -->
+      <div nz-col [nzSpan]="6">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'business.types' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.businessTypeDictName}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <!-- 标准报价 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'standard.quotation' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.standardQuotation}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 成交金额 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'deal.price' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.transactionAmount}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 折扣率 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'The discount' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.discountRate}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 赠品金额 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'gift.amount' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.giftAmount}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 成本 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'cost' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.cost}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 合同费用 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'project.file.upload.contract' | translate }}{{ 'pm.quotation.fee' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.contractCost}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <!-- 合同利润 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'contract.profits' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.contractProfit}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 回款金额 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'receivable.amount' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.received}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 应收款账 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'accounts.receivable.account' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.accountsReceivable}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 业绩计算率 -->
+      <div nz-col [nzSpan]="4">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{ 'performance．calculation．rate' | translate }}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.performanceCalculationRate}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <!-- 制单人 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+            {{'pm.quotation.Single.person' | translate}}
+          </nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.createBy}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 制单时间 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'make.time' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.createTime}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <!-- 修改人 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'update.by' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="24" [nzXs]="24">
+            {{contractFile.updateBy}}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <!-- 修改时间 -->
+      <div nz-col [nzSpan]="12">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'update.time' | translate }}</nz-form-label>
+          <nz-form-control>
+            {{ contractFile.updateTime }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </nz-card>
+</form>

@@ -1,0 +1,144 @@
+<!-- 查询表格 -->
+<page-header [title]="'{{ 'menu.list.searchtable' | translate }}'"></page-header>
+<nz-card [nzBordered]="false">
+  <form nz-form [nzLayout]="'inline'" (ngSubmit)="getData()" class="search__form">
+    <div nz-row [nzGutter]="{ xs: 8, sm: 8, md: 8, lg: 24, xl: 48, xxl: 48 }">
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <!-- 规则编号 -->
+          <nz-form-label nzFor="no">{{ 'rule.number' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input [(ngModel)]="q.no" name="no" placeholder="{{ 'placeholder' | translate }}" id="no" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24">
+        <nz-form-item>
+          <!-- 使用状态 -->
+          <nz-form-label nzFor="status">{{ 'use.status' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [(ngModel)]="q.status"
+              name="status"
+              id="status"
+              [nzPlaceHolder]="'{{ 'select.please.choose"' | translate }}'"
+              [nzShowSearch]="true"
+            >
+              <nz-option *ngFor="let i of status; let idx = index" [nzLabel]="i.text" [nzValue]="idx"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <!-- 调用次数 -->
+          <nz-form-label nzFor="callNo">{{ 'callBack.number' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input nz-input id="callNo" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <!-- 更新日期 -->
+          <nz-form-label nzFor="updatedAt"
+            >{{ 'pm.quotation.update' | translate }}{{ 'Date' | translate }}</nz-form-label
+          >
+          <nz-form-control> </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <!-- 使用状态 -->
+          <nz-form-label nzFor="status2">{{ 'use.status' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select [nzPlaceHolder]="'{{ 'select.please.choose' | translate }}'" nzId="status2" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of status; let idx = index" [nzLabel]="i.text" [nzValue]="idx"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col nzMd="8" nzSm="24" *ngIf="expandForm">
+        <nz-form-item>
+          <!-- 使用状态 -->
+          <nz-form-label nzFor="status3">{{ 'use.status' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select [nzPlaceHolder]="'{{ 'select.please.choose' | translate }}'" nzId="status3" [nzShowSearch]="true">
+              <nz-option *ngFor="let i of status; let idx = index" [nzLabel]="i.text" [nzValue]="idx"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="expandForm ? 24 : 8" [class.text-right]="expandForm">
+        <!-- 查询 -->
+        <button nz-button type="submit" [nzType]="'primary'" [nzLoading]="loading">
+          {{ 'button.query' | translate }}
+        </button>
+        <!-- 重置 -->
+        <button nz-button type="reset" (click)="reset()" class="mx-sm">{{ 'button.reset' | translate }}</button>
+        <a (click)="expandForm = !expandForm">
+          {{ expandForm ? '收起' : '展开' }}
+          <i class="anticon" [class.anticon-down]="!expandForm" [class.anticon-up]="expandForm"></i>
+        </a>
+      </div>
+    </div>
+  </form>
+  <button nz-button (click)="add(modalContent)" [nzType]="'primary'">
+    <i nz-icon type="plus"></i>
+    <!-- 新建 -->
+    <span>{{ 'cost.new' | translate }}</span>
+  </button>
+  <ng-container *ngIf="selectedRows.length > 0">
+    <!-- 批量操作 -->
+    <button nz-button>{{ 'batch.operation' | translate }}</button>
+    <nz-dropdown [nzPlacement]="'bottomLeft'">
+      <button nz-button nz-dropdown>
+        <!-- 更多操作 -->
+        {{ 'menu.more' | translate }}{{ 'table.operation' | translate }}
+        <i nz-icon type="down"></i>
+      </button>
+      <ul nz-menu>
+        <!-- 删除 -->
+        <li nz-menu-item (click)="remove()">{{ 'table.delete' | translate }}</li>
+        <!-- 批量审批 -->
+        <li nz-menu-item (click)="approval()">{{ 'batch.approval' | translate }}</li>
+      </ul>
+    </nz-dropdown>
+  </ng-container>
+  <div class="my-md">
+    <nz-alert [nzType]="'info'" [nzShowIcon]="true" [nzMessage]="message">
+      <ng-template #message>
+        <!--已选择  -->
+        {{ 'has.chosen' | translate }} 
+        <!-- 服务调用总计 -->
+        <strong class="text-primary">{{ selectedRows.length }}</strong> 
+        {{ 'item' | translate }} &nbsp;&nbsp;{{ 'total.service.invocation' | translate }}
+         <strong>{{ totalCallNo }}</strong> 
+         
+         {{ 'tenThousand' | translate }}
+        <!--清空  -->
+        <a *ngIf="totalCallNo > 0" (click)="st.clearCheck()" class="ml-lg">{{ 'empty' | translate }}</a>
+      </ng-template>
+    </nz-alert>
+  </div>
+  <st #st [columns]="columns" [data]="data" [loading]="loading" (change)="stChange($event)">
+    <ng-template st-row="status" let-i>
+      <nz-badge [nzStatus]="i.statusType" [nzText]="i.statusText"></nz-badge>
+    </ng-template>
+  </st>
+</nz-card>
+<ng-template #modalContent>
+  <nz-form-item>
+    <!-- 描述 -->
+    <nz-form-label nzFor="no">{{ 'description' | translate }}</nz-form-label>
+    <nz-form-control>
+      <input
+        nz-input
+        [(ngModel)]="description"
+        name="description"
+        placeholder="{{ 'placeholder' | translate }}"
+        id="no"
+      />
+    </nz-form-control>
+  </nz-form-item>
+</ng-template>

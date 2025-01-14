@@ -1,0 +1,28 @@
+<nz-table nzSize="small" class="distance" [nzData]="dataRolesList" #borderedTable [nzShowPagination]=false
+  (nzCurrentPageDataChange)="currentPageDataChange($event)" [nzLoading]="isSpinning">
+  <thead>
+    <tr>
+      <!-- <th nzWidth="5%" nzShowCheckbox [(nzChecked)]="isAllDisplayDataChecked" [nzIndeterminate]="isIndeterminate"
+        (nzCheckedChange)="checkAll($event)"></th> -->
+      <!-- 数据规则名称 -->
+      <th nzWidth="5%"></th>
+      <th>{{'data.roles.name'|translate}}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of  borderedTable.data">
+      <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[item.id]" (nzCheckedChange)="refreshStatus()"></td>
+      <td>{{item.ruleName}}</td>
+    </tr>
+  </tbody>
+</nz-table>
+<!-- 底部按钮 -->
+<div class="base">
+  <!-- 底部关闭按钮 -->
+  <button style="margin-right: 2%" type="button" (click)="close()"
+    class="ant-btn buttonDistance"><span>{{'pm.quotation.cancel' | translate}}
+    </span></button>
+  <!-- 底部保存按钮 -->
+  <button nzbutton (click)="save()" type="button"
+    class="ant-btn ant-btn-primary"><span>{{'pm.finish' | translate}}</span></button>
+</div>

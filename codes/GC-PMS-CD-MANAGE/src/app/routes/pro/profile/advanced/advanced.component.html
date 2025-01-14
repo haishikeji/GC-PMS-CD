@@ -1,0 +1,206 @@
+<page-header [title]="'单号：234231029431'" [logo]="logo" [action]="action" [extra]="extra" [tab]="tab">
+  <ng-template #logo>
+    <img src="https://gw.alipayobjects.com/zos/rmsportal/nxkuOJlFJuAUhzlMTCEe.png" />
+  </ng-template>
+  <ng-template #action>
+    <nz-button-group>
+      <!-- 操作 -->
+      <button nz-button>{{ 'table.operation' | translate }}</button>
+      <button nz-button>{{ 'table.operation' | translate }}</button>
+    </nz-button-group>
+    <nz-dropdown class="mx-sm">
+      <button nz-button nz-dropdown>
+        <i nz-icon type="ellipsis"></i>
+      </button>
+      <ul nz-menu>
+        <!--选项一 二 三  -->
+        <li nz-menu-item>{{ 'option.one' | translate }}</li>
+        <li nz-menu-item>{{ 'option.two' | translate }}</li>
+        <li nz-menu-item>{{ 'option.three' | translate }}</li>
+      </ul>
+    </nz-dropdown>
+    <!--  主操作-->
+    <button nz-button [nzType]="'primary'">{{ 'main.table.operation' | translate }}</button>
+  </ng-template>
+  <ng-template #extra>
+    <div nz-row>
+      <div nz-col nzXs="24" nzSm="12">
+        <!-- 状态 -->
+        <p class="text-grey">{{ 'state' | translate }}</p>
+        <!-- 待审批 -->
+        <p class="text-lg">{{ 'pending.approval' | translate }}</p>
+      </div>
+      <div nz-col nzXs="24" nzSm="12">
+        <!-- 订单金额 -->
+        <p class="text-grey">{{ 'indent.their.fees.money' | translate }}</p>
+        <p class="text-lg">¥ 568.08</p>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template #tab>
+    <nz-tabset>
+      <!-- 详情 -->
+      <nz-tab nzTitle="{{ 'table.view' | translate }}"></nz-tab>
+      <!-- 规则 -->
+      <nz-tab nzTitle="{{ 'rules' | translate }}"></nz-tab>
+    </nz-tabset>
+  </ng-template>
+  <sv-container size="small" col="2">
+    <!-- 创建人 -->
+    <sv label="{{ 'create.by' | translate }}">曲丽丽</sv>
+    <!-- 订购产品 -->
+    <sv label="{{ 'order.products' | translate }}">XX 服务</sv>
+    <!-- 创建时间 -->
+    <sv label="{{ 'creat.time' | translate }}">2017-07-07</sv>
+    <!-- 关联单据 -->
+    <sv label="{{ 'associated.documents' | translate }}">
+      <a (click)="msg.success('yes')">12421</a>
+    </sv>
+    <!--生效日期  -->
+    <sv label="{{ 'effective.date' | translate }}">2017-07-07 ~ 2017-08-08</sv>
+    <!-- 备注 -->
+    <sv label="{{ 'memo' | translate }}">请于两个工作日内确认</sv>
+    <!--  -->
+  </sv-container>
+</page-header>
+<!-- 流程进度 -->
+<nz-card [nzBordered]="false" class="mb-lg" nzTitle="{{ 'process.schedule' | translate }}">
+  <nz-steps [nzCurrent]="1" nzProgressDot>
+    <!-- 创建项目 -->
+    <nz-step [nzTitle]="'{{ 'create.object' | translate }}'" [nzDescription]="createDesc">
+      <ng-template #createDesc>
+        <div class="desc">
+          <div class="my-sm">
+            曲丽丽
+            <i nz-icon type="dingding" class="ml-sm"></i>
+          </div>
+          <div>2016-12-12 12:32</div>
+        </div>
+      </ng-template>
+    </nz-step>
+    <!-- 部门初审 -->
+    <nz-step [nzTitle]="'{{ 'depart.first.trial' | translate }}'" [nzDescription]="checkedDesc">
+      <ng-template #checkedDesc>
+        <div class="desc">
+          <div class="my-sm">
+            周毛毛
+            <i nz-icon type="dingding" class="ml-sm" style="color: #00a0e9;"></i>
+          </div>
+          <!-- 催一下 -->
+          <a (click)="msg.success('click')">{{ 'hurry' | translate }}</a>
+        </div>
+      </ng-template>
+    </nz-step>
+    <!-- 财务复核 -->
+    <nz-step [nzTitle]="'{{ 'financial.review' | translate }}'"></nz-step>
+    <!-- 完成 -->
+    <nz-step [nzTitle]="'{{ 'cost.finish' | translate }}'"></nz-step>
+  </nz-steps>
+  <div class="steps-content"></div>
+</nz-card>
+<!-- 用户信息 -->
+<nz-card [nzBordered]="false" nzTitle="{{ 'user.info' | translate }}" class="mb-lg">
+  <sv-container class="mb-lg">
+    <!-- 用户姓名 -->
+    <sv label="{{ 'user.name' | translate }}">付小小</sv>
+    <!-- 会员卡号 -->
+    <sv label="{{ 'vip.card.number' | translate }}">32943898021309809423</sv>
+    <!--身份证  -->
+    <sv label="{{ 'Id.card' | translate }}">3321944288191034921</sv>
+    <!-- 联系方式 -->
+    <sv label="{{ 'contact' | translate }}">18112345678</sv>
+    <!-- 联系地址 -->
+    <sv label="{{ 'hospital.contact.address' | translate }}"
+      >曲丽丽 18100000000 浙江省杭州市西湖区黄姑山路工专路交叉路口</sv
+    >
+  </sv-container>
+  <!-- 信息组 -->
+  <sv-container class="mb-lg" title="{{ 'info.group' | translate }}">
+    <!-- 某某数据 -->
+    <sv label="{{ 'such.data' | translate }}">725</sv>
+    <!-- 该数据更新时间 -->
+    <sv label="{{ 'this.data.update.time' | translate }}">2017-08-08</sv>
+    <sv>&nbsp;</sv>
+    <sv [label]="label">
+      <ng-template #label>
+        {{ 'such.data' | translate }}
+        <!-- 数据说明 -->
+        <nz-tooltip [nzTitle]="{{ 'data.desc' | translate }}''">
+          <span nz-tooltip>
+            <i nz-icon type="info-circle"></i>
+          </span>
+        </nz-tooltip>
+      </ng-template>
+      725
+    </sv>
+    <sv label="该数据更新时间">2017-08-08</sv>
+  </sv-container>
+  <!-- 信息组 -->
+  <h4 class="mb-md">{{ 'info.group' | translate }}</h4>
+  <nz-card nzType="inner" nzTitle="{{ 'multi.level.info.group' | translate }}">
+    <!-- 组名称 -->
+    <sv-container size="small" title="{{ 'group.name' | translate }}">
+      <!-- 负责人 -->
+      <sv label="{{ 'depart.person.in.charge' | translate }}">林东东</sv>
+      <!--  角色码-->
+      <sv label="{{ 'character.code' | translate }}">1234567</sv>
+      <!-- 所属部门 -->
+      <sv label="{{ 'subordinate.departments' | translate }}">XX公司 - YY部</sv>
+      <!-- 过期时间 -->
+      <sv label="{{ 'expiration.time' | translate }}">2017-08-08</sv>
+      <!-- 描述 -->
+      <sv label="{{ 'description' | translate }}">
+        这段描述很长很长很长很长很长很长很长很长很长很长很长很长很长很长...
+      </sv>
+    </sv-container>
+    <nz-divider></nz-divider>
+    <!-- 组名称 -->
+    <sv-container size="small" title="{{ 'group.name' | translate }}" col="1">
+      <!-- 学名 -->
+      <sv label="{{ 'scientific.name' | translate }}">
+        Citrullus lanatus (Thunb.) Matsum. et Nakai一年生蔓生藤本；茎、枝粗壮，具明显的棱。卷须较粗..
+      </sv>
+    </sv-container>
+    <nz-divider></nz-divider>
+    <!-- 组名称 -->
+    <sv-container size="small" title="{{ 'group.name' | translate }}">
+      <!-- 负责人 -->
+      <sv label="{{ 'depart.person.in.charge' | translate }}">付小小</sv>
+      <!-- 角色码 -->
+      <sv label="{{ 'character.code' | translate }}">1234568</sv>
+    </sv-container>
+  </nz-card>
+</nz-card>
+<!--用户近半年来电记录  -->
+<nz-card [nzBordered]="false" nzTitle="{{ 'user.call.records.sixMonths' | translate }}" class="mb-lg">
+  <div class="no-data">
+    <!--暂无数据  -->
+    <i nz-icon type="frown"></i>{{ 'no.data' | translate }}
+  </div>
+</nz-card>
+<nz-card [nzBordered]="false">
+  <nz-card-tab>
+    <nz-tabset nzSize="large" (nzSelectChange)="change($event)">
+      <!--操作日志一  -->
+      <nz-tab nzTitle="{{ 'table.operation' | translate }}{{ 'log.one' | translate }}"></nz-tab>
+      <nz-tab nzTitle="{{ 'table.operation' | translate }}{{ 'log.two' | translate }}"></nz-tab>
+      <nz-tab nzTitle="{{ 'table.operation' | translate }}{{ 'log.three' | translate }}"></nz-tab>
+    </nz-tabset>
+  </nz-card-tab>
+  <st [columns]="opColumns" [data]="list">
+    <ng-template st-row="status" let-i>
+      <!-- 成功 -->
+      <nz-badge
+        *ngIf="i.status === 'success'"
+        [nzStatus]="'success'"
+        [nzText]="'{{ 'success' | translate }}'"
+      ></nz-badge>
+      <!-- 进行中 -->
+      <nz-badge
+        *ngIf="i.status !== 'success'"
+        [nzStatus]="'processing'"
+        [nzText]="'{{ 'pm.project.archives.start.Have.in.hand' | translate }}'"
+      ></nz-badge>
+    </ng-template>
+  </st>
+</nz-card>

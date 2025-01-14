@@ -1,0 +1,62 @@
+<!-- 角色授权 -->
+<nz-drawer
+  [nzBodyStyle]="{ height: 'calc(100% - 55px)', overflow: 'auto', 'padding-bottom': '53px' }"
+  [nzMaskClosable]="true"
+  [nzWidth]="600"
+  [nzVisible]="visible"
+  nzTitle="{{ 'character' | translate }}{{ 'table.To.grant.authorization' | translate }}"
+  (nzOnClose)="close()"
+>
+  <nz-tree
+    #nzTreeComponent
+    [nzData]="nodes"
+    nzCheckable
+    nzMultiple
+    [nzCheckStrictly]="checkStrictly"
+    [nzCheckedKeys]="defaultCheckedKeys"
+    [nzExpandedKeys]="defaultExpandedKeys"
+    [nzSelectedKeys]="defaultSelectedKeys"
+    (nzClick)="nzEvent($event)"
+    (nzExpandChange)="nzEvent($event)"
+    (nzClick)="treeClick($event)"
+  >
+    <ng-template #nzTreeTemplate let-node>
+      <span style="cursor:pointer">{{ node.title }}</span>
+      <span *ngIf="node.scopedSlots" style="color:orange"><i nz-icon nzType="profile" nzTheme="outline"></i></span>
+    </ng-template>
+  </nz-tree>
+
+  <div class="footer">
+    <nz-dropdown style="float:left" [nzTrigger]="'click'">
+      <button nz-button nz-dropdown>
+        <span>{{ 'tree.operation' | translate }}</span> <i nz-icon type="up"></i>
+      </button>
+      <ul nz-menu>
+        <li nz-menu-item>
+          <a href="javascript:;" (click)="operateTree(0)">{{ 'parent.child.association' | translate }}</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" (click)="operateTree(1)">{{ 'unlink' | translate }}</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" (click)="operateTree(2)">{{ 'check.all' | translate }}</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" (click)="operateTree(3)">{{ 'cancel.all' | translate }}</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" (click)="operateTree(4)">{{ 'expand.all' | translate }}</a>
+        </li>
+        <li nz-menu-item>
+          <a href="javascript:;" (click)="operateTree(5)">{{ 'all.merged' | translate }}</a>
+        </li>
+      </ul>
+    </nz-dropdown>
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;">
+      <span>{{ 'button.close' | translate }}</span>
+    </button>
+    <button nzType="button" nz-button (click)="save()" [nzLoading]="isSaving" class="ant-btn ant-btn-primary">
+      <span>{{ 'button.save' | translate }}</span>
+    </button>
+  </div>
+</nz-drawer>

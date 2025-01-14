@@ -1,0 +1,174 @@
+<!-- 基本信息 -->
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 单据编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+          {{ 'documents.code' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <!-- 自动生成 -->
+          {{ 'aoto.create' | translate }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">
+          {{ 'project.code' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.proCode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目名称 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+          {{ 'cost.item.name' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-select
+            style="widows: 100%;"
+            nzShowSearch
+            nzAllowClear
+            formControlName="proId"
+            id="proId"
+            [(ngModel)]="proWorkMilestone.proId"
+            nzPlaceHolder="{{ 'cost.choose' | translate }}"
+            (ngModelChange)="proChange($event)"
+          >
+            <nz-option *ngFor="let i of proList" [nzValue]="i.id" [nzLabel]="i.proName"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('proId')?.dirty && validateForm.get('proId')?.errors">
+            <!-- 请选择项目名称 -->
+            {{ 'select.please.choose' | translate }}{{ 'cost.item.name' | translate }}
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户编码 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'customer.code' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.cusCode }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 客户名称 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null">{{ 'customer.name' | translate }}</nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          {{ proWorkMilestone.cusName }}
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 项目里程碑 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+          {{ 'project' | translate }}{{ 'financial.management.milestoneName' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-select
+            style="widows: 100%;"
+            nzShowSearch
+            nzAllowClear
+            formControlName="mileId"
+            id="mileId"
+            [(ngModel)]="proWorkMilestone.mileId"
+            nzPlaceHolder="{{ 'cost.choose' | translate }}"
+            (ngModelChange)="milChange($event)"
+          >
+            <nz-option *ngFor="let i of mieList" [nzValue]="i.key" [nzLabel]="i.milesName"></nz-option>
+          </nz-select>
+          <nz-form-explain *ngIf="validateForm.get('mileId')?.dirty && validateForm.get('mileId')?.errors">
+            <!-- 请选择里程碑 -->
+            {{ 'cost.choose' | translate }}{{ 'financial.management.milestoneName' | translate }}
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 里程碑确认 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+          {{ 'financial.management.milestoneName' | translate }}{{ 'ok' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-switch
+            formControlName="milSwitch"
+            id="milSwitch"
+            [(ngModel)]="milSwitch"
+            nzCheckedChildren="{{ 'cost.yes' | translate }}"
+            nzUnCheckedChildren="{{ 'cost.no' | translate }}"
+          ></nz-switch>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+    <div nz-col [nzSpan]="6">
+      <nz-form-item>
+        <!-- 确认时间 -->
+        <nz-form-label [nzSpan]="'vertical' ? 24 : null" nzRequired>
+          {{ 'ok' | translate }}{{ 'date' | translate }}
+        </nz-form-label>
+        <nz-form-control [nzSm]="24" [nzXs]="24">
+          <nz-date-picker formControlName="confirmTime" id="confirmTime" [(ngModel)]="proWorkMilestone.confirmTime">
+          </nz-date-picker>
+          <nz-form-explain *ngIf="validateForm.get('confirmTime')?.dirty && validateForm.get('confirmTime')?.errors">
+            <!-- 请选择时间 -->
+            {{ 'select.please.choose' | translate }}{{ 'date' | translate }}
+          </nz-form-explain>
+        </nz-form-control>
+      </nz-form-item>
+    </div>
+  </div>
+</form>
+<!-- 项目成果 -->
+<nz-card nzTitle="{{ 'project.results' | translate }}">
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="6">
+      <nz-upload
+        nzAction="sys/common/uploadFile"
+        [nzFileList]="fileList"
+        nzMultiple="true"
+        (nzChange)="handleChange($event)"
+      >
+        <!-- 上传 -->
+        <button nz-button>
+          <i nz-icon nzType="upload"></i>
+          {{ 'pm.project.archives.file.up.load' | translate }}
+        </button>
+      </nz-upload>
+    </div>
+  </div>
+</nz-card>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 填写人 -->
+  <strong>{{ 'fill.person' | translate }}:</strong>{{ proWorkMilestone.currentUser }}
+
+  <!-- 填写时间 -->
+  <strong>{{ 'fill.time' | translate }}:</strong>{{ proWorkMilestone.createTime }}
+
+  <!-- 关闭按钮 -->
+  <a
+    nz-popconfirm
+    nzTitle="{{ 'pm.contract.contract.add.button.cancel' | translate }}"
+    (nzOnConfirm)="close()"
+    style="padding-right: 8px"
+  >
+    <button nz-button>{{ 'pm.quotation.cancel' | translate }}</button>
+  </a>
+  <!-- 保存按钮 -->
+  <button nz-button nzType="primary" class="ant-btn ant-btn-primary" (click)="submitForm()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.finish' | translate }}</span>
+  </button>
+</div>

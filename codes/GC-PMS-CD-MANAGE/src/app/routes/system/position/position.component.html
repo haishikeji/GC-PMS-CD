@@ -1,0 +1,41 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="add()" nz-button nzType="primary">{{'new'|translate}}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+
+  <nz-table nzSize="small" #basicTable [nzData]="listOfData"
+    [nzFrontPagination]="false"
+    [nzTotal]="page.total"
+    [nzPageIndex]="page.current"
+  >
+    <thead>
+      <tr>
+        <th>{{'position.code'|translate}}</th>
+        <th>{{'position.name'|translate}}</th>
+        <th>{{'create.by'|translate}}</th>
+        <th>{{'creat.time'|translate}}</th>
+        <th>{{'update.by'|translate}}</th>
+        <th>{{'update.time'|translate}}</th>
+        <th>{{'table.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of basicTable.data">
+        <td>{{ data.code }}</td>
+        <td>{{ data.name }}</td>
+        <td>{{data.createBy}}</td>
+        <td>{{data.createTime}}</td>
+        <td>{{data.updateBy}}</td>
+        <td>{{data.updateTime}}</td>
+        <td>
+          <a href="javascript:void(0);" (click)="update(data.id)">{{'edit'|translate}}</a>
+          <nz-divider nzType="vertical"></nz-divider>
+          <a href="javascript:void(0);" (click)="delete(data.id)">{{'table.delete'|translate}}</a>
+        </td>
+      </tr>
+    </tbody>
+  </nz-table>
+
+</nz-card>

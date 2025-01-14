@@ -1,0 +1,195 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <span id="titleAdd" hidden="true">{{ 'button.add' | translate }}{{ 'personnel' | translate }}</span>
+    <span id="titleUpdate" hidden="true">{{ 'table.update' | translate }}{{ 'personnel' | translate }}</span>
+    <button nz-button nzType="primary" (click)="editPersonnel('')">
+      {{ 'button.add' | translate }}{{ 'personnel' | translate }}
+    </button>
+  </ng-template>
+</page-header>
+
+<span id="departTitleAdd" hidden="true">{{ 'button.add' | translate }}{{ 'depart' | translate }}</span>
+<span id="departTitleUpdate" hidden="true">{{ 'table.update' | translate }}{{ 'depart' | translate }}</span>
+<div nz-row [nzGutter]="24">
+  <!--左边card-->
+  <div nz-col nzMd="24" nzLg="6">
+    <nz-card>
+      <!--添加一级-->
+      <div nz-row [nzGutter]="24" style="margin-bottom: 10px;">
+        <div nz-col nzMd="24" nzLg="24">
+          <button nz-button nzType="primary" (click)="addDepar(0)">{{ 'button.leve.one' | translate }}</button>
+        </div>
+      </div>
+      <!--搜索框-->
+      <div nz-row [nzGutter]="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-input-group [nzSuffix]="suffixIcon" style="width:100%">
+            <input
+              type="text"
+              nz-input
+              placeholder="{{ 'placeholder' | translate }}{{ 'depart.name' | translate }}"
+              [(ngModel)]="searchValue"
+            />
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <i nz-icon type="search"></i>
+          </ng-template>
+        </div>
+      </div>
+      <!--树形体-->
+      <div nz-row [nzGutter]="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-tree
+            [nzData]="nodes"
+            [nzSearchValue]="searchValue"
+            (nzClick)="treeClick($event)"
+            (nzDblClick)="openFolder($event)"
+          >
+            <ng-template #contextTemplate>
+              <ul nz-menu nzInDropDown>
+                <li nz-menu-item (click)="addDepar(1)">{{ 'button.add' | translate }}</li>
+                <li nz-menu-item (click)="addDepar(2)">{{ 'table.update' | translate }}</li>
+                <li nz-menu-item (click)="deleteDepart()">{{ 'table.delete' | translate }}</li>
+                <li nz-menu-item (click)="cancel()">{{ 'button.cancel' | translate }}</li>
+              </ul>
+            </ng-template>
+            <ng-template #nzTreeTemplate let-node>
+              <span class="custom-node">
+                <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu(node.key, $event, contextTemplate)">
+                  <span class="folder-name">{{ node.title }}</span>
+                </span>
+                <span *ngIf="node.isLeaf" (contextmenu)="contextMenu(node.key, $event, contextTemplate)">
+                  <span class="file-name">{{ node.title }}</span>
+                </span>
+              </span>
+            </ng-template>
+          </nz-tree>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <!--右边card-->
+  <div nz-col nzMd="24" nzLg="18">
+    <nz-card>
+      <form>
+        <!--查询条件-->
+        <div nz-row nzGutter="24">
+          <div nz-col nzMd="24" nzLg="3">
+            <nz-form-label>{{ 'personnel.code' | translate }}</nz-form-label>
+          </div>
+          <div nz-col nzMd="24" nzLg="6">
+            <input nz-input [(ngModel)]="personnl.code" name="code" />
+          </div>
+          <div nz-col nzMd="24" nzLg="3">
+            <nz-form-label>{{ 'personnel.name' | translate }}</nz-form-label>
+          </div>
+          <div nz-col nzMd="24" nzLg="6">
+            <input nz-input [(ngModel)]="personnl.name" name="name" />
+          </div>
+          <div nz-col nzMd="24" nzLg="6">
+            <button (click)="query()" nz-button nzType="primary">{{ 'button.query' | translate }}</button>
+            <button (click)="rest()" nz-button nzType="primary">{{ 'button.reset' | translate }}</button>
+          </div>
+        </div>
+      </form>
+      <!-- 人员数据表 -->
+      <div nz-row nzGutter="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-table
+            class="tableTdPadding"
+            nzSize="small"
+            #basicTable
+            [nzData]="listOfData"
+            [nzFrontPagination]="false"
+            [nzTotal]="page.total"
+            [nzPageIndex]="page.current"
+            (nzPageIndexChange)="pageIndexChange($event)"
+            [nzLoading]="isSpinning"
+            [nzScroll]="{ x: '70vw' }"
+          >
+            <thead>
+              <tr>
+                <th nzWidth="8vw" nzLeft="0px" nzAlign="center">{{ 'personnel.code' | translate }}</th>
+                <th nzAlign="center" nzLeft="8vw">{{ 'personnel.name' | translate }}</th>
+                <th nzAlign="center">{{ 'company' | translate }}</th>
+                <th nzAlign="center">{{ 'depart' | translate }}</th>
+                <th nzAlign="center">{{ 'personnel.manager' | translate }}</th>
+                <th nzAlign="center">{{ 'email' | translate }}</th>
+                <th nzAlign="center">{{ 'On.the.job.status' | translate }}</th>
+                <th nzAlign="center">{{ 'whether.using.or.not' | translate }}</th>
+                <th nzAlign="center" nzRight="0px">{{ 'table.operation' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td style="width: 8vw" nzAlign="center" nzLeft="0px">{{ data.code }}</td>
+                <td nzAlign="center" nzLeft="8vw">{{ data.name }}</td>
+                <!-- 性别 -->
+                <!-- <td nzAlign="center"> -->
+                <!-- 男 -->
+                <!-- <nz-tag *ngIf="data.gender==='0'" [nzColor]="'blue'">{{'male'|translate}}</nz-tag> -->
+                <!-- 女 -->
+                <!-- <nz-tag *ngIf="data.gender==='1'" [nzColor]="'magenta'">{{'female'|translate}}</nz-tag>
+                </td> -->
+                <td nzAlign="center">{{ data.orgName }}</td>
+                <td nzAlign="center">{{ data.departName }}</td>
+                <td nzAlign="center">{{ data.namePersonnel }}</td>
+                <td nzAlign="center">{{ data.email }}</td>
+                <td nzAlign="center">
+                  <ng-container *ngIf="data.status == 1">
+                    {{ 'state.stay' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="data.status == 2">
+                    {{ 'state.leave' | translate }}
+                  </ng-container>
+                  <ng-container *ngIf="data.status == 3">
+                    {{ 'state.vacation' | translate }}
+                  </ng-container>
+                </td>
+                <!-- 是否停用 -->
+                <td nzAlign="center">
+                  <!-- 否 -->
+                  <nz-tag *ngIf="data.enable === '0'" [nzColor]="'green'">{{ 'no' | translate }}</nz-tag>
+                  <!-- 是 -->
+                  <nz-tag *ngIf="data.enable === '1'" [nzColor]="'red'">{{ 'yes' | translate }}</nz-tag>
+                  <!-- <ng-container *ngIf="data.enable==0">
+                    {{'no'| translate}}
+                  </ng-container>
+                  <ng-container *ngIf="data.enable==1">
+                    {{'yes'| translate}}
+                  </ng-container> -->
+                </td>
+                <td nzAlign="center" nzRight="0px" style="width: 10%;">
+                  <a href="javascript:void(0);" (click)="openDetailsComponent(data.id)">{{
+                    'table.view' | translate
+                  }}</a>
+                  <nz-divider nzType="vertical"></nz-divider>
+                  <nz-dropdown>
+                    <a nz-dropdown>&nbsp;{{ 'hospital.operation.more' | translate }}<i nz-icon type="down"></i> </a>
+                    <ul nz-menu nzSelectable>
+                      <li nz-menu-item>
+                        <a href="javascript:void(0);" (click)="editPersonnel(data.id)">{{
+                          'table.update' | translate
+                        }}</a>
+                      </li>
+                      <li nz-menu-item>
+                        <a
+                          nz-popconfirm
+                          nzTitle="{{ 'isdelete' | translate }}"
+                          nzOkText="{{ 'yes' | translate }}"
+                          nzCancelText="{{ 'no' | translate }}"
+                          (nzOnConfirm)="deletePersonnel(data.id)"
+                          >{{ 'table.delete' | translate }}</a
+                        >
+                      </li>
+                    </ul>
+                  </nz-dropdown>
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</div>

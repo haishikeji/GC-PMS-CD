@@ -1,0 +1,28 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <nz-tabset nzTabPosition="left">
+    <nz-tab nzTitle="合同基本信息">
+      <app-contract-management-contract-file-update-essential-information #essentialInformation
+        (milestone)="milestone($event)"></app-contract-management-contract-file-update-essential-information>
+    </nz-tab>
+    <nz-tab nzTitle="产品与模块">
+      <app-contract-management-contract-file-update-product-module #productModule
+        (contractFileObject)="contractFileObject($event)"></app-contract-management-contract-file-update-product-module>
+    </nz-tab>
+    <nz-tab nzTitle="收款计划">
+      <app-contract-management-contract-file-update-collection-plan #collectionPlan>
+
+      </app-contract-management-contract-file-update-collection-plan>
+    </nz-tab>
+  </nz-tabset>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 关闭按钮 -->
+  <a nz-popconfirm nzTitle="{{'pm.contract.contract.add.button.cancel'|translate}}" (nzOnConfirm)="close()"
+    style="padding-right: 8px">
+    <button nz-button>{{'pm.quotation.cancel'|translate}}</button>
+  </a>
+  <!-- 保存按钮 -->
+  <button nz-button nzType="primary" class="ant-btn ant-btn-primary" (click)="save()"
+    [nzLoading]="isLoadingSave"><span>{{'pm.finish' | translate}}</span></button>
+</div>

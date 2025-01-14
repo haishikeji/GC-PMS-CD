@@ -1,0 +1,306 @@
+<page-header [title]="'高级表单'">
+  <!-- {{ '' | translate }} -->
+  高级表单常见于一次性输入和提交大批量数据的场景。（示例采用响应式表单，也可使用模板驱动方式）
+</page-header>
+<form nz-form [formGroup]="form" (ngSubmit)="_submitForm()" [nzLayout]="'vertical'">
+  <!-- 仓库管理 -->
+  <nz-card [nzBordered]="false" nzTitle="{{ 'warehouse.management' | translate }}">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <!-- 仓库名 -->
+          <nz-form-label nzFor="name">{{ 'warehouse.name' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              formControlName="name"
+              id="name"
+              placeholder="{{ 'placeholder' | translate }}{{ 'warehouse.name' | translate }}"
+            />
+            <nz-form-explain *ngIf="(name.dirty || name.touched) && name.errors?.required">
+              {{ 'placeholder' | translate }}{{ 'warehouse.name' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <!-- 仓库域名 -->
+          <nz-form-label>{{ 'warehouse.domain.name' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-input-group nzAddOnBefore="http://" nzAddOnAfter=".com">
+              <input nz-input formControlName="url" placeholder="{{ 'placeholder' | translate }}" />
+            </nz-input-group>
+            <nz-form-explain *ngIf="(url.dirty || url.touched) && url.errors?.required">
+              {{ 'placeholder' | translate }}
+              {{ 'warehouse.domain.name' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <!--仓库管理员  -->
+          <nz-form-label>{{ 'warehouse.keeper' | translate }}仓库管理员</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              formControlName="owner"
+              [nzPlaceHolder]="'{{ 'placeholder' | translate }}{{ 'warehouse.keeper' | translate }}'"
+              [nzShowSearch]="true"
+            >
+              <nz-option *ngFor="let i of users" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="(owner.dirty || owner.touched) && owner.errors?.required">
+              {{ 'placeholder' | translate }}{{ 'warehouse.keeper' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <!-- 审批员 -->
+          <nz-form-label>{{ 'part.approval' | translate }}</nz-form-label>
+          <nz-form-control>
+            <!--  -->
+            <nz-select
+              formControlName="approver"
+              [nzPlaceHolder]="'{{ 'placeholder' | translate }}{{ 'part.approval' | translate }}'"
+              [nzShowSearch]="true"
+            >
+              <nz-option *ngFor="let i of users" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="(approver.dirty || approver.touched) && approver.errors?.required">
+              {{ 'placeholder' | translate }}{{ 'part.approval' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <!-- 生效日期 -->
+          <nz-form-label>{{ 'effective.date' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-range-picker formControlName="date_range" [nzStyle]="{ width: '100%' }"></nz-range-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <!-- 仓库类型 -->
+          <nz-form-label>{{ 'warehouse.type' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              formControlName="type"
+              [nzShowSearch]="true"
+              [nzPlaceHolder]="'{{ 'placeholder' | translate }}{{ 'warehouse.type' | translate }}'"
+            >
+              <!-- 私密 -->
+              <nz-option [nzLabel]="'{{ 'private' | translate }}'" [nzValue]="'private'"></nz-option>
+              <!-- 公开 -->
+              <nz-option [nzLabel]="'{{ 'public' | translate }}'" [nzValue]="'public'"></nz-option>
+            </nz-select>
+            <!--  -->
+            <nz-form-explain *ngIf="(type.dirty || type.touched) && type.errors?.required">
+              {{ 'placeholder' | translate }}{{ 'warehouse.type' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <nz-card [nzBordered]="false" nzTitle="{{ 'working.task' | translate }}{{ 'management' | translate }}">
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <!-- 任务名 -->
+          <nz-form-label>{{ 'working.task.name' | translate }}</nz-form-label>
+          <nz-form-control>
+            <input
+              nz-input
+              formControlName="name2"
+              placeholder="{{ 'placeholder' | translate }}{{ 'working.task.name' | translate }}"
+            />
+            <nz-form-explain *ngIf="(name2.dirty || name2.touched) && name2.errors?.required">
+              {{ 'placeholder' | translate }}{{ 'working.task.name' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <!-- 任务描述 -->
+          <nz-form-label>{{ 'working.task.desc' | translate }}</nz-form-label>
+          <nz-form-control>
+            <textarea
+              nz-input
+              formControlName="summary"
+              [nzAutosize]="true"
+              placeholder="{{ 'placeholder' | translate }}{{ 'working.task.desc' | translate }}"
+            ></textarea>
+            <nz-form-explain *ngIf="(summary.dirty || summary.touched) && summary.errors?.required">
+              {{ 'placeholder' | translate }}{{ 'working.task.desc' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <!-- 执行人 -->
+          <nz-form-label>{{ 'executor' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              formControlName="owner2"
+              [nzPlaceHolder]="'{{ 'select.please.choose' | translate }}{{ 'executor' | translate }}'"
+              [nzShowSearch]="true"
+            >
+              <nz-option *ngFor="let i of users" [nzLabel]="i.label" [nzValue]="i.value"> </nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="(owner2.dirty || owner2.touched) && owner2.errors?.required">
+              {{ 'select.please.choose' | translate }}{{ 'executor' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+    <nz-row nzGutter="16">
+      <nz-col nzLg="6" nzMd="12" nzSm="24">
+        <nz-form-item>
+          <!-- 责任人 -->
+          <nz-form-label>{{ 'the.responsible' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              formControlName="approver2"
+              [nzPlaceHolder]="'{{ 'select.please.choose' | translate }}{{ 'the.responsible' | translate }}'"
+              [nzShowSearch]="true"
+            >
+              <nz-option *ngFor="let i of users" [nzLabel]="i.label" [nzValue]="i.value"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="(approver2.dirty || approver2.touched) && approver2.errors?.required">
+              {{ 'select.please.choose' | translate }}{{ 'the.responsible' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 6, offset: 2 }" [nzLg]="{ span: 8 }" [nzMd]="{ span: 12 }" nzSm="24">
+        <nz-form-item>
+          <!-- 生效时间 -->
+          <nz-form-label>{{ 'effect.time' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-time-picker formControlName="time"></nz-time-picker>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+      <nz-col [nzXl]="{ span: 8, offset: 2 }" [nzLg]="{ span: 10 }" [nzMd]="{ span: 24 }" nzSm="24">
+        <nz-form-item>
+          <!--任务类型  -->
+          <nz-form-label>{{ 'working.task' | translate }}{{ 'financial.management.type' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              formControlName="type2"
+              [nzShowSearch]="true"
+              [nzPlaceHolder]="'{{ 'select.please.choose' | translate }}{{ 'working.task' | translate }}{{ 'financial.management.type' | translate }}'"
+            >
+              <!--私密  -->
+              <nz-option [nzLabel]="'{{ 'private' | translate }}'" [nzValue]="'private'"></nz-option>
+              <!-- 公开 -->
+              <nz-option [nzLabel]="'{{ 'public' | translate }}'" [nzValue]="'public'"></nz-option>
+            </nz-select>
+            <nz-form-explain *ngIf="(type2.dirty || type2.touched) && type2.errors?.required">
+              {{ 'select.please.choose' | translate }}{{ 'working.task' | translate
+              }}{{ 'financial.management.type' | translate }}
+            </nz-form-explain>
+          </nz-form-control>
+        </nz-form-item>
+      </nz-col>
+    </nz-row>
+  </nz-card>
+  <!--成员管理  -->
+  <nz-card [nzBordered]="false" nzTitle="{{ 'members' | translate }}{{ 'management' | translate }}">
+    <nz-table nzSize="small" formArrayName="items" [nzData]="items.value" [nzShowPagination]="false">
+      <thead>
+        <tr>
+          <!--  成员姓名-->
+          <th>{{ 'members' | translate }}{{ 'name' | translate }}</th>
+          <!-- 工号 -->
+          <th>{{ 'work.number' | translate }}</th>
+          <!-- 所属部门 -->
+          <th>{{ 'subordinate.departments' | translate }}</th>
+          <!-- 操作 -->
+          <th>{{ 'table.operation' | translate }}</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of items.controls; let i = index" [formGroupName]="i">
+          <td>
+            <span *ngIf="editIndex !== i">{{ items.value[i].name }}</span>
+            <span *ngIf="editIndex === i" nz-form-control>
+              <!-- 成员姓名 -->
+              <input
+                nz-input
+                formControlName="name"
+                placeholder="{{ 'placeholder' | translate }}{{ 'members' | translate }}{{ 'name' | translate }}"
+              />
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex !== i">{{ items.value[i].workId }}</span>
+            <span *ngIf="editIndex === i" nz-form-control>
+              <!-- 请输入工号 -->
+              <input
+                nz-input
+                formControlName="workId"
+                placeholder="{{ 'placeholder' | translate }}{{ 'work.number' | translate }}"
+              />
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex !== i">{{ items.value[i].department }}</span>
+            <span *ngIf="editIndex === i" nz-form-control>
+              <!-- 所属部门 -->
+              <input
+                nz-input
+                formControlName="department"
+                placeholder="{{ 'placeholder' | translate }}{{ 'subordinate.departments' | translate }}"
+              />
+            </span>
+          </td>
+          <td>
+            <span *ngIf="editIndex !== i">
+              <!-- 编辑 -->
+              <a (click)="edit(i)">{{ 'edit' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <!-- 是否要删除此行 -->
+              <nz-popconfirm (nzOnConfirm)="del(i)" [nzTitle]="'{{ 'whether.to.delete.this.row' | translate }}'">
+                <!-- 删除 -->
+                <a nz-popconfirm>{{ 'table.delete' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+            <span *ngIf="editIndex === i">
+              <!--保存  -->
+              <a (click)="save(i)">{{ 'button.save' | translate }}</a>
+              <nz-divider nzType="vertical"></nz-divider>
+              <!--  取消-->
+              <nz-popconfirm
+                (nzOnConfirm)="cancel(i)"
+                [nzTitle]="'{{ 'whether.to.cancel.this.operation' | translate }}'"
+              >
+                <a nz-popconfirm>{{ 'button.cancel' | translate }}</a>
+              </nz-popconfirm>
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </nz-table>
+    <button *ngIf="editIndex === -1" nz-button [nzType]="'dashed'" (click)="add()" nzBlock class="mt-md">
+      <i nz-icon type="plus"></i>
+      <!-- 新增成员 -->
+      <span>{{ 'button.add' | translate }}{{ 'members' | translate }}</span>
+    </button>
+  </nz-card>
+  <footer-toolbar errorCollect>
+    <!-- 提交 -->
+    <button nz-button type="primary" nzType="primary">{{ 'submit' | translate }}</button>
+  </footer-toolbar>
+</form>

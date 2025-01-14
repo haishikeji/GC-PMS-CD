@@ -1,0 +1,23 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- <button (click)="add()" nz-button nzType="primary">新建</button> -->
+  </ng-template>
+</page-header>
+<nz-card>
+  <div nz-row nzGutter="16">
+    <!-- 加密 -->
+    <div nz-col class="gutter-row" nzSpan="7">
+      <textarea rows="4" placeholder="请输入加密字符" nz-input [(ngModel)]="encryption"></textarea>
+    </div>
+    <!-- 操作 -->
+    <div nz-col class="gutter-row" nzSpan="5">
+        <button (click)="encryptionClick()" nz-button nzType="primary">加密</button>
+        <button (click)="decryptClick()" nz-button nzType="primary">解密</button>
+        <button (click)="empty()" nz-button>清空</button>
+    </div>
+    <!-- 解密 -->
+    <div nz-col class="gutter-row" nzSpan="7">
+        <textarea rows="4" placeholder="请输入解密字符" nz-input [(ngModel)]="decrypt"></textarea>
+    </div>
+  </div>
+</nz-card>

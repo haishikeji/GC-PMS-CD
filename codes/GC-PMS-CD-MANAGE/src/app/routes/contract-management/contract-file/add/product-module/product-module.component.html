@@ -1,0 +1,238 @@
+<!-- 产品 -->
+<nz-card nzTitle="{{ 'product' | translate }}">
+  <!-- 操作按钮 -->
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <!-- 新增 -->
+      <button nz-button (click)="productAddRow()" nzType="primary">{{ 'button.add' | translate }}</button>
+      <br />
+      <br />
+    </div>
+  </div>
+  <!-- 表格 -->
+  <div nz-row [nzGutter]="24">
+    <div nz-col [nzSpan]="24">
+      <nz-table #productRowTable nzSize="small" class="tableTdPadding" nzBordered [nzData]="productList">
+        <thead>
+          <tr>
+            <!-- 产品编码 -->
+            <th nzWidth="10%">{{ 'product' | translate }}{{ 'table.thead.code' | translate }}</th>
+            <!-- 产品名称 -->
+            <th nzWidth="17%">{{ 'product' | translate }}{{ 'contract.name' | translate }}</th>
+
+            <!-- 折扣率 -->
+            <th nzWidth="9%">{{ 'The discount' | translate }}</th>
+            <!-- 标准报价 -->
+            <th nzWidth="9%">{{ 'standard.quotation' | translate }}</th>
+
+            <!-- 折扣后单价 -->
+            <th nzWidth="9%">
+              {{ 'pm.quotation.Discount' | translate }}{{ 'after' | translate }}{{ 'price' | translate }}
+            </th>
+
+            <!-- 标准金额 -->
+            <th nzWidth="9%">{{ 'standard.amount' | translate }}</th>
+
+            <!-- 折扣后金额 -->
+            <th nzWidth="9%">
+              {{ 'pm.quotation.Discount' | translate }}{{ 'after' | translate }}{{ 'their.fees.money' | translate }}
+            </th>
+
+            <!-- 成本单价 -->
+            <th nzWidth="9%">{{ 'cost' | translate }}{{ 'price' | translate }}</th>
+
+            <!--成本金额  -->
+            <th nzWidth="9%">{{ 'cost' | translate }}{{ 'their.fees.money' | translate }}</th>
+
+            <!-- 操作 -->
+            <th nzWidth="10%">{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of productRowTable.data" class="editable-row">
+            <td><input type="text" nz-input [(ngModel)]="data.code" disabled="true" /></td>
+            <td>
+              <nz-input-group nzSearch [nzAddOnAfter]="suffixIconButton">
+                <input
+                  type="text"
+                  [(ngModel)]="data.name"
+                  nz-input
+                  placeholder="{{ 'select.please.choose' | translate }}"
+                  disabled="true"
+                />
+              </nz-input-group>
+              <ng-template #suffixIconButton>
+                <!-- 放大镜  勾选列表 -->
+                <button nz-button nzType="primary" nzSearch (click)="selectProdutModal(data)">
+                  <i nz-icon type="search"></i>
+                </button>
+              </ng-template>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [(ngModel)]="data.discountRate"
+                [nzFormatter]="formatterDollar2"
+                [nzParser]="parserDollar2"
+              ></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [nzDisabled]="true"
+                [(ngModel)]="data.standardQuotation"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [(ngModel)]="data.unitPriceAfterDiscount"
+                (nzBlur)="unitPriceAfterDiscountBlur(data)"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [(ngModel)]="data.standardAmount"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [(ngModel)]="data.amountAfterDiscount"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [(ngModel)]="data.costUnitPrice"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              <nz-input-number
+                [nzMin]="0"
+                [(ngModel)]="data.costAmount"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              <a
+                nz-popconfirm
+                nzTitle="{{ 'confirm.to.delete' | translate }}?"
+                nzOkText="{{ 'yes' | translate }}"
+                nzCancelText="{{ 'no' | translate }}"
+                (nzOnConfirm)="productDeleteRow(data)"
+                >{{ 'table.delete' | translate }}</a
+              >
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>
+
+<!-- 模块 -->
+<nz-card nzTitle="{{ 'module' | translate }}">
+  <nz-tabset>
+    <nz-tab *ngFor="let product of productList" [nzTitle]="product.name">
+      <!-- 操作按钮 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <!-- 新增 -->
+          <button nz-button (click)="moduleAddRow(product)" nzType="primary">{{ 'button.add' | translate }}</button>
+          <br />
+          <br />
+        </div>
+      </div>
+      <!-- 表格 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-table
+            #moduleRowTable
+            nzSize="small"
+            class="tableTdPadding"
+            nzBordered
+            [nzData]="product.contractFileModularList"
+          >
+            <thead>
+              <tr>
+                <!-- 产品模块编码 -->
+                <th nzWidth="30%">{{ 'product' | translate }}{{ 'module.code' | translate }}</th>
+
+                <!-- 产品模块名称 -->
+                <th nzWidth="30%">{{ 'product' | translate }}{{ 'module.name' | translate }}</th>
+
+                <!-- 标准报价 -->
+                <th nzWidth="10%">{{ 'standard.quotation' | translate }}</th>
+
+                <!-- 采购价格 -->
+                <th nzWidth="10%">{{ 'procurement' | translate }}{{ 'the.price' | translate }}</th>
+
+                <!-- 操作 -->
+                <th nzWidth="20%">{{ 'table.operation' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of moduleRowTable.data" class="editable-row">
+                <td><input disabled="true" type="text" nz-input [(ngModel)]="data.code" /></td>
+                <td>
+                  <nz-select
+                    style="width:100%"
+                    nzShowSearch
+                    nzAllowClear
+                    [(ngModel)]="data.baseMaterialFileModularId"
+                    nzPlaceHolder="{{ 'select.please.choose' | translate }}"
+                    (ngModelChange)="baseMaterialFileModularIdChange(product, data, $event)"
+                  >
+                    <nz-option *ngFor="let i of product.modularListSelect" [nzValue]="i.id" [nzLabel]="i.name">
+                    </nz-option>
+                  </nz-select>
+                </td>
+                <td>
+                  <nz-input-number
+                    [nzMin]="0"
+                    [nzDisabled]="true"
+                    [(ngModel)]="data.standardQuotation"
+                    [nzFormatter]="formatterDollar"
+                    [nzParser]="parserDollar"
+                    (ngModelChange)="standardQuotationModuleKeyUp(product)"
+                  ></nz-input-number>
+                </td>
+                <td>
+                  <nz-input-number
+                    [nzMin]="0"
+                    [(ngModel)]="data.purchasePrice"
+                    [nzFormatter]="formatterDollar"
+                    [nzParser]="parserDollar"
+                  ></nz-input-number>
+                </td>
+                <td>
+                  <a
+                    nz-popconfirm
+                    nzTitle="{{ 'confirm.to.delete' | translate }}?"
+                    nzOkText="{{ 'yes' | translate }}"
+                    nzCancelText="{{ 'no' | translate }}"
+                    (nzOnConfirm)="moduleDeleteRow(product, data.id)"
+                    >{{ 'table.delete' | translate }}</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-tab>
+  </nz-tabset>
+</nz-card>

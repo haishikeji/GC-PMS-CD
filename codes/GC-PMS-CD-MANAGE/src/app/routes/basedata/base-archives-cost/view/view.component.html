@@ -1,0 +1,16 @@
+<form nz-form>
+  <nz-form-item>
+    <!-- 费用编码 -->
+    <nz-form-label [nzSm]="5" [nzXs]="24">
+      {{ 'pm.quotation.fee' | translate }}{{ 'contract.code' | translate }}
+    </nz-form-label>
+    <nz-form-control [nzSm]="4" [nzXs]="24">
+      {{ baseArchivesCost.code }}
+    </nz-form-control>
+    <!-- 费用名称 -->
+    <nz-form-label [nzSm]="5" [nzXs]="24">{{ 'pm.quotation.Tag.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="10" [nzXs]="24">
+      {{ baseArchivesCost.name }}
+    </nz-form-control>
+  </nz-form-item>
+</form>

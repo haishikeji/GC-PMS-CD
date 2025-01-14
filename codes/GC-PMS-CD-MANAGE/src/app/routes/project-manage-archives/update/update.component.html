@@ -1,0 +1,46 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <nz-tabset nzTabPosition="left">
+    <!-- 基本信息 -->
+    <nz-tab nzTitle="{{'essential.information'|translate}}">
+      <app-project-manage-archives-update-essential-information #essentialInformation (projectManageArchivesaEntiy)="projectManageArchivesaEntiy($event)"
+      (milestone)="milestone($event)">
+
+      </app-project-manage-archives-update-essential-information>
+    </nz-tab>
+    <!-- 商务 -->
+    <nz-tab nzTitle="{{'business.affairs'|translate}}">
+      <app-project-manage-archives-update-business-affairs #businessAffairs (remittanceInformationChange)="remittanceInformationChange($event)">
+
+      </app-project-manage-archives-update-business-affairs>
+    </nz-tab>
+    <!-- 实施 -->
+    <nz-tab nzTitle="{{'implementation'|translate}}">
+      <app-project-manage-archives-update-implementation #implementation>
+
+      </app-project-manage-archives-update-implementation>
+    </nz-tab>
+    <!-- 开发 -->
+    <nz-tab nzTitle="{{'development'|translate}}">
+      <app-project-manage-archives-update-development #development>
+
+      </app-project-manage-archives-update-development>
+    </nz-tab>
+    <!-- 服务 -->
+    <nz-tab nzTitle="{{'service'|translate}}">
+      <app-project-manage-archives-update-serviceta #serviceta>
+
+      </app-project-manage-archives-update-serviceta>
+    </nz-tab>
+  </nz-tabset>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 关闭按钮 -->
+  <a nz-popconfirm nzTitle="{{'pm.contract.contract.add.button.cancel'|translate}}" (nzOnConfirm)="close()"
+    style="padding-right: 8px">
+    <button nz-button>{{'pm.quotation.cancel'|translate}}</button>
+  </a>
+  <!-- 保存按钮 -->
+  <button nz-button nzType="primary" class="ant-btn ant-btn-primary" (click)="save()"
+    [nzLoading]="isLoadingSave"><span>{{'pm.finish' | translate}}</span></button>
+</div>

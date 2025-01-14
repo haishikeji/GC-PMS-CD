@@ -1,0 +1,28 @@
+<nz-table nzSize="small" #userTable [nzData]="listOfMapData" 
+[nzFrontPagination]="false"
+[nzTotal]="page.total"
+[nzPageIndex]="page.current"
+(nzPageIndexChange)="pageIndexChange($event)"
+>
+  <thead>
+    <tr>
+      <th>日志内容</th>
+      <th>操作人</th>
+      <th>IP</th>
+      <th>耗时(毫秒)</th>
+      <th>日志类型</th>
+      <th>创建时间</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of userTable.data">
+      <td>{{ item.logContent }}</td>
+      <td>{{ item.username }}</td>
+      <td>{{ item.ip }}</td>
+      <td>{{ item.costTime }}</td>
+      <td>{{ item.logType_dictText }}</td>
+      <td>{{ item.createTime }}</td>
+    </tr>
+  </tbody>
+</nz-table>
+

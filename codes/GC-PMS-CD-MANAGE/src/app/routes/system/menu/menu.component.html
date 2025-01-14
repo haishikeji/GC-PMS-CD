@@ -1,0 +1,69 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <button (click)="systemMenuEditComponent.openAdd('新增')" nz-button
+      nzType="primary">{{'button.add' | translate}}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <!-- <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf> -->
+  <!-- <st #st [data]="url" [columns]="columns"></st> -->
+  <nz-table nzSize="small" #expandTable [nzData]="listOfMapData" [nzPageSize]=100 [nzShowPagination]=false [nzLoading]="isSpinning">
+    <thead>
+      <tr>
+        <!-- <th>图标</th> -->
+        <th>{{'menu.name'|translate}}</th>
+        <th>{{'menu.type'|translate}}</th>
+        <th>{{'menu.permission'|translate}}</th>
+        <th>{{'menu.component'|translate}}</th>
+        <th>{{'menu.routing'|translate}}</th>
+        <th>{{'sort'|translate}}</th>
+        <th>{{'table.operation'|translate}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let data of expandTable.data">
+        <ng-container *ngFor="let item of mapOfExpandedData[data.key]">
+          <tr *ngIf="(item.parent && item.parent.expand) || !item.parent">
+            <td [nzIndentSize]="item.level * 20" [nzShowExpand]="!!item.children" [(nzExpand)]="item.expand"
+              (nzExpandChange)="collapse(mapOfExpandedData[data.key], item, $event)">
+              <i nz-icon nzType="{{ item.icon }}" nzTheme="outline"></i> {{ item.name }}
+            </td>
+            <!-- <td>{{ item.name }}</td> -->
+            <td>
+              <span *ngIf="item.menuType==0">{{'menu'|translate}}</span>
+              <span *ngIf="item.menuType==1">{{'menu'|translate}}</span>
+              <span *ngIf="item.menuType==2">{{'button'|translate}}</span>
+            </td>
+            <td>{{ item.perms }}</td>
+            <td>{{ item.url }}</td>
+            <td>{{ item.component }}</td>
+            <td>{{ item.sortNo }}</td>
+            <td>
+              <a href="javascript:;"
+                (click)="systemMenuEditComponent.openAddSub('新增下级',item.menuType,item.id)">{{'add.subordinate'|translate}}</a>
+              <span class="ant-divider ant-divider-vertical"></span>
+              <nz-dropdown>
+                <a nz-dropdown> {{'menu.more'|translate}} <i nz-icon type="down"></i> </a>
+                <ul nz-menu nzSelectable>
+                  <li nz-menu-item>
+                    <a href="javascript:;"
+                      (click)="systemMenuEditComponent.openEdit('修改',item)">{{'table.update'|translate}}</a>
+                  </li>
+                  <li nz-menu-item>
+                    <a href="javascript:;" (click)="dataRoles(item)">{{'data.rule'|translate}}</a>
+                  </li>
+                  <li nz-menu-item>
+                    <a nz-popconfirm nzTitle="{{'confirm.to.delete'|translate}}?" nzOkText="{{'yes'|translate}}"
+                      nzCancelText="{{'no'|translate}}" (nzOnConfirm)="confirmDel(item.id)"
+                      (nzOnCancel)="cancelDel()">{{'table.delete'|translate}}</a>
+                  </li>
+                </ul>
+              </nz-dropdown>
+            </td>
+          </tr>
+        </ng-container>
+      </ng-container>
+    </tbody>
+  </nz-table>
+</nz-card>
+<app-system-menu-edit #systemMenuEditComponent (afterSave)="getMenus()"></app-system-menu-edit>

@@ -1,0 +1,79 @@
+<nz-card [nzBordered]="false">
+  <form nz-form se-container="1" size="compact" gutter="32" [labelWidth]="null">
+    <!-- 所属类目 -->
+    <se label="{{ 'belong.category' | translate }}" line>
+      <tag-select>
+        <nz-tag
+          *ngFor="let i of categories; let idx = index"
+          nzMode="checkable"
+          [nzChecked]="i.value"
+          (nzCheckedChange)="changeCategory($event, idx)"
+        >
+          {{ i.text }}
+        </nz-tag>
+      </tag-select>
+    </se>
+    <se label="{{ 'other.options' | translate }}">
+      <div class="ant-form ant-form-inline">
+        <nz-form-item>
+          <!--作者  -->
+          <nz-form-label nzFor="rate">{{ 'author' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [(ngModel)]="q.user"
+              name="user"
+              [nzPlaceHolder]="'{{ 'no.limit' | translate }}'"
+              [nzShowSearch]="true"
+              style="width: 100px;"
+            >
+              <nz-option [nzLabel]="'{{ 'lee.san' | translate }}'" [nzValue]="'lisa'"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <!-- 好评度 -->
+          <nz-form-label nzFor="rate">{{ 'aavorable.rating' | translate }}</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              [(ngModel)]="q.rate"
+              name="rate"
+              [nzPlaceHolder]="'{{ 'no.limit' | translate }}'"
+              [nzShowSearch]="true"
+              style="width: 100px;"
+            >
+            <!-- 优秀 -->
+              <nz-option [nzLabel]="'{{ 'good' | translate }}'" [nzValue]="'good'"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </se>
+  </form>
+</nz-card>
+<nz-list
+  [nzLoading]="loading"
+  [nzRenderItem]="item"
+  [nzDataSource]="list"
+  [nzGrid]="{ gutter: 24, lg: 6, md: 8, sm: 12, xs: 24 }"
+>
+  <ng-template #item let-item>
+    <nz-list-item>
+      <nz-card nzHoverable [nzCover]="cover">
+        <ng-template #cover>
+          <img alt="{{ item.title }}" src="{{ item.cover }}" />
+        </ng-template>
+        <nz-card-meta [nzTitle]="nzTitle" [nzDescription]="item.subDescription">
+          <ng-template #nzTitle>
+            <a (click)="msg.success('标题：' + item.id)">{{ item.title }}</a>
+          </ng-template>
+        </nz-card-meta>
+        <div class="card-item-content">
+          <span class="text-grey">{{ item.updatedAt | _date: 'fn' }}</span>
+          <avatar-list size="mini">
+            <avatar-list-item *ngFor="let m of item.members" [src]="m.avatar" [tips]="m.name"></avatar-list-item>
+          </avatar-list>
+        </div>
+      </nz-card>
+    </nz-list-item>
+  </ng-template>
+</nz-list>

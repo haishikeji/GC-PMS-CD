@@ -1,0 +1,129 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- <button (click)="add()" nz-button nzType="primary">新建</button> -->
+  </ng-template>
+</page-header>
+<nz-card>
+  <!-- 查询条件 -->
+  <form nz-form>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'documents.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="code" [(ngModel)]="managerPaymentAndReceiptSlip.billcode" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="2" [nzXs]="24" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 查询 -->
+            <button nzType="primary" (click)="query()" nz-button>
+              <span>
+                {{ 'button.query' | translate }}
+              </span>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <!-- 表格 -->
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        nzSize="small"
+        #basicTable
+        [nzData]="listOfData"
+        [nzFrontPagination]="false"
+        [nzTotal]="page.total"
+        [nzPageIndex]="page.current"
+        (nzPageIndexChange)="pageIndexChange($event)"
+        [nzLoading]="isSpinning"
+      >
+        <thead>
+          <tr>
+            <!-- 单据编码 -->
+            <th>{{ 'documents.code' | translate }}</th>
+            <!-- 客户编码 -->
+            <th>{{ 'customer.code' | translate }}</th>
+            <!-- 客户名称 -->
+            <th>{{ 'customer.name' | translate }}</th>
+            <!-- 项目编码 -->
+            <th>{{ 'project.code' | translate }}</th>
+            <!-- 项目名称 -->
+            <th>{{ 'cost.item.name' | translate }}</th>
+            <!-- 收付款条线 -->
+            <th>{{ 'receiving.line' | translate }}</th>
+            <!-- 里程碑 -->
+            <th>{{ 'milestone.milestone' | translate }}</th>
+            <!--  收款金额-->
+            <th>{{ 'collection' | translate }}{{ 'their.fees.money' | translate }}</th>
+            <!--说明  -->
+            <th>{{ 'instructions' | translate }}</th>
+            <!-- 对应发票 -->
+            <th>{{ 'corresponding.invoice' | translate }}</th>
+            <!-- 操作 -->
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.billcode }}</td>
+            <td>{{ data.cusCode }}</td>
+            <td>{{ data.cusName }}</td>
+            <td>{{ data.proCode }}</td>
+            <td>{{ data.proName }}</td>
+            <td>
+              {{ data.coArchivesName }}
+            </td>
+            <td>
+              {{ data.proArchivesMilestone }}
+            </td>
+            <td>
+              <!-- 已确认显示 -->
+              <nz-input-number
+                *ngIf="data.status === '1'"
+                [nzDisabled]="true"
+                [(ngModel)]="data.coPrvice"
+                [nzMin]="0"
+                [nzMax]="10000000000"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+              <!-- 待确认显示 -->
+              <nz-input-number
+                *ngIf="data.status === '0'"
+                [(ngModel)]="data.coPrvice"
+                [nzMin]="0"
+                [nzMax]="10000000000"
+                [nzStep]="1"
+                [nzFormatter]="formatterDollar"
+                [nzParser]="parserDollar"
+              ></nz-input-number>
+            </td>
+            <td>
+              {{ data.explain }}
+            </td>
+            <td>
+              {{ data.invoice }}
+            </td>
+            <td>
+              <!-- 待确认 -->
+              <a *ngIf="data.status === '0'" (click)="toBeConfirmed(data)" acl [acl-ability]="'receipt:update'">
+                {{'waiting.confim' | translate}}
+              </a>
+              
+              <!-- 已确认 -->
+              <nz-tag *ngIf="data.status === '1'" [nzColor]="'gray'">{{ 'have.confim' | translate }}</nz-tag>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>

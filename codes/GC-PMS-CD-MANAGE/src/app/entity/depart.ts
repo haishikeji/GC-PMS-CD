@@ -1,0 +1,19 @@
+export class Depart {
+  id?:string;
+  parentId?:string;//父机构id
+  departName?:string;//部门名称
+  departNameEn?:string;//英文名称
+  departNameAbbr?:string;//缩写
+  departOrder?:number;//排序
+  description?:object;//描述
+  orgType?:string;//机构类型
+  orgCode?:string;//机构编码
+  mobile?:string;//手机号
+  fax?:string;//传真
+  address?:string;//地址
+  memo?:string;//备注
+  pkPersonnel?:string;//人员主键
+  type?:string;//类型
+  fix?:string;
+  pkOrg?:string;//组织id
+}

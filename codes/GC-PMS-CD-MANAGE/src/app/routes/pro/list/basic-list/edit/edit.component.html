@@ -1,0 +1,14 @@
+<div class="modal-header">
+  <!-- 任务编辑 -->
+  <div class="modal-title">{{ 'working.task' | translate }}{{ 'edit' | translate }}</div>
+</div>
+<sf #sf mode="edit" [schema]="schema" [formData]="record" button="none">
+  <div class="modal-footer">
+    <!-- 关闭 -->
+    <button nz-button type="button" (click)="close()">{{ 'button.close' | translate }}</button>
+    <!-- 保存 -->
+    <button nz-button type="submit" [nzType]="'primary'" (click)="save(sf.value)" [disabled]="!sf.valid">
+      {{ 'button.save' | translate }}
+    </button>
+  </div>
+</sf>

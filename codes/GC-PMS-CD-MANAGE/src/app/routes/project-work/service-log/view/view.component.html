@@ -1,0 +1,112 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <form nz-form>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzFor="code">{{ 'documents.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ proWorkLogic.billcode }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ proWorkLogic.proName }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 汇报人 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'report.person' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ proWorkLogic.reporter }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'contract.start.date' | translate }}</nz-form-label>
+          <!-- <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-range-picker [nzShowTime]="true" formControlName="date" id="date" [(ngModel)]="date"></nz-range-picker>
+          </nz-form-control> -->
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ proWorkLogic.startDate }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 结束时间 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'contract.end.date' | translate }}</nz-form-label>
+          <!-- <nz-form-control [nzSm]="14" [nzXs]="24">
+            <nz-range-picker [nzShowTime]="true" formControlName="date" id="date" [(ngModel)]="date"></nz-range-picker>
+          </nz-form-control> -->
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ proWorkLogic.endDate }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+          style="padding-top: 5px;"
+          nzSize="small"
+          #basicTable
+          [nzData]="itemList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <!--  序号-->
+              <th nzAlign="center" style="width: 5%;">{{ 'pm.contract.serial.number' | translate }}</th>
+              <!-- 里程碑 -->
+              <th style="width: 30%;">{{ 'financial.management.milestoneName' | translate }}</th>
+              <!-- 工作内容 -->
+              <th style="width: 50%;">{{ 'work.content' | translate }}</th>
+              <!--工作用时  -->
+              <th style="width: 5%;">{{ 'work.available' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td nzAlign="center">{{ i + 1 }}</td>
+              <td>
+                {{ data.proArchivesMilestone }}
+              </td>
+              <td>
+                {{ data.content }}
+              </td>
+              <td style="width: 10%;">
+                {{ data.duration }}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 填写人 -->
+  <strong>{{ 'fill.person' | translate }}:</strong>{{ proWorkLogic.currentUser }}
+
+  <!-- 填写时间 -->
+  <strong>{{ 'fill.time' | translate }}:</strong>{{ proWorkLogic.createTime }}
+
+  <!-- 关闭按钮 -->
+  <button nz-button (click)="close()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.quotation.cancel' | translate }}</span>
+  </button>
+</div>

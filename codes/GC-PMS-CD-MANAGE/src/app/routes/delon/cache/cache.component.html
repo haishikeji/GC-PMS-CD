@@ -1,0 +1,13 @@
+<div class="alain-default__content-title">
+  <h1>
+    <!-- 缓存 -->
+    Cache{{ 'cache' | translate }},
+    <a href="https://ng-alain.com/components/cache" target="_blank">Document</a>
+  </h1>
+</div>
+<nz-card nzTitle="Service">
+  <!-- 设置 -->
+  <button nz-button (click)="set()">{{ 'menu.extras.settings' | translate }}</button>
+  <!-- 获取 -->
+  <button nz-button (click)="get()" class="ml-sm">{{ 'get' | translate }}</button>
+</nz-card>

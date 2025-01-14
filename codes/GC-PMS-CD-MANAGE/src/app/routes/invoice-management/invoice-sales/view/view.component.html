@@ -1,0 +1,100 @@
+<nz-spin [nzSpinning]="isLoadingSave">
+  <form nz-form>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'documents.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ invoiceManagePurchase.billcode }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'project.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ invoiceManagePurchase.proCode }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 项目名称 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{ 'cost.item.name' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            {{ invoiceManagePurchase.proName }}
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+
+  <nz-card>
+    <div nz-row [nzGutter]="24">
+      <div nz-col [nzSpan]="24">
+        <nz-table
+          style="padding-top: 5px;"
+          nzSize="small"
+          #basicTable
+          [nzData]="itemDataList"
+          [nzFrontPagination]="false"
+          [nzShowPagination]="false"
+        >
+          <thead>
+            <tr>
+              <!-- 序号 -->
+              <th nzAlign="center">{{ 'milestone.serial.number' | translate }}</th>
+              <!--首付款条线  -->
+              <th>{{ 'first.payment.line' | translate }}</th>
+              <!-- 里程碑 -->
+              <th>{{ 'milestone.milestone' | translate }}</th>
+              <!-- 金额 -->
+              <th>{{ 'their.fees.money' | translate }}</th>
+              <!--  未收票金额-->
+              <th>{{ 'no.ticket.money' | translate }}</th>
+              <!-- 本次收票金额 -->
+              <th>{{ 'this.ticket.money' | translate }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let data of basicTable.data; let i = index">
+              <td nzAlign="center">{{ i + 1 }}</td>
+              <td style="width: 20%;">
+                {{ data.coArchivesName }}
+              </td>
+              <td style="width: 20%;">
+                {{ data.proArchivesMilestone }}
+              </td>
+              <td>
+                <!-- <nz-input-number [(ngModel)]="data.price" [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterDollar" [nzParser]="parserDollar"></nz-input-number> -->
+                {{ data.price }}
+              </td>
+              <td>
+                <!-- <nz-input-number [(ngModel)]="data.uncoPrice" [nzMin]="0" [nzStep]="1" [nzFormatter]="formatterDollar" [nzParser]="parserDollar"></nz-input-number> -->
+                {{ data.uncoPrice }}
+              </td>
+              <td>
+                {{ data.coPrice }}
+              </td>
+            </tr>
+          </tbody>
+        </nz-table>
+      </div>
+    </div>
+  </nz-card>
+</nz-spin>
+<!-- 按钮 -->
+<div class="base">
+  <!-- 填写人 -->
+  <strong>{{ 'fill.person' | translate }}:</strong>{{ invoiceManagePurchase.currentUser }}
+
+  <!-- 填写时间 -->
+  <strong>{{ 'fill.time' | translate }}:</strong>{{ invoiceManagePurchase.createTime }}
+
+  <!-- 关闭按钮 -->
+  <button nz-button (click)="close()" [nzLoading]="isLoadingSave">
+    <span>{{ 'pm.quotation.cancel' | translate }}</span>
+  </button>
+</div>

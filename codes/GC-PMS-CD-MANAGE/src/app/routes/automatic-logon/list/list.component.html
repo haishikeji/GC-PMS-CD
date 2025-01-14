@@ -1,0 +1,10 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!--新建  -->
+    <button (click)="add()" nz-button nzType="primary">{{ 'new' | translate }}</button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <sf mode="search" [schema]="searchSchema" (formSubmit)="st.reset($event)" (formReset)="st.reset($event)"></sf>
+  <st #st [data]="url" [columns]="columns"></st>
+</nz-card>

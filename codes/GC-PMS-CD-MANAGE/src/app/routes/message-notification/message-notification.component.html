@@ -1,0 +1,34 @@
+<!-- form -->
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <!-- 标题 -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{'title'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input nz-input formControlName="titile" [(ngModel)]="sysAnnouncement.titile" />
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 内容 -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{'message.type'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <textarea rows="4" nz-input formControlName="msgContent" [(ngModel)]="sysAnnouncement.msgContent"></textarea>
+    </nz-form-control>
+  </nz-form-item>
+  <!-- 接收人 -->
+  <nz-form-item>
+    <nz-form-label [nzSm]="6" [nzXs]="24" nzRequired>{{'Receiver'|translate}}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <nz-select style="width:100%;" nzShowSearch nzAllowClear nzPlaceHolder="{{'pm.choose'|translate}}"
+      nzMode="multiple" formControlName="receiver" [(ngModel)]="receiver">
+        <ng-container *ngFor="let depart of personnelData">
+          <nz-option-group *ngFor="let dep of depart.children" nzLabel="{{dep.title}}">
+            <ng-container *ngFor="let personnel of dep.children">
+              <nz-option nzValue="{{personnel.id}}" nzLabel="{{personnel.name}}">
+              </nz-option>
+            </ng-container>
+          </nz-option-group>
+        </ng-container>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>

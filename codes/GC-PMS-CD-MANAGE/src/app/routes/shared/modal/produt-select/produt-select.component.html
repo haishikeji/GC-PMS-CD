@@ -1,0 +1,86 @@
+<div nz-row [nzGutter]="24">
+  <!-- 产品分类 -->
+  <div nz-col [nzSpan]="6">
+    <nz-card>
+      <!-- 搜索框 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-input-group [nzSuffix]="suffixIcon" style="width:100%">
+            <input type="text" nz-input placeholder="{{ 'placeholder' | translate }}" [(ngModel)]="searchValue" />
+          </nz-input-group>
+          <ng-template #suffixIcon>
+            <i nz-icon type="search"></i>
+          </ng-template>
+        </div>
+      </div>
+      <!-- tree -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col nzMd="24" nzLg="24">
+          <nz-tree
+            [nzData]="nodes"
+            [nzSearchValue]="searchValue"
+            (nzClick)="treeClick($event)"
+            (nzDblClick)="openFolder($event)"
+          >
+            <ng-template #contextTemplate> </ng-template>
+            <ng-template #nzTreeTemplate let-node>
+              <span class="custom-node">
+                <span *ngIf="!node.isLeaf" (contextmenu)="contextMenu(node.key, $event, contextTemplate)">
+                  <span class="folder-name">{{ node.title }}</span>
+                </span>
+                <span *ngIf="node.isLeaf" (contextmenu)="contextMenu(node.key, $event, contextTemplate)">
+                  <span class="file-name">{{ node.title }}</span>
+                </span>
+              </span>
+            </ng-template>
+          </nz-tree>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+  <!-- 产品表格 -->
+  <div nz-col [nzSpan]="18">
+    <nz-card>
+      <!-- 搜索条件 -->
+      <div nz-row [nzGutter]="24"></div>
+      <!-- 表格 -->
+      <div nz-row [nzGutter]="24">
+        <div nz-col [nzSpan]="24">
+          <nz-table
+            nzSize="small"
+            #basicTable
+            [nzData]="listOfData"
+            [nzFrontPagination]="false"
+            [nzTotal]="page.total"
+            [nzPageIndex]="page.current"
+            (nzPageIndexChange)="pageIndexChange($event)"
+            [nzLoading]="isSpinning"
+            (nzCurrentPageDataChange)="currentPageDataChange($event)"
+          >
+            <thead>
+              <tr>
+                <th></th>
+                <!-- 产品编码 -->
+                <th>{{ 'product' | translate }}{{ 'table.thead.code' | translate }}</th>
+
+                <!-- 产品名称 -->
+                <th>{{ 'product' | translate }}{{ 'contract.name' | translate }}</th>
+
+                <!-- 产品属性 -->
+                <th>{{ 'product' | translate }}{{ 'property' | translate }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let data of basicTable.data">
+                <td nzShowCheckbox [(nzChecked)]="mapOfCheckedId[data.id]"></td>
+                <td>{{ data.code }}</td>
+                <td>{{ data.name }}</td>
+                <td>{{ data.attribute }}</td>
+              </tr>
+            </tbody>
+          </nz-table>
+        </div>
+      </div>
+    </nz-card>
+  </div>
+</div>

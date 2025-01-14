@@ -1,0 +1,42 @@
+<form nz-form>
+  <nz-form-item>
+    <!-- 字典名称 -->
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{ 'dictionary.name' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="dict.dictName"
+        name="dictName"
+        nz-input
+        placeholder="{{ 'enter.dictionary.name' | translate }}"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!--字典编码  -->
+    <nz-form-label nzRequired [nzSm]="6" [nzXs]="24">{{ 'dictionary.code' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input
+        [(ngModel)]="dict.dictCode"
+        name="dictCode"
+        nz-input
+        placeholder="{{ 'enter.dictionary.code' | translate }}"
+      />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <!-- 描述 -->
+    <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'description' | translate }}</nz-form-label>
+    <nz-form-control [nzSm]="14" [nzXs]="24">
+      <input [(ngModel)]="dict.description" name="description" nz-input />
+    </nz-form-control>
+  </nz-form-item>
+
+  <div class="footer">
+    <button type="button" (click)="close()" class="ant-btn" style="margin-right: 8px;">
+      <span>{{ 'button.close' | translate }}</span>
+    </button>
+    <button type="button" (click)="save()" class="ant-btn ant-btn-primary">
+      <span>{{ 'button.save' | translate }}</span>
+    </button>
+  </div>
+</form>

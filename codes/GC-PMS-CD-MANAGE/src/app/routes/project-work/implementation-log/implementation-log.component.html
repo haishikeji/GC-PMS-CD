@@ -1,0 +1,96 @@
+<page-header [action]="phActionTpl">
+  <ng-template #phActionTpl>
+    <!-- 新建 -->
+    <button (click)="add()" nz-button nzType="primary" acl [acl-ability]="'implementation-log:add'">
+      {{ 'cost.new' | translate }}
+    </button>
+  </ng-template>
+</page-header>
+<nz-card>
+  <!-- 查询条件 -->
+  <form nz-form>
+    <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <!-- 单据编码 -->
+          <nz-form-label [nzSm]="6" [nzXs]="24">{{ 'documents.code' | translate }}</nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <input nz-input name="code" [(ngModel)]="proWorkLogic.billcode" />
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+      <div nz-col [nzSpan]="8">
+        <nz-form-item>
+          <nz-form-label [nzSm]="2" [nzXs]="24" [nzNoColon]="true"></nz-form-label>
+          <nz-form-control [nzSm]="14" [nzXs]="24">
+            <!-- 查询 -->
+            <button nzType="primary" (click)="query()" nz-button>
+              <span>{{ 'button.query' | translate }}</span>
+            </button>
+          </nz-form-control>
+        </nz-form-item>
+      </div>
+    </div>
+  </form>
+  <!-- 表格 -->
+  <div nz-row [nzGutter]="{ xs: 8, sm: 16, md: 24, lg: 32 }">
+    <div nz-col [nzSpan]="24">
+      <nz-table
+        nzSize="small"
+        #basicTable
+        [nzData]="listOfData"
+        [nzFrontPagination]="false"
+        [nzTotal]="page.total"
+        [nzPageIndex]="page.current"
+        (nzPageIndexChange)="pageIndexChange($event)"
+        [nzLoading]="isSpinning"
+      >
+        <thead>
+          <tr>
+            <!--单据编码  -->
+            <th>{{ 'documents.code' | translate }}</th>
+            <!-- 项目名称 -->
+            <th>{{ 'cost.item.name' | translate }}</th>
+            <!--开始时间  -->
+            <th>{{ 'contract.start.date' | translate }}</th>
+            <!-- 结束时间 -->
+            <th>{{ 'contract.end.date' | translate }}</th>
+            <!--汇报人  -->
+            <th>{{ 'report.person' | translate }}</th>
+            <!--填写人  -->
+            <th>{{ 'fill.person' | translate }}</th>
+            <!--  填写时间-->
+            <th>{{ 'fill.time' | translate }}</th>
+            <!-- 操作 -->
+            <th>{{ 'table.operation' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let data of basicTable.data">
+            <td>{{ data.billcode }}</td>
+            <td>{{ data.proName }}</td>
+            <td>{{ data.startDate }}</td>
+            <td>{{ data.endDate }}</td>
+            <td>{{ data.reporter }}</td>
+            <td>{{ data.currentUser }}</td>
+            <td>{{ data.createTime }}</td>
+            <td>
+              <!-- 详情 修改 删除 -->
+              <a (click)="view(data)" acl [acl-ability]="'implementation-log:view'">
+                {{ 'table.view' | translate }}
+              </a>
+              <nz-divider nzType="vertical" acl [acl-ability]="'implementation-log:view'"></nz-divider>
+              <a (click)="update(data)" acl [acl-ability]="'implementation-log:update'">
+                {{ 'table.update' | translate }}
+              </a>
+              <nz-divider nzType="vertical" acl [acl-ability]="'implementation-log:update'"></nz-divider>
+              <a (click)="delete(data.id)" acl [acl-ability]="'implementation-log:delete'">
+                {{ 'table.delete' | translate }}
+              </a>
+            </td>
+          </tr>
+        </tbody>
+      </nz-table>
+    </div>
+  </div>
+</nz-card>
